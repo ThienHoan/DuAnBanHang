@@ -16,10 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
-/**
- *
- * @author hoan6
- */
 @WebServlet(name="SearchControl", urlPatterns={"/search"})
 public class SearchControl extends HttpServlet {
    
