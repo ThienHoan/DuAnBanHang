@@ -8,7 +8,10 @@
         <filter-name>LoggingFilter</filter-name>
         <url-pattern>/Category.jsp</url-pattern>
         <url-pattern>/category</url-pattern>
-        
+        <url-pattern>/Manager.jsp</url-pattern>
+<!--        <url-pattern>/Home.jsp</url-pattern>
+        <url-pattern>/home</url-pattern>
+        -->
     </filter-mapping>
     <servlet>
         <servlet-name>HomeControl</servlet-name>
