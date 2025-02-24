@@ -65,14 +65,14 @@
                     <!--Form Sign In-->
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="signin-container">
-                            <form action="#" name="frm-login" method="post">
+                            <form action="login" name="frm-login" method="post">
                                 <p class="form-row">
                                     <label for="fid-name">Email Address:<span class="requite">*</span></label>
-                                    <input type="text" id="fid-name" name="name" value="" class="txt-input">
+                                    <input type="text" id="fid-name" name="user" value="" class="txt-input">
                                 </p>
                                 <p class="form-row">
                                     <label for="fid-pass">Password:<span class="requite">*</span></label>
-                                    <input type="email" id="fid-pass" name="email" value="" class="txt-input">
+                                    <input type="password" id="fid-pass" name="pass" value="" class="txt-input">
                                 </p>
                                 <p class="form-row wrap-btn">
                                     <button class="btn btn-submit btn-bold" type="submit">sign in</button>
