@@ -32,7 +32,6 @@ public class HomeControl extends HttpServlet {
         //b1: get data from dao
         DAO dao = new DAO();
         List<Product> list = dao.getAllProduct();
-        System.out.println("Số lượng sản phẩm lấy được: " + list.size()); // Debug
         request.setAttribute("listP", list);
         List<Category> listC = dao.getAllCategory();
         Product last = dao.getLast();
@@ -41,6 +40,7 @@ public class HomeControl extends HttpServlet {
         request.setAttribute("listCC", listC);
         request.setAttribute("p", last);
         request.getRequestDispatcher("Home.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
