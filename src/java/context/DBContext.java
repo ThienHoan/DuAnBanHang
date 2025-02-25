@@ -20,7 +20,7 @@ public class DBContext {
     public static String dbURL = "jdbc:sqlserver://localhost:1433;databaseName=Wish;";
     public static String userDB = "sa";
     public static String passDB = "123";
-    
+    //kk
     public static Connection getConnection() {
         Connection con = null;
         
