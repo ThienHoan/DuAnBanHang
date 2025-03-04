@@ -1,0 +1,9 @@
+{
+  "java.project.referencedLibraries": [
+    "/Users/thienhoan/Downloads/lib/jakarta.servlet.jsp.jstl-2.0.0.jar",
+    "/Users/thienhoan/Downloads/lib/jakarta.servlet.jsp.jstl-api-2.0.0.jar",
+    "/Users/thienhoan/Downloads/lib/sqljdbc42.jar",
+    "/Users/thienhoan/Downloads/lib/jaxb-api-2.3.1.jar"
+  ],
+  "java.project.sourcePaths": ["src"]
+}

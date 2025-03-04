@@ -4,6 +4,8 @@
         <filter-name>LoggingFilter</filter-name>
         <filter-class>filter.LoggingFilter</filter-class>
     </filter>
+
+
     <filter-mapping>
         <filter-name>LoggingFilter</filter-name>
         <url-pattern>/Category.jsp</url-pattern>
@@ -18,6 +20,9 @@
         <servlet-name>HomeControl</servlet-name>
         <servlet-class>control.HomeControl</servlet-class>
     </servlet>
+    <session-config>
+    <session-timeout>30</session-timeout> <!-- 30 phút -->
+</session-config>
     <servlet-mapping>
         <servlet-name>HomeControl</servlet-name>
         <url-pattern>/home</url-pattern>
