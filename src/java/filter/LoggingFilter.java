@@ -16,22 +16,6 @@ public class LoggingFilter implements Filter {
     }
 
     @Override
-//    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-//            throws IOException, ServletException {
-//        
-//        HttpServletRequest req = (HttpServletRequest) request;
-//        HttpServletResponse res = (HttpServletResponse) response;
-//        
-//        HttpSession session = req.getSession();
-//        if(session.getAttribute("account")==null){
-//            res.sendRedirect("login");
-//            return;
-//        }try {
-//            chain.doFilter(request, response);
-//        } catch (Exception e) {
-//        }
-//        
-//    }
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {

@@ -225,6 +225,24 @@ public class DAO {
         }
         
     }
+    public void updateProduct(int id, String name, String image, double price, String title, String description, int category) {
+    String sql = "UPDATE products SET name=?, image=?, price=?, title=?, description=?, category_id=? WHERE id=?";
+    try (Connection conn = DBContext.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, name);
+        ps.setString(2, image);
+        ps.setDouble(3, price);
+        ps.setString(4, title);
+        ps.setString(5, description);
+        ps.setInt(6, category);
+        ps.setInt(7, id);
+        ps.executeUpdate();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+
 
 
     public static void main(String[] args) {
