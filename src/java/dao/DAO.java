@@ -21,10 +21,6 @@ import java.util.List;
  */
 public class DAO {
 
-    Connection conn = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
-
     private static final String LOGIN = "SELECT*FROM Account WHERE username=? and password=?";
     private static final String SELECT_ALL_PRODUCT = "SELECT*FROM Product";
     private static final String SELECT_PRODUCT_BY_CID = "SELECT*FROM Product WHERE cateID=?";
@@ -36,16 +32,19 @@ public class DAO {
     //------------------------------------------------------------
     public Account login(String user, String pass) {
         System.out.println("Debug: Đang login với username = " + user + " và password = " + pass); // In ra để kiểm tra
-        try {
-            conn = new DBContext().getConnection();//mo ket noi voi sql
-            ps = conn.prepareStatement(LOGIN);
+        try(Connection conn = new DBContext().getConnection();//mo ket noi voi sql
+            PreparedStatement ps = conn.prepareStatement(LOGIN);) {
+            
             ps.setString(1, user);
             ps.setString(2, pass);
-            rs = ps.executeQuery();
-            while (rs.next()) {
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                System.out.println("Debug: Login thành công!");
                 return new Account(rs.getInt("uID"), rs.getString("username"), rs.getString("password"), rs.getInt("isSell"), rs.getInt("isAdmin"));
-
             }
+            else
+                System.out.println("Debug: Login thất bại");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -179,9 +178,9 @@ public class DAO {
     public Product getLast() {
         
         try {
-            conn = new DBContext().getConnection();//mo ket noi voi sql
-            ps = conn.prepareStatement(SELECT_LAST_PRODUCT);
-            rs = ps.executeQuery();
+            Connection conn = new DBContext().getConnection();//mo ket noi voi sql
+            PreparedStatement ps = conn.prepareStatement(SELECT_LAST_PRODUCT);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 return new Product(rs.getInt(1),
                         rs.getString(2),

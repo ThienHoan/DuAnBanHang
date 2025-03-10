@@ -13,12 +13,12 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Biolife - Organic Food</title>
+        <title>Công Ty Gia Truyền Hồng Đức</title>
         <link href="https://fonts.googleapis.com/css?family=Cairo:400,600,700&amp;display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Poppins:600&amp;display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400i,700i" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Ubuntu&amp;display=swap" rel="stylesheet">
-        <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
+        <link rel="shortcut icon" type="image/x-icon" href="hinh anh/Logo/cropped-Favicon-1-32x32.png" />
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/animate.min.css">
         <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -305,27 +305,27 @@
                         </ul>
                         <div class="biolife-service type01 biolife-service__type01 sm-margin-top-0 xs-margin-top-45px">
                             <b class="txt-show-01" >100%Nature</b>
-                            <i class="txt-show-02" >Fresh Fruits</i>
+                            <i class="txt-show-02" >Essential Oil</i>
                             <ul class="services-list">
                                 <li>
                                     <div class="service-inner color-reverse">
                                         <span class="number">1</span>
                                         <span class="biolife-icon icon-beer"></span>
-                                        <a class="srv-name" href="#">full stamped product</a>
+                                        <a class="srv-name" href="#">Sản phẩm chính hãng.</a>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="service-inner color-reverse">
                                         <span class="number">2</span>
                                         <span class="biolife-icon icon-schedule"></span>
-                                        <a class="srv-name" href="#">place and delivery on time</a>
+                                        <a class="srv-name" href="#">Giao nhanh, đúng hẹn!</a>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="service-inner color-reverse">
                                         <span class="number">3</span>
                                         <span class="biolife-icon icon-car"></span>
-                                        <a class="srv-name" href="#">Free shipping in the city</a>
+                                        <a class="srv-name" href="#">Miễn phí nội thành.</a>
                                     </div>
                                 </li>
                             </ul>
@@ -338,13 +338,13 @@
                     <div class="container">
                         <div class="biolife-title-box">
                             <span class="subtitle">All the best item for You</span>
-                            <h3 class="main-title">Related Products</h3>
+                            <h3 class="main-title">Related essential oils</h3>
                         </div>
                         <div class="biolife-tab biolife-tab-contain sm-margin-top-34px">
                             <div class="tab-head tab-head__icon-top-layout icon-top-layout">
                                 <ul class="tabs md-margin-bottom-35-im xs-margin-bottom-40-im">
                                     <li class="tab-element active">
-                                        <a href="#tab01_1st" class="tab-link"><span class="biolife-icon icon-lemon"></span>Oranges</a>
+                                        <a href="#tab01_1st" class="tab-link"><span class="biolife-icon icon-lemon"></span>Chanh</a>
                                     </li>
                                     <li class="tab-element" >
                                         <a href="#tab01_2nd" class="tab-link"><span class="biolife-icon icon-grape2"></span>Grapes</a>
@@ -353,7 +353,7 @@
                                         <a href="#tab01_3rd" class="tab-link"><span class="biolife-icon icon-blueberry"></span>Blueberries</a>
                                     </li>
                                     <li class="tab-element" >
-                                        <a href="#tab01_4th" class="tab-link"><span class="biolife-icon icon-orange"></span>Lemon</a>
+                                        <a href="#tab01_4th" class="tab-link"><span class="biolife-icon icon-orange"></span>Cam</a>
                                     </li>
                                     <li class="tab-element" >
                                         <a href="#tab01_5th" class="tab-link"><span class="biolife-icon icon-broccoli"></span>Vegetables</a>
@@ -1325,18 +1325,20 @@
         </div>
 
         <!-- FOOTER -->
+        
+        
         <footer id="footer" class="footer layout-03">
             <div class="footer-content background-footer-03">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-9">
                             <section class="footer-item">
-                                <a href="home-03-green.html" class="logo footer-logo"><img src="assets/images/organic-3-green.png" alt="biolife logo" width="135" height="36"></a>
+                                <a href="home-03-green.html" class="logo footer-logo"><img src="hinh anh/Logo/logo-gia-truyen-hong-duc1.png" alt="biolife logo" width="220" height="80"></a>
                                 <div class="footer-phone-info">
                                     <i class="biolife-icon icon-head-phone"></i>
                                     <p class="r-info">
                                         <span>Got Questions ?</span>
-                                        <span>(700)  9001-1909  (900) 689 -66</span>
+                                        <span>0905.666.218</span>
                                     </p>
                                 </div>
                                 <div class="newsletter-block layout-01">
@@ -1350,77 +1352,64 @@
                                 </div>
                             </section>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 md-margin-top-5px sm-margin-top-50px xs-margin-top-40px">
+                        <div class="col-lg-5 col-md-4 col-sm-6 md-margin-top-5px sm-margin-top-50px xs-margin-top-40px">
                             <section class="footer-item">
-                                <h3 class="section-title">Useful Links</h3>
+                                <h3 class="section-title">CHÍNH SÁCH SẢN PHẨM</h3>
                                 <div class="row">
-                                    <div class="col-lg-6 col-sm-6 col-xs-6">
+                                    <div class="col-lg-6 col-sm-6 col-xs-8">
                                         <div class="wrap-custom-menu vertical-menu-2">
                                             <ul class="menu">
-                                                <li><a href="#">About Us</a></li>
-                                                <li><a href="#">About Our Shop</a></li>
-                                                <li><a href="#">Secure Shopping</a></li>
-                                                <li><a href="#">Delivery infomation</a></li>
-                                                <li><a href="#">Privacy Policy</a></li>
-                                                <li><a href="#">Our Sitemap</a></li>
+                                                <li><a href="https://giatruyenhongduc.com/2020/05/04/chinh-sach-giao-hang-2/">Chính sách giao hàng</a></li>
+                                                <li><a href="https://giatruyenhongduc.com/2020/04/27/chinh-sach-doi-tra-san-pham/">Chính sách đổi trả sản phẩm</a></li>
+                                                <li><a href="https://giatruyenhongduc.com/2019/12/24/chinh-sach-mua-hang/">Chính sách mua hàng</a></li>
+                                                <li><a href="https://giatruyenhongduc.com/2019/12/24/chinh-sach-bao-mat-thanh-toan/">Chính sách bảo mật thanh toán</a></li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-sm-6 col-xs-6">
                                         <div class="wrap-custom-menu vertical-menu-2">
                                             <ul class="menu">
-                                                <li><a href="#">Who We Are</a></li>
-                                                <li><a href="#">Our Services</a></li>
-                                                <li><a href="#">Projects</a></li>
-                                                <li><a href="#">Contacts Us</a></li>
-                                                <li><a href="#">Innovation</a></li>
-                                                <li><a href="#">Testimonials</a></li>
+                                                <li><a href="https://giatruyenhongduc.com/2020/04/27/chinh-sach-dai-ly/">Chính sách dành cho Đại Lý</a></li>
+                                                <li><a href="https://giatruyenhongduc.com/2020/07/10/chinh-sach-uu-dai-khach-hang/">Chính sách dành cho Cộng Tác Viên</a></li>
+                                                <li><a href="https://giatruyenhongduc.com/2020/07/10/tu-van-chon-san-pham-phu-hop/">Tư vấn miễn phí chọn sản phẩm phù hợp</a></li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </section>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 md-margin-top-5px sm-margin-top-50px xs-margin-top-40px">
+                        <div class="col-lg-3 col-md-4 col-sm-6 md-margin-top-5px sm-margin-top-50px xs-margin-top-40px">
                             <section class="footer-item">
-                                <h3 class="section-title">Transport Offices</h3>
+                                <h3 class="section-title">Chi nhánh trung tâm</h3>
                                 <div class="contact-info-block footer-layout xs-padding-top-10px">
                                     <ul class="contact-lines">
                                         <li>
                                             <p class="info-item">
                                                 <i class="biolife-icon icon-location"></i>
-                                                <b class="desc">7563 St. Vicent Place, Glasgow, Greater Newyork NH7689, UK </b>
+                                                <b class="desc">Showroom : Tầng 2 524 Núi Thành – Q. Hải Châu – Tp. Đà Nẵng</b>
                                             </p>
                                         </li>
                                         <li>
                                             <p class="info-item">
                                                 <i class="biolife-icon icon-phone"></i>
-                                                <b class="desc">Phone: (+067) 234 789  (+068) 222 888</b>
+                                                <b class="desc">Phone: 0905.666.218</b>
                                             </p>
                                         </li>
                                         <li>
                                             <p class="info-item">
                                                 <i class="biolife-icon icon-letter"></i>
-                                                <b class="desc">Email:  contact@company.com</b>
+                                                <b class="desc">Email:  giatruyenhongducdn@gmail.com</b>
                                             </p>
                                         </li>
                                         <li>
                                             <p class="info-item">
                                                 <i class="biolife-icon icon-clock"></i>
-                                                <b class="desc">Hours: 7 Days a week from 10:00 am</b>
+                                                <b class="desc">Hours: 8 am - 5.30 pm</b>
                                             </p>
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="biolife-social inline">
-                                    <ul class="socials">
-                                        <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                        <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                        <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                        <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-                                        <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                </div>
+                               
                             </section>
                         </div>
                     </div>
@@ -1429,7 +1418,6 @@
                             <div class="separator sm-margin-top-62px xs-margin-top-40px"></div>
                         </div>
                         <div class="col-lg-6 col-sm-6 col-xs-12">
-                            <div class="copy-right-text"><p><a href="templateshub.net">Templates Hub</a></p></div>
                         </div>
                         <div class="col-lg-6 col-sm-6 col-xs-12">
                             <div class="payment-methods">

@@ -6,33 +6,14 @@
         <div class="container">
             <div class="top-bar left">
                 <ul class="horizontal-menu">
-                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>Organic@company.com</a></li>
-                    <li><a href="#">Free Shipping for all Order of $99</a></li>
+                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>giatruyenhongducdn@gmail.com</a></li>
+                    <li><a href="https://www.facebook.com/Dautronghoa"><i class="fa fa-facebook" aria-hidden="true"></i>Công Ty Gia Truyền Hồng Đức</a></li>
                 </ul>
+                
             </div>
             <div class="top-bar right" style="max-width: unset !important;">
-                <ul class="social-list">
-                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                </ul>
                 <ul class="horizontal-menu">
-                    <li class="horz-menu-item currency">
-                        <select name="currency">
-                            <option value="eur">€ EUR (Euro)</option>
-                            <option value="usd" selected>$ USD (Dollar)</option>
-                            <option value="usd">£ GBP (Pound)</option>
-                            <option value="usd">¥ JPY (Yen)</option>
-                        </select>
-                    </li>
-                    <li class="horz-menu-item lang">
-                        <select name="language">
-                            <option value="fr">French (EUR)</option>
-                            <option value="en" selected>English (USD)</option>
-                            <option value="ger">Germany (GBP)</option>
-                            <option value="jp">Japan (JPY)</option>
-                        </select>
-                    </li>
+
                     <c:if test="${sessionScope.account != null}">  <!--gọi session acoount kiểm tra-->
 
                         <li style="min-width: unset !important;">
@@ -52,42 +33,20 @@
     <div class="header-middle biolife-sticky-object ">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-2 col-md-6 col-xs-6">
-                    <a href="home" class="biolife-logo"><img src="assets/images/organic-3-green.png" alt="biolife logo" width="135" height="36"></a>
+                <div class="col-lg-4 col-md-2 col-xs-6">
+                    <a href="home" class="biolife-logo"><img src="hinh anh/Logo/logo-gia-truyen-hong-duc1.png" alt="hongduclogo" width="220" height="80"></a>
                 </div>
-                <div class="col-lg-6 col-md-7 hidden-sm hidden-xs">
+                <div class="col-lg-5 col-md-7 hidden-sm hidden-xs">
                     <div class="primary-menu">
                         <ul class="menu biolife-menu clone-main-menu clone-primary-menu" id="primary-menu" data-menuname="main menu">
                             <li class="menu-item"><a href="home">Home</a></li>
                             <li class="menu-item menu-item-has-children has-child">
                                 <a href="#" class="menu-name" data-title="Product">Product</a>
                                 <ul class="sub-menu">
-                                    <li class="menu-item"><a href="#">Omelettes</a></li>
-                                    <li class="menu-item"><a href="#">Breakfast Scrambles</a></li>
-                                    <li class="menu-item menu-item-has-children has-child"><a href="#" class="menu-name" data-title="Eggs & other considerations">Eggs & other considerations</a>
-                                        <ul class="sub-menu">
-                                            <li class="menu-item"><a href="#">Classic Breakfast</a></li>
-                                            <li class="menu-item"><a href="#">Huevos Rancheros</a></li>
-                                            <li class="menu-item"><a href="#">Everything Egg Sandwich</a></li>
-                                            <li class="menu-item"><a href="#">Egg Sandwich</a></li>
-                                            <li class="menu-item"><a href="#">Vegan Burrito</a></li>
-                                            <li class="menu-item"><a href="#">Biscuits and Gravy</a></li>
-                                            <li class="menu-item"><a href="#">Bacon Avo Egg Sandwich</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item"><a href="#">Griddle</a></li>
-                                    <li class="menu-item menu-item-has-children has-child"><a href="#" class="menu-name" data-title="Sides & Extras">Sides & Extras</a>
-                                        <ul class="sub-menu">
-                                            <li class="menu-item"><a href="#">Breakfast Burrito</a></li>
-                                            <li class="menu-item"><a href="#">Crab Cake Benedict</a></li>
-                                            <li class="menu-item"><a href="#">Corned Beef Hash</a></li>
-                                            <li class="menu-item"><a href="#">Steak & Eggs</a></li>
-                                            <li class="menu-item"><a href="#">Oatmeal</a></li>
-                                            <li class="menu-item"><a href="#">Fruit & Yogurt Parfait</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item"><a href="#">Biscuits</a></li>
-                                    <li class="menu-item"><a href="#">Seasonal Fruit Plate</a></li>
+                                    <li class="menu-item"><a href="#">Tinh dầu xông phòng</a></li>
+                                    <li class="menu-item"><a href="#">Tinh dầu massage</a></li>
+                                    <li class="menu-item"><a href="#">Tinh dầu cho xe hơi</a></li>
+                                    <li class="menu-item"><a href="#">Tinh dầu trị liệu</a></li>
                                 </ul>
                             </li>
 <!--                            <li class="menu-item menu-item-has-children has-megamenu">
@@ -175,7 +134,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-md-6 col-xs-6">
+                <div class="col-lg-3 col-md-6 col-xs-6">
                     <div class="biolife-cart-info">
                         <div class="mobile-search">
                             <a href="javascript:void(0)" class="open-searchbox"><i class="biolife-icon icon-search"></i></a>
@@ -370,14 +329,16 @@
                                 <c:forEach items="${listCC}" var="o">
                                     <li class="list-group-item text-white"><a href="category?cid=${o.cid}">${o.cname}</a></li>
                                     </c:forEach>
-                                <li class="menu-item"><a href="#" class="menu-name" data-title="Ocean Foods"><i class="biolife-icon icon-fish"></i>Ocean Foods</a></li>
+<!--                                <li class="menu-item"><a href="#" class="menu-name" data-title="Ocean Foods"><i class="biolife-icon icon-fish"></i>Ocean Foods</a></li>
 
                                 <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-fast-food"></i>Fastfood</a></li>
                                 <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-beef"></i>Fresh Meat</a></li>
                                 <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-onions"></i>Fresh Onion</a></li>
                                 <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-avocado"></i>Papaya & Crisps</a></li>
                                 <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-contain"></i>Oatmeal</a></li>
-                                <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-fresh-juice"></i>Fresh Bananas & Plantains</a></li>
+                                <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-fresh-juice"></i>Fresh Bananas & Plantains</a></li>-->
+                                
+                                
                             </ul>
                         </div>
                     </div>
@@ -402,8 +363,8 @@
                         </form>
                     </div>
                     <div class="live-info">
-                        <p class="telephone"><i class="fa fa-phone" aria-hidden="true"></i><b class="phone-number">(+900) 123 456 7891</b></p>
-                        <p class="working-time">Mon-Fri: 8:30am-7:30pm; Sat-Sun: 9:30am-4:30pm</p>
+                        <p class="telephone"><i class="fa fa-phone" aria-hidden="true"></i><b class="phone-number">0905.666.218</b></p>
+                        <p class="working-time">8 am - 5.30 pm</p>
                     </div>
                 </div>
             </div>

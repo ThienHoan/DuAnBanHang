@@ -10,12 +10,12 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Biolife - Organic Food</title>
+        <title>Công Ty Gia Truyền Hồng Đức</title>
         <link href="https://fonts.googleapis.com/css?family=Cairo:400,600,700&amp;display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Poppins:600&amp;display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400i,700i" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Ubuntu&amp;display=swap" rel="stylesheet">
-        <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
+        <link rel="shortcut icon" type="image/x-icon" href="hinh anh/Logo/cropped-Favicon-1-32x32.png" />
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/animate.min.css">
         <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -139,12 +139,12 @@
                                         <div class="wrap-selectors">
                                             <div class="selector-item orderby-selector">
                                                 <select name="orderby" class="orderby" aria-label="Shop order">
-                                                    <option value="menu_order" selected="selected">Default sorting</option>
-                                                    <option value="popularity">popularity</option>
-                                                    <option value="rating">average rating</option>
-                                                    <option value="date">newness</option>
-                                                    <option value="price">price: low to high</option>
-                                                    <option value="price-desc">price: high to low</option>
+                                                    <option value="menu_order" selected="selected">Mặc định</option>
+                                                    <option value="popularity">Phổ biến</option>
+                                                    <option value="rating">Đánh giá cao</option>
+                                                    <option value="date">Mới nhất</option>
+                                                    <option value="price">Giá: thấp đến cao</option>
+                                                    <option value="price-desc">Giá: Cao đến thấp</option>
                                                 </select>
                                             </div>
                                             <div class="selector-item viewmode-selector">
@@ -337,11 +337,12 @@
                                 <h4 class="wgt-title">Product Tags</h4>
                                 <div class="wgt-content">
                                     <ul class="tag-cloud">
-                                        <li class="tag-item"><a href="#" class="tag-link">Fresh Fruit</a></li>
-                                        <li class="tag-item"><a href="#" class="tag-link">Natural Food</a></li>
-                                        <li class="tag-item"><a href="#" class="tag-link">Hot</a></li>
-                                        <li class="tag-item"><a href="#" class="tag-link">Organics</a></li>
-                                        <li class="tag-item"><a href="#" class="tag-link">Dried Organic</a></li>
+                                        <li class="tag-item"><a href="#" class="tag-link">Tinh dầu hoa lài</a></li>
+                                        <li class="tag-item"><a href="#" class="tag-link">Trầm</a></li>
+                                        <li class="tag-item"><a href="#" class="tag-link">Quế</a></li>
+                                        <li class="tag-item"><a href="#" class="tag-link">Tinh dầu ngọc lan tây</a></li>
+                                        <li class="tag-item"><a href="#" class="tag-link">Oải hương</a></li>
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -353,7 +354,10 @@
         </div>
 
         <!-- FOOTER -->
-        <footer id="footer" class="footer layout-03">
+        <jsp:include page="Footer.jsp"></jsp:include>
+        
+        
+<!--        <footer id="footer" class="footer layout-03">
             <div class="footer-content background-footer-03">
                 <div class="container">
                     <div class="row">
@@ -473,7 +477,7 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer>-->
 
         <!--Footer For Mobile-->
         <div class="mobile-footer">
