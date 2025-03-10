@@ -166,11 +166,13 @@
                             
                             
                             <c:if test="${sessionScope.account.isAdmin == 1}">
-                                <li class="menu-item"><a href="ManagerAccount.jsp">Manager Account</a></li>
+                                
                         </c:if>
+                            <li class="menu-item"><a href="ManagerAccount.jsp">Manager Account</a></li>
                             <c:if test="${sessionScope.account.isSell == 1}">
-                            <li class="menu-item"><a href="manager">Manager Product</a></li>
+                            
                         </c:if>
+                                <li class="menu-item"><a href="manager">Manager Product</a></li>
                         
                         </ul>
                     </div>
