@@ -67,12 +67,12 @@
                             <div class="media">
                                 <ul class="biolife-carousel slider-for" data-slick='{"arrows":false,"dots":false,"slidesMargin":30,"slidesToShow":1,"slidesToScroll":1,"fade":true,"asNavFor":".slider-nav"}'>
                                     <li><img src="${detail.image}" alt="" width="500" height="500"></li>
-                                <!--Nào muốn phát triển sản phẩm thì mở ra            <li><img src="assets/images/details-product/p02.jpg" alt="" width="500" height="500"></li>
+<!--                                Nào muốn phát triển sản phẩm thì mở ra            <li><img src="assets/images/details-product/p02.jpg" alt="" width="500" height="500"></li>
                                                             <li><img src="assets/images/details-product/p03.jpg" alt="" width="500" height="500"></li>
                                                             <li><img src="assets/images/details-product/p06.jpg" alt="" width="500" height="500"></li>
-                                                            <li><img src="assets/images/details-product/p07.jpg" alt="" width="500" height="500"></li>-->
+                                                            <li><img src="assets/images/details-product/p07.jpg" alt="" width="500" height="500"></li>
                             </ul>
-                            <!--                        <ul class="biolife-carousel slider-nav" data-slick='{"arrows":false,"dots":false,"centerMode":false,"focusOnSelect":true,"slidesMargin":10,"slidesToShow":4,"slidesToScroll":1,"asNavFor":".slider-for"}'>
+                                                    <ul class="biolife-carousel slider-nav" data-slick='{"arrows":false,"dots":false,"centerMode":false,"focusOnSelect":true,"slidesMargin":10,"slidesToShow":4,"slidesToScroll":1,"asNavFor":".slider-for"}'>
                                                         <li><img src="assets/images/details-product/thumb_p01.jpg" alt="" width="88" height="88"></li>
                                                         <li><img src="assets/images/details-product/thumb_p02.jpg" alt="" width="88" height="88"></li>
                                                         <li><img src="assets/images/details-product/thumb_p03.jpg" alt="" width="88" height="88"></li>
