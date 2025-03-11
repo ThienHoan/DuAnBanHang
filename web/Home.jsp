@@ -211,7 +211,7 @@
                                             <span class="second-line">Organic Heaven Made</span>
                                             <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
                                             <div class="product-detail">
-                                                <h4 class="product-name">${p.title}</h4>
+                                                <h4 class="product-name">${p.name}</h4>
                                                 <div class="price price-contain">
                                                     <ins><span class="price-amount"><span class="currencySymbol">£</span>${p.price}</span></ins>
                                                     <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
@@ -386,7 +386,7 @@
                             <ins><span class="price-amount"><span class="currencySymbol">£</span>${o.price}</span></ins>
                         </div>
                         <div class="slide-down-box">
-                            <p class="message">${o.title}</p>
+                            <p class="message">${o.description}</p>
                             <div class="buttons">
                                 <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                 <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> add to cart</a>
