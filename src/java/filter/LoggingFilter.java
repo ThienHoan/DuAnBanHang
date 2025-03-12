@@ -33,8 +33,8 @@ public class LoggingFilter implements Filter {
             Account acc = (Account) account;
 
             // Xác định quyền
-            boolean isAdmin = acc.getIsAdmin() == 1;
-            boolean isSeller = acc.getIsSell() == 1;
+            boolean isAdmin = acc.getRoleID() == 3;
+            boolean isSeller = acc.getRoleID() == 2;
 
             // Lấy đường dẫn trang đang truy cập
             String requestURI = req.getRequestURI();

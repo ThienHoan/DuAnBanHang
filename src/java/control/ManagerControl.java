@@ -45,7 +45,7 @@ public class ManagerControl extends HttpServlet {
         if (a == null) {
             System.out.println("Account is null!");
         } else {
-            int id = a.getId();
+            int id = a.getUserID();
             DAO dao = new DAO();
             List<Product> list = dao.getProductBySellID(id);
             List<Category> listC = dao.getAllCategory();

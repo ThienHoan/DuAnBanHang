@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class DBContext {
 
     public static String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    public static String dbURL = "jdbc:sqlserver://localhost:1433;databaseName=Wish;";
+    public static String dbURL = "jdbc:sqlserver://localhost:1433;databaseName=Wiish;";
     public static String userDB = "sa";
     public static String passDB = "123";
     
