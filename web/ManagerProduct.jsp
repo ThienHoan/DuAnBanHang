@@ -334,7 +334,7 @@
                                         </td>
                                         <td>${o.id}</td>
                                         <td>${o.name}</td>
-                                        <td><img src="${o.image}" alt="alt"/></td>
+                                        <td><img src="${o.img}" alt="alt"/></td>
                                         <td>${o.price} vnđ</td>
                                         <td>
                                             
@@ -349,9 +349,8 @@
    data-toggle="modal"
    data-id="${o.id}" 
    data-name="${o.name}" 
-   data-image="${o.image}" 
-   data-price="${o.price}" 
-   data-title="${o.title}" 
+   data-image="${o.img}" 
+   data-price="${o.price}"  
    data-description="${o.description}"
    data-category="${cid}"> <!-- ✅ Dùng 'cid' thay vì 'category' -->
                                                     
