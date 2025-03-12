@@ -314,7 +314,7 @@
                                             <div class="contain-product style-widget">
                                                 <div class="product-thumb">
                                                     <a href="#" class="link-to-product" tabindex="0">
-                                                        <img src="${p.image}" alt="${p.name}" width="270" height="270" class="product-thumnail">
+                                                        <img src="${p.img}" alt="${p.name}" width="270" height="270" class="product-thumnail">
                                                     </a>
                                                 </div>
                                                 <div class="info">

@@ -21,16 +21,18 @@ public class HomeControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //b1: get data from dao
+        
         DAO dao = new DAO();
         List<Product> list = dao.getAllProduct();
         request.setAttribute("listP", list);
         List<Category> listC = dao.getAllCategory();
         Product last = dao.getLast();
         
-        //b2: set data to jsp
+        
         request.setAttribute("listCC", listC);
         request.setAttribute("p", last);
+        
+        
         request.getRequestDispatcher("Home.jsp").forward(request, response);
 
     }

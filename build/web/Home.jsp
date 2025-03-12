@@ -203,7 +203,7 @@
                                     <div class="banner-contain">
                                         <div class="media">
                                             <a href="#" class="bn-link">
-                                                <figure><img src="${p.image}" width="616" height="483" alt=""></figure>
+                                                <figure><img src="${p.img}" width="616" height="483" alt=""></figure>
                                             </a>
                                         </div>  
                                         <div class="text-content">
@@ -211,7 +211,7 @@
                                             <span class="second-line">Organic Heaven Made</span>
                                             <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
                                             <div class="product-detail">
-                                                <h4 class="product-name">${p.title}</h4>
+                                                <h4 class="product-name"></h4>
                                                 <div class="price price-contain">
                                                     <ins><span class="price-amount"><span class="currencySymbol">£</span>${p.price}</span></ins>
                                                     <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
@@ -375,7 +375,7 @@
                 <div class="contain-product layout-default">
                     <div class="product-thumb">
                         <a href="#" class="link-to-product">
-                            <img src="${o.image}" alt="${o.name}" width="270" height="270" class="product-thumnail">
+                            <img src="${o.img}" alt="${o.name}" width="270" height="270" class="product-thumnail">
                         </a> 
                         <a class="lookup btn_call_quickview" href="#"><i class="biolife-icon icon-search"></i></a>
                     </div>
@@ -386,7 +386,7 @@
                             <ins><span class="price-amount"><span class="currencySymbol">£</span>${o.price}</span></ins>
                         </div>
                         <div class="slide-down-box">
-                            <p class="message">${o.title}</p>
+                            <p class="message">${o.description}</p>
                             <div class="buttons">
                                 <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                 <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> add to cart</a>
