@@ -38,7 +38,7 @@
                         <li style="min-width: unset !important;">
                             <a href="logout" class="login-link" style="min-width: unset !important; display: inline-block;"><i></i>Logout</a>
                         </li>
-                        <li><a href="#" class="login-link"><i class="biolife-icon icon-login"></i>Hello ${sessionScope.account.user}</a></li>
+                        <li><a href="#" class="login-link"><i class="biolife-icon icon-login"></i>Hello ${sessionScope.account.userName}</a></li>
 
                     </c:if>
                     <c:if test="${sessionScope.account == null}">
@@ -165,10 +165,10 @@
                             <li class="menu-item"><a href="contact.html">Contact</a></li>
                             
                             
-                            <c:if test="${sessionScope.account.isAdmin == 1}">
+                            <c:if test="${sessionScope.account.roleID == 3}">
                                 <li class="menu-item"><a href="ManagerAccount.jsp">Manager Account</a></li>
                         </c:if>
-                            <c:if test="${sessionScope.account.isSell == 1}">
+                            <c:if test="${sessionScope.account.roleID == 2}">
                             <li class="menu-item"><a href="manager">Manager Product</a></li>
                         </c:if>
                         
