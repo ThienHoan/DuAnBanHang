@@ -1,4 +1,3 @@
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -74,6 +73,12 @@
                                     <label for="fid-pass">Password:<span class="requite">*</span></label>
                                     <input type="password" id="fid-pass" name="pass" value="" class="txt-input">
                                 </p>
+                                <!-- Add error message display -->
+                                <c:if test="${not empty error}">
+                                    <p class="form-row" style="color: red">
+                                        ${error}
+                                    </p>
+                                </c:if>
                                 <p class="form-row wrap-btn">
                                     <button class="btn btn-submit btn-bold" type="submit">sign in</button>
                                     <a href="#" class="link-to-help">Forgot your password</a>
@@ -87,7 +92,7 @@
                         <div class="register-in-container">
                             <div class="intro">
                                 <h4 class="box-title">New Customer?</h4>
-                                <p class="sub-title">Create an account with us and you?ll be able to:</p>
+                                <p class="sub-title">Create an account with us and you'll be able to:</p>
                                 <ul class="lis">
                                     <li>Check out faster</li>
                                     <li>Save multiple shipping anddesses</li>
@@ -95,7 +100,8 @@
                                     <li>Track new orders</li>
                                     <li>Save items to your Wishlist</li>
                                 </ul>
-                                <a href="#" class="btn btn-bold">Create an account</a>
+                                <!-- Update link to registration page -->
+                                <a href="register" class="btn btn-bold">Create an account</a>
                             </div>
                         </div>
                     </div>

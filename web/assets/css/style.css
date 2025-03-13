@@ -483,11 +483,13 @@ body{
     z-index: 9999999;
     margin-top: 0;
     top: 0;
+     display: none; /* Ẩn preloader */
 }
 #biof-loading .biof-loading-center{
     width: 100%;
     height: 100%;
     position: relative;
+     display: none; /* Ẩn preloader */
 }
 #biof-loading .biof-loading-center-absolute{
     position: absolute;
@@ -497,6 +499,7 @@ body{
     width: 150px;
     margin-top: -75px;
     margin-left: -75px;
+     display: none; /* Ẩn preloader */
 }
 .biof-loading-center-absolute .dot{
     width: 20px;
@@ -508,6 +511,7 @@ body{
     -moz-border-radius: 50% 50% 50% 50%;
     -webkit-border-radius: 50% 50% 50% 50%;
     border-radius: 50% 50% 50% 50%;
+     display: none; /* Ẩn preloader */
 }
 
 .biof-loading-center-absolute .dot-one {
