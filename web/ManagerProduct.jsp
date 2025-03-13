@@ -308,98 +308,97 @@
                         </div>
 
                         <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <span class="custom-checkbox">
-                                            <input type="checkbox" id="selectAll">
-                                            <label for="selectAll"></label>
-                                        </span>
-                                    </th>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Image</th>
-                                    <th>Price</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${listS}" var="o">
-                                    <tr>
-                                        <td>
-                                            <span class="custom-checkbox">
-                                                <input type="checkbox" class="product-checkbox" name="selectedProducts" value="${o.id}">
-                                                <label></label>
-                                            </span>
-                                        </td>
-                                        <td>${o.id}</td>
-                                        <td>${o.name}</td>
-                                        <td><img src="${o.img}" alt="alt"/></td>
-                                        <td>${o.price} vnđ</td>
-                                        <td>
-                                            
-                                                <c:set var="cid" value="" />
-                                                <c:forEach var="p" items="${listSS}">
-                                                    <c:if test="${p.id eq o.id}"> <!-- Dùng eq để so sánh String -->
-                                                        <c:set var="cid" value="${p.cid}" />
-                                                    </c:if>
-                                                </c:forEach>
-
-                                                <a href="#editProductModal" class="edit" 
-   data-toggle="modal"
-   data-id="${o.id}" 
-   data-name="${o.name}" 
-   data-image="${o.img}" 
-   data-price="${o.price}"  
-   data-description="${o.description}"
-   data-category="${cid}"> <!-- ✅ Dùng 'cid' thay vì 'category' -->
-                                                    
-
-    <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-</a>
-   <c:forEach var="p" items="${listSS}">
+                            ...
+<thead>
     <tr>
-        <td>p.id: ${p.id}</td> 
-        <td>p.cid: ${p.cid}</td> 
+        <th>
+            <span class="custom-checkbox">
+                <input type="checkbox" id="selectAll">
+                <label for="selectAll"></label>
+            </span>
+        </th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Price</th>
+        <th>Stock</th> <!-- Thêm cột Stock -->
+        <th>Actions</th>
     </tr>
-</c:forEach>
+</thead>
+...
+<tbody>
+    <c:forEach items="${listS}" var="o">
+        <tr>
+            <td>
+                <span class="custom-checkbox">
+                    <input type="checkbox" class="product-checkbox" name="selectedProducts" value="${o.id}">
+                    <label></label>
+                </span>
+            </td>
+            <td>${o.id}</td>
+            <td>${o.name}</td>
+            <td><img src="${o.img}" alt="alt"/></td>
+            <td>${o.price} vnđ</td>
+            <td>
+                <c:if test="${o.stock == 0}">
+                    <span class="badge badge-warning">Hết hàng</span>
+                </c:if>
+                <c:if test="${o.stock != 0}">
+                    ${o.stock}
+                </c:if>
+            </td> <!-- Hiển thị trạng thái hết hàng hoặc số lượng stock -->
+            <td>
+                <!-- Hiển thị trạng thái khả dụng hoặc không khả dụng -->
+                <c:choose>
+                    <c:when test="${o.status == 0}">
+                        <span class="badge badge-danger">Không khả dụng</span>
+                    </c:when>
+                    <c:otherwise>
+                        <span class="badge badge-success">Khả dụng</span>
+                    </c:otherwise>
+                </c:choose>
+                <a href="#editProductModal" class="edit" 
+                   data-toggle="modal"
+                   data-id="${o.id}" 
+                   data-name="${o.name}" 
+                   data-image="${o.img}" 
+                   data-price="${o.price}"  
+                   data-description="${o.description}"
+                   data-stock="${o.stock}"
+                   data-status="${o.status}"
+                   data-category="${o.cateID}">
+                    <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+                </a>
+                <a href="#deleteProductModal${o.id}" class="delete" data-toggle="modal">
+                    <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                </a>
+            </td>
+        </tr>
+        <!-- Modal Xóa từng sản phẩm -->
+        <div id="deleteProductModal${o.id}" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="delete" method="post">
+                        <div class="modal-header">						
+                            <h4 class="modal-title">Delete Product</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">					
+                            <p>Are you sure you want to delete this product?</p>
+                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="pid" value="${o.id}">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </c:forEach>
+</tbody>
 
-
-
-
-
-                                            <!-- Mỗi sản phẩm có một modal riêng -->
-                                            <a href="#deleteProductModal${o.id}" class="delete" data-toggle="modal">
-                                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                                            </a>
-                                        </td>
-                                    </tr>
-
-                                    <!-- Modal Xóa từng sản phẩm -->
-                                <div id="deleteProductModal${o.id}" class="modal fade">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <form action="delete" method="post">
-                                                <div class="modal-header">						
-                                                    <h4 class="modal-title">Delete Product</h4>
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                </div>
-                                                <div class="modal-body">					
-                                                    <p>Are you sure you want to delete this product?</p>
-                                                    <p class="text-warning"><small>This action cannot be undone.</small></p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <input type="hidden" name="pid" value="${o.id}">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </c:forEach>
-                            </tbody>
                         </table>
                     </form>
 
@@ -539,95 +538,91 @@
             </div>
         </div>
         <!-- Edit Modal HTML -->
-        <div id="editProductModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="add" method="post">
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Edit Product</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">					
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input name="name" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Image</label>
-                                <input name="image" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Price</label>
-                                <input name="price" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Title</label>
-                                <textarea name="title" class="form-control" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <textarea name="description" class="form-control" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Category</label>
-                                <select name="category" class="form-select" aria-label="Default select example">
-                                    <c:forEach items="${listCC}" var="o">
-                                        <option value="${o.cid}" >${o.cname}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
 
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
-                        </div>
-                    </form>
+<!-- Edit Modal HTML -->
+<div id="editProductModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="update" method="post">
+                <input type="hidden" name="id"> <!-- ID ẩn -->
+                <div class="modal-header">						
+                    <h4 class="modal-title">Edit Product</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-            </div>
-
-            <div id="editProductModal" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <!-- Form cập nhật sản phẩm -->
-                        <form action="update" method="post">
-                            <input type="hidden" name="id"> <!-- ID ẩn -->
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input value="" name="name" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Image</label>
-                                <input name="image" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Price</label>
-                                <input name="price" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Title</label>
-                                <textarea name="title" class="form-control" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <textarea name="description" class="form-control" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Category</label>
-                                <select name="category" class="form-select">
-                                    <c:forEach items="${listCC}" var="o">
-                                        <option value="${o.cid}">${o.cname}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                <input type="submit" class="btn btn-success" value="Save">
-                            </div>
-                        </form>
-
+                <div class="modal-body">					
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input name="name" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Image</label>
+                        <input name="image" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Price</label>
+                        <input name="price" type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Stock</label>
+                        <input name="stock" type="number" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select name="status" class="form-control" required>
+                            <option value="1">Khả dụng</option>
+                            <option value="0">Không khả dụng</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="category" class="form-select" aria-label="Default select example">
+                            <c:forEach items="${listCC}" var="o">
+                                <option value="${o.cid}">${o.cname}</option>
+                            </c:forEach>
+                        </select>
                     </div>
                 </div>
-            </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="submit" class="btn btn-success" value="Save">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+...
+<script>
+    $(document).ready(function () {
+        $(".edit").click(function () {
+            var id = $(this).data("id");
+            var name = $(this).data("name");
+            var image = $(this).data("image");
+            var price = $(this).data("price");
+            var description = $(this).data("description");
+            var stock = $(this).data("stock");
+            var status = $(this).data("status");
+            var category = $(this).data("category");
+
+            // Gán dữ liệu vào form trong modal
+            $("#editProductModal input[name='id']").val(id);
+            $("#editProductModal input[name='name']").val(name);
+            $("#editProductModal input[name='image']").val(image);
+            $("#editProductModal input[name='price']").val(price);
+            $("#editProductModal textarea[name='description']").val(description);
+            $("#editProductModal input[name='stock']").val(stock);
+            $("#editProductModal select[name='status']").val(status);
+            $("#editProductModal select[name='category']").val(category);
+
+            // Thay đổi action của form để gửi dữ liệu update
+            $("#editProductModal form").attr("action", "update?id=" + id);
+        });
+    });
+</script>
+
+
     </body>
 </html>

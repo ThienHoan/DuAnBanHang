@@ -2,23 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/hinh%20anh/SanPham/Cac_Loai_TinhDau/Buoi_15ml/Tinh-dau-buoi-10ml-4.jpg</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/context/DBContext.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/dao/DAO.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/ManagerControl.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/HomeControl.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/Account.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/Category.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Menu.jsp</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/UpdateControl.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/Product.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/filter/LoggingFilter.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/LoginControl.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Category.jsp</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/AddControl.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Home.jsp</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Login.jsp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -231,19 +231,19 @@ public class DAO {
         return null;
     }
     public void deleteProduct(String pid) {
-    String query = "DELETE FROM Product WHERE pid = ?";
+    String query = "UPDATE Product SET status = 0 WHERE pid = ?";
     try (Connection conn = new DBContext().getConnection();
          PreparedStatement ps = conn.prepareStatement(query)) {
         
         ps.setString(1, pid);
         
-        System.out.println("Đang xóa sản phẩm có ID: " + pid); // Debug
+        System.out.println("Đang cập nhật trạng thái sản phẩm có ID: " + pid); // Debug
         int rowsAffected = ps.executeUpdate();
         
         if (rowsAffected > 0) {
-            System.out.println("✅ Xóa sản phẩm thành công!");
+            System.out.println("✅ Cập nhật trạng thái sản phẩm thành công!");
         } else {
-            System.out.println("⚠️ Không tìm thấy sản phẩm để xóa!");
+            System.out.println("⚠️ Không tìm thấy sản phẩm để cập nhật!");
         }
 
     } catch (Exception e) {
