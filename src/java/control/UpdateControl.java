@@ -86,7 +86,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     System.out.println("Category: " + category);
 
     DAO dao = new DAO();
-    dao.updateProduct(id, name, image, price, title, description, category);
+    dao.updateProduct(id, name, image, price, description, category, id);
 
     response.sendRedirect("product-list"); // Chuyển hướng sau khi cập nhật
 }

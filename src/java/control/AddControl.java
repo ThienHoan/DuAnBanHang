@@ -44,7 +44,7 @@ public class AddControl extends HttpServlet {
         Account a = (Account) session.getAttribute("account");
         int sid = a.getUserID();
         DAO dao = new DAO();
-        dao.insertProduct(name, image, price, title, description, category, sid);
+        dao.insertProduct(name, image, price, description, category, sid, sid);
         response.sendRedirect("manager");
         
     }

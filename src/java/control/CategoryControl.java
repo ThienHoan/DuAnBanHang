@@ -22,36 +22,35 @@ import java.util.List;
  * @author hoan6
  */
 @WebServlet(name="CategoryControl", urlPatterns={"/category"})
-public class CategoryControl extends HttpServlet {
-   
-   
+public class CategoryControl extends HttpServlet 
+{
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-    response.setContentType("text/html;charset=UTF-8");
-    String cateID = request.getParameter("cid"); // Lấy category ID từ request
-    DAO dao = new DAO();
-    
-    List<Product> listP; 
-    if (cateID == null || cateID.isEmpty()) {
-        listP = dao.getAllProduct(); // Nếu không có cid -> lấy tất cả sản phẩm
-    } else {
-        listP = dao.getProductByCID(cateID); // Lọc theo danh mục
-    }
-    List<Product> listPP = dao.getAllProduct();
-    List<Product> list = dao.getAllProduct();
-    List<Category> listCC = dao.getAllCategory(); // Lấy danh sách danh mục
-    List<Category> listC = dao.getAllCategory();
-    Product last = dao.getLast();
-    // Gửi dữ liệu sang JSP
-    request.setAttribute("listPP", listPP);
-    request.setAttribute("listP", listP);
-    request.setAttribute("listCC", listC);
-    request.setAttribute("p", last);
-    request.setAttribute("tag", cateID);
-    request.setAttribute("selectedCid", cateID); // Giữ giá trị danh mục đang chọn
+        response.setContentType("text/html;charset=UTF-8");
+        String cateID = request.getParameter("cid"); // Lấy category ID từ request
+        DAO dao = new DAO();
+        
+        List<Product> listP; 
+        if (cateID == null || cateID.isEmpty()) {
+            listP = dao.getAllProduct(); // Nếu không có cid -> lấy tất cả sản phẩm
+        } else {
+            listP = dao.getProductByCID(cateID); // Lọc theo danh mục
+        }
+        List<Product> listPP = dao.getAllProduct();
+        List<Product> list = dao.getAllProduct();
+        List<Category> listCC = dao.getAllCategory(); // Lấy danh sách danh mục
+        List<Category> listC = dao.getAllCategory();
+        Product last = dao.getLast();
+        // Gửi dữ liệu sang JSP
+        request.setAttribute("listPP", listPP);
+        request.setAttribute("listP", listP);
+        request.setAttribute("listCC", listC);
+        request.setAttribute("p", last);
+        request.setAttribute("tag", cateID);
+        request.setAttribute("selectedCid", cateID); // Giữ giá trị danh mục đang chọn
 
-    request.getRequestDispatcher("Category.jsp").forward(request, response);
-}
+        request.getRequestDispatcher("Category.jsp").forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

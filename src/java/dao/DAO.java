@@ -12,8 +12,11 @@ import entity.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -295,8 +298,59 @@ public class DAO {
     }
 }
 
+    // Check if account with email already exists
+    public boolean checkAccountExists(String email) {
+        String query = "SELECT COUNT(*) FROM Account WHERE email = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return false;
+    }
 
+    // Register a new account
+    public boolean registerAccount(Account account) {
+        String query = "INSERT INTO Account (userName, password, email, address, phoneNumber, roleID, status) " +
+                       "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, account.getUserName());
+            ps.setString(2, account.getPassword());
+            ps.setString(3, account.getEmail());
+            ps.setString(4, account.getAddress());
+            ps.setString(5, account.getPhoneNumber());
+            ps.setInt(6, account.getRoleID());
+            ps.setInt(7, account.getStatus());
+            
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return false;
+    }
 
+    // Helper method to close connections
+    private void closeConnection() {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
 
     public static void main(String[] args) {
         DAO dao = new DAO();
