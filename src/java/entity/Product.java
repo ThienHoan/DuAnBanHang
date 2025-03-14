@@ -17,6 +17,9 @@ public class Product {
     
     // Định dạng cho ngày
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    
+    //Định dạng tiền VND
+    private String priceFormatted;
 
     // Constructor mặc định
     public Product() {
@@ -37,6 +40,17 @@ public class Product {
         this.cateID = cateID;
         this.img = img;
     }
+
+    //getter và setter cho VND
+    public String getPriceFormatted() {
+        return priceFormatted;
+    }
+
+    public void setPriceFormatted(String priceFormatted) {
+        this.priceFormatted = priceFormatted;
+    }
+    
+    
 
     // Getter cho importDate, trả về String theo format yyyy-MM-dd
     public String getImportDate() {

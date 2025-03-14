@@ -10,12 +10,12 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Biolife - Organic Food</title>
+        <title>Công Ty Gia Truyền Hồng Đức</title>
         <link href="https://fonts.googleapis.com/css?family=Cairo:400,600,700&amp;display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Poppins:600&amp;display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400i,700i" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Ubuntu&amp;display=swap" rel="stylesheet">
-        <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
+        <link rel="shortcut icon" type="image/x-icon" href="hinh anh/Logo/cropped-Favicon-1-32x32.png" />
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/animate.min.css">
         <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="assets/css/slick.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/main-color.css">
+        <link rel="stylesheet" href="assets/css/main-color03-green.css">
     </head>
     <body class="biolife-body">
 
@@ -42,7 +43,7 @@
 
         <!--Hero Section-->
         <div class="hero-section hero-background">
-            <h1 class="page-title">Organic Fruits</h1>
+            <h1 class="page-title">Essential Oils</h1>
         </div>
 
         <!--Navigation section-->
@@ -50,7 +51,7 @@
             <nav class="biolife-nav">
                 <ul>
                     <li class="nav-item"><a href="index-2.html" class="permal-link">Home</a></li>
-                    <li class="nav-item"><a href="#" class="permal-link">Natural Organic</a></li>
+                    <li class="nav-item"><a href="#" class="permal-link">Tinh dầu</a></li>
                     <li class="nav-item"><span class="current-page">Fresh Fruit</span></li>
                 </ul>
             </nav>
@@ -353,7 +354,10 @@
         </div>
 
         <!-- FOOTER -->
-        <footer id="footer" class="footer layout-03">
+        <jsp:include page="Footer.jsp" ></jsp:include>
+
+        
+<!--        <footer id="footer" class="footer layout-03">
             <div class="footer-content background-footer-03">
                 <div class="container">
                     <div class="row">
@@ -473,7 +477,7 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer>-->
 
         <!--Footer For Mobile-->
         <div class="mobile-footer">
