@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="assets/css/slick.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/main-color.css">
+    <link rel="stylesheet" href="assets/css/cart.css">
+
 </head>
 <body class="biolife-body">
 
@@ -72,7 +74,7 @@
                                 <option value="jp">Japan (JPY)</option>
                             </select>
                         </li>
-                        <li><a href="login.html" class="login-link"><i class="biolife-icon icon-login"></i>Login/Register</a></li>
+                        <li><a href="Login.jsp" class="login-link"><i class="biolife-icon icon-login"></i>Login/Register</a></li>
                     </ul>
                 </div>
             </div>
@@ -90,7 +92,7 @@
                                 <li class="menu-item menu-item-has-children has-megamenu">
                                     <a href="#" class="menu-name" data-title="Shop" >Shop</a>
                                     <div class="wrap-megamenu lg-width-900 md-width-750">
-                                        <div class="mega-content">
+<!--                                        <div class="mega-content">
                                             <div class="col-lg-3 col-md-3 col-xs-12 md-margin-bottom-0 xs-margin-bottom-25">
                                                 <div class="wrap-custom-menu vertical-menu">
                                                     <h4 class="menu-title">Fresh Berries</h4>
@@ -139,12 +141,12 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </li>
                                 <li class="menu-item menu-item-has-children has-child">
                                     <a href="#" class="menu-name" data-title="Products">Products</a>
-                                    <ul class="sub-menu">
+<!--                                    <ul class="sub-menu">
                                         <li class="menu-item"><a href="#">Omelettes</a></li>
                                         <li class="menu-item"><a href="#">Breakfast Scrambles</a></li>
                                         <li class="menu-item menu-item-has-children has-child"><a href="#" class="menu-name" data-title="Eggs & other considerations">Eggs & other considerations</a>
@@ -171,11 +173,11 @@
                                         </li>
                                         <li class="menu-item"><a href="#">Biscuits</a></li>
                                         <li class="menu-item"><a href="#">Seasonal Fruit Plate</a></li>
-                                    </ul>
+                                    </ul>-->
                                 </li>
                                 <li class="menu-item menu-item-has-children has-megamenu">
                                     <a href="#" class="menu-name" data-title="Demo">Demo</a>
-                                    <div class="wrap-megamenu lg-width-800 md-width-750">
+<!--                                    <div class="wrap-megamenu lg-width-800 md-width-750">
                                         <div class="mega-content">
                                             <div class="col-lg-3 col-md-3 col-xs-12 md-margin-bottom-0 xs-margin-bottom-25">
                                                 <div class="wrap-custom-menu vertical-menu">
@@ -236,11 +238,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </li>
                                 <li class="menu-item menu-item-has-children has-megamenu">
                                     <a href="#" class="menu-name" data-title="Blog">Blog</a>
-                                    <div class="wrap-megamenu lg-width-800 md-width-750">
+<!--                                    <div class="wrap-megamenu lg-width-800 md-width-750">
                                         <div class="mega-content">
                                             <div class="col-lg-3 col-md-3 col-xs-6">
                                                 <div class="wrap-custom-menu vertical-menu">
@@ -308,7 +310,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </li>
                                 <li class="menu-item"><a href="contact.html">Contact</a></li>
                             </ul>
@@ -323,7 +325,7 @@
                                         <a href="#" class="btn-close"><span class="biolife-icon icon-close-menu"></span></a>
                                         <input type="text" name="s" class="input-text" value="" placeholder="Search here...">
                                         <select name="category">
-                                            <option value="-1" selected>All Categories</option>
+<!--                                            <option value="-1" selected>All Categories</option>
                                             <option value="vegetables">Vegetables</option>
                                             <option value="fresh_berries">Fresh Berries</option>
                                             <option value="ocean_foods">Ocean Foods</option>
@@ -332,7 +334,7 @@
                                             <option value="fresh_meat">Fresh Meat</option>
                                             <option value="fresh_onion">Fresh Onion</option>
                                             <option value="papaya_crisps">Papaya & Crisps</option>
-                                            <option value="oatmeal">Oatmeal</option>
+                                            <option value="oatmeal">Oatmeal</option>-->
                                         </select>
                                         <button type="submit" class="btn-submit">go</button>
                                     </form>
@@ -359,7 +361,7 @@
                                     <div class="cart-content">
                                         <div class="cart-inner">
                                             <ul class="products">
-                                                <li>
+<!--                                                <li>
                                                     <div class="minicart-item">
                                                         <div class="thumb">
                                                             <a href="#"><img src="assets/images/minicart/pr-01.jpg" width="90" height="90" alt="National Fresh"></a>
@@ -404,7 +406,7 @@
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="minicart-item">
+                                                 <div class="minicart-item">
                                                         <div class="thumb">
                                                             <a href="#"><img src="assets/images/minicart/pr-03.jpg" width="90" height="90" alt="National Fresh"></a>
                                                         </div>
@@ -468,7 +470,7 @@
                                                             <a href="#" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                                         </div>
                                                     </div>
-                                                </li>
+                                                </li>-->
                                             </ul>
                                             <p class="btn-control">
                                                 <a href="#" class="btn view-cart">view cart</a>
@@ -504,7 +506,7 @@
                                 <span class="menu-title">All departments</span>
                                 <span class="angle" data-tgleclass="fa fa-caret-down"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
                             </div>
-                            <div class="wrap-menu">
+<!--                            <div class="wrap-menu">
                                 <ul class="menu clone-main-menu">
                                     <li class="menu-item menu-item-has-children has-megamenu">
                                         <a href="#" class="menu-name" data-title="Fruit & Nut Gifts"><i class="biolife-icon icon-fruits"></i>Fruit & Nut Gifts</a>
@@ -756,7 +758,7 @@
                                     <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-contain"></i>Oatmeal</a></li>
                                     <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-fresh-juice"></i>Fresh Bananas & Plantains</a></li>
                                 </ul>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-8 padding-top-2px">
@@ -765,7 +767,7 @@
                                 <input type="text" name="s" class="input-text" value="" placeholder="Search here...">
                                 <select name="category">
                                     <option value="-1" selected>All Categories</option>
-                                    <option value="vegetables">Vegetables</option>
+<!--                                    <option value="vegetables">Vegetables</option>
                                     <option value="fresh_berries">Fresh Berries</option>
                                     <option value="ocean_foods">Ocean Foods</option>
                                     <option value="butter_eggs">Butter & Eggs</option>
@@ -773,7 +775,7 @@
                                     <option value="fresh_meat">Fresh Meat</option>
                                     <option value="fresh_onion">Fresh Onion</option>
                                     <option value="papaya_crisps">Papaya & Crisps</option>
-                                    <option value="oatmeal">Oatmeal</option>
+                                    <option value="oatmeal">Oatmeal</option>-->
                                 </select>
                                 <button type="submit" class="btn-submit"><i class="biolife-icon icon-search"></i></button>
                             </form>
@@ -839,116 +841,96 @@
                     </p>
                 </div>
 
-                <!--Cart Table-->
-                <div class="shopping-cart-container">
-                    <div class="row">
-                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                            <h3 class="box-title">Your cart items</h3>
-                            <form class="shopping-cart-form" action="#" method="post">
-                                <table class="shop_table cart-form">
-                                    <thead>
-                                    <tr>
-                                        <th class="product-name">Product Name</th>
-                                        <th class="product-price">Price</th>
-                                        <th class="product-quantity">Quantity</th>
-                                        <th class="product-subtotal">Total</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr class="cart_item">
-                                        <td class="product-thumbnail" data-title="Product Name">
-                                            <a class="prd-thumb" href="#">
-                                                <figure><img width="113" height="113" src="assets/images/shippingcart/pr-01.jpg" alt="shipping cart"></figure>
-                                            </a>
-                                            <a class="prd-name" href="#">National Fresh Fruit</a>
-                                            <div class="action">
-                                                <a href="#" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                <a href="#" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+        <!--Cart Table-->
+<div class="shopping-cart-container">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h3 class="box-title">Your cart items</h3>
+
+            <form class="shopping-cart-form">
+                <!-- Kiểm tra giỏ hàng có sản phẩm hay không -->
+                <c:if test="${not empty cartItems}">
+                    <table class="shop_table cart-form">
+                        <thead>
+                            <tr>
+                                <th class="product-name">Product Name</th>
+                                <th class="product-price">Price</th>
+                                <th class="product-quantity">Quantity</th>
+                                <th class="product-subtotal">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Duyệt qua danh sách sản phẩm trong giỏ hàng -->
+                            <c:forEach var="item" items="${cartItems}">
+                                <tr class="cart_item">
+                                    <td class="product-thumbnail" data-title="Product Name">
+                                        <a class="prd-thumb" href="ProductDetail?id=${item.product.id}">
+                                            <figure><img width="113" height="113" src="${item.product.image}" alt="${item.product.name}"></figure>
+                                        </a>
+                                        <a class="prd-name" href="ProductDetail?id=${item.product.id}">${item.product.name}</a>
+                                        <div class="action">
+                                            <a href="Cart?action=edit&productId=${item.product.id}" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <a href="Cart?action=removeProduct&productId=${item.product.id}" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                        </div>
+                                    </td>
+                                    <td class="product-price" data-title="Price">
+                                        <div class="price price-contain">
+                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>${item.product.price}</span></ins>
+                                        </div>
+                                    </td>
+                                    <td class="product-quantity" data-title="Quantity">
+                                        <div class="quantity-box type1">
+                                            <div class="qty-input">
+                                                <input type="number" name="quantity" value="${item.quantity}" data-max_value="20" data-min_value="1" data-step="1">
+                                                <a href="CartControl?action=increase&productId=${item.product.id}" class="qty-btn btn-up"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+                                                <a href="CartControl?action=decrease&productId=${item.product.id}" class="qty-btn btn-down"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
                                             </div>
-                                        </td>
-                                        <td class="product-price" data-title="Price">
-                                            <div class="price price-contain">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                            </div>
-                                        </td>
-                                        <td class="product-quantity" data-title="Quantity">
-                                            <div class="quantity-box type1">
-                                                <div class="qty-input">
-                                                    <input type="text" name="qty12554" value="1" data-max_value="20" data-min_value="1" data-step="1">
-                                                    <a href="#" class="qty-btn btn-up"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
-                                                    <a href="#" class="qty-btn btn-down"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal" data-title="Total">
-                                            <div class="price price-contain">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="cart_item">
-                                        <td class="product-thumbnail" data-title="Product Name">
-                                            <a class="prd-thumb" href="#">
-                                                <figure><img width="113" height="113" src="assets/images/shippingcart/pr-02.jpg" alt="shipping cart"></figure>
-                                            </a>
-                                            <a class="prd-name" href="#">National Fresh Fruit</a>
-                                            <div class="action">
-                                                <a href="#" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                <a href="#" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                            </div>
-                                        </td>
-                                        <td class="product-price" data-title="Price">
-                                            <div class="price price-contain">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                            </div>
-                                        </td>
-                                        <td class="product-quantity" data-title="Quantity">
-                                            <div class="quantity-box type1">
-                                                <div class="qty-input">
-                                                    <input type="text" name="qty12554" value="1" data-max_value="20" data-min_value="1" data-step="1">
-                                                    <a href="#" class="qty-btn btn-up"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
-                                                    <a href="#" class="qty-btn btn-down"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal" data-title="Total">
-                                            <div class="price price-contain">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="cart_item wrap-buttons">
-                                        <td class="wrap-btn-control" colspan="4">
-                                            <a class="btn back-to-shop">Back to Shop</a>
-                                            <button class="btn btn-update" type="submit" disabled>update</button>
-                                            <button class="btn btn-clear" type="reset">clear all</button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </form>
-                        </div>
-                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                            <div class="shpcart-subtotal-block">
-                                <div class="subtotal-line">
-                                    <b class="stt-name">Subtotal <span class="sub">(2ittems)</span></b>
-                                    <span class="stt-price">£170.00</span>
-                                </div>
-                                <div class="subtotal-line">
-                                    <b class="stt-name">Shipping</b>
-                                    <span class="stt-price">£0.00</span>
-                                </div>
-                                <div class="tax-fee">
-                                    <p class="title">Est. Taxes & Fees</p>
-                                    <p class="desc">Based on 56789</p>
-                                </div>
-                                <div class="btn-checkout">
-                                    <a href="#" class="btn checkout">Check out</a>
-                                </div>
+                                        </div>
+                                    </td>
+                                    <td class="product-subtotal" data-title="Total">
+                                        <div class="price price-contain">
+                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>${item.product.price * item.quantity}</span></ins>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+
+                            <!-- Các nút điều khiển -->
+                            <tr class="cart_item wrap-buttons">
+                                <td class="wrap-btn-control" colspan="4">
+                                    <a href="Home.jsp" class="btn back-to-shop">Back to Shop</a>
+                                    <button class="btn btn-update" type="submit" name="action" value="updateQuantity">Update Cart</button>
+                                    <button class="btn btn-clear" type="submit" name="action" value="clearCart">Clear All</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </c:if>
+
+                <!-- Hiển thị khi giỏ hàng trống -->
+                <c:if test="${empty cartItems}">
+                    <p>Your cart is currently empty.</p>
+                </c:if>
+            </form>
+        </div>
+
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="shpcart-subtotal-block">
+                <div class="subtotal-line">
+                    <b class="stt-name">Subtotal <span class="sub">(${totalItems} items)</span></b>
+                    <span class="stt-price">£${totalPrice}</span>
+                </div>
+                <div class="btn-checkout">
+                    <a href="Checkout" class="btn checkout">Check out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+
+
+
                                 <div class="biolife-progress-bar">
                                     <table>
                                         <tr>
@@ -972,191 +954,7 @@
                     </div>
                 </div>
 
-                <!--Related Product-->
-                <div class="product-related-box single-layout">
-                    <div class="biolife-title-box lg-margin-bottom-26px-im">
-                        <span class="biolife-icon icon-organic"></span>
-                        <span class="subtitle">All the best item for You</span>
-                        <h3 class="main-title">Related Products</h3>
-                    </div>
-                    <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":0,"slidesToShow":5, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin":20}},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":10}}]}'>
-                        <li class="product-item">
-                            <div class="contain-product layout-default">
-                                <div class="product-thumb">
-                                    <a href="#" class="link-to-product">
-                                        <img src="assets/images/products/p-13.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                    </a>
-                                </div>
-                                <div class="info">
-                                    <b class="categories">Fresh Fruit</b>
-                                    <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                    <div class="price ">
-                                        <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                        <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                    </div>
-                                    <div class="slide-down-box">
-                                        <p class="message">All products are carefully selected to ensure food safety.</p>
-                                        <div class="buttons">
-                                            <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                            <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                            <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product-item">
-                            <div class="contain-product layout-default">
-                                <div class="product-thumb">
-                                    <a href="#" class="link-to-product">
-                                        <img src="assets/images/products/p-14.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                    </a>
-                                </div>
-                                <div class="info">
-                                    <b class="categories">Fresh Fruit</b>
-                                    <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                    <div class="price">
-                                        <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                        <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                    </div>
-                                    <div class="slide-down-box">
-                                        <p class="message">All products are carefully selected to ensure food safety.</p>
-                                        <div class="buttons">
-                                            <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                            <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                            <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product-item">
-                            <div class="contain-product layout-default">
-                                <div class="product-thumb">
-                                    <a href="#" class="link-to-product">
-                                        <img src="assets/images/products/p-15.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                    </a>
-                                </div>
-                                <div class="info">
-                                    <b class="categories">Fresh Fruit</b>
-                                    <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                    <div class="price">
-                                        <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                        <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                    </div>
-                                    <div class="slide-down-box">
-                                        <p class="message">All products are carefully selected to ensure food safety.</p>
-                                        <div class="buttons">
-                                            <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                            <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                            <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product-item">
-                            <div class="contain-product layout-default">
-                                <div class="product-thumb">
-                                    <a href="#" class="link-to-product">
-                                        <img src="assets/images/products/p-10.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                    </a>
-                                </div>
-                                <div class="info">
-                                    <b class="categories">Fresh Fruit</b>
-                                    <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                    <div class="price">
-                                        <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                        <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                    </div>
-                                    <div class="slide-down-box">
-                                        <p class="message">All products are carefully selected to ensure food safety.</p>
-                                        <div class="buttons">
-                                            <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                            <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                            <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product-item">
-                            <div class="contain-product layout-default">
-                                <div class="product-thumb">
-                                    <a href="#" class="link-to-product">
-                                        <img src="assets/images/products/p-08.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                    </a>
-                                </div>
-                                <div class="info">
-                                    <b class="categories">Fresh Fruit</b>
-                                    <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                    <div class="price">
-                                        <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                        <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                    </div>
-                                    <div class="slide-down-box">
-                                        <p class="message">All products are carefully selected to ensure food safety.</p>
-                                        <div class="buttons">
-                                            <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                            <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                            <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product-item">
-                            <div class="contain-product layout-default">
-                                <div class="product-thumb">
-                                    <a href="#" class="link-to-product">
-                                        <img src="assets/images/products/p-21.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                    </a>
-                                </div>
-                                <div class="info">
-                                    <b class="categories">Fresh Fruit</b>
-                                    <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                    <div class="price">
-                                        <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                        <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                    </div>
-                                    <div class="slide-down-box">
-                                        <p class="message">All products are carefully selected to ensure food safety.</p>
-                                        <div class="buttons">
-                                            <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                            <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                            <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="product-item">
-                            <div class="contain-product layout-default">
-                                <div class="product-thumb">
-                                    <a href="#" class="link-to-product">
-                                        <img src="assets/images/products/p-18.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                    </a>
-                                </div>
-                                <div class="info">
-                                    <b class="categories">Fresh Fruit</b>
-                                    <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                    <div class="price">
-                                        <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                        <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                    </div>
-                                    <div class="slide-down-box">
-                                        <p class="message">All products are carefully selected to ensure food safety.</p>
-                                        <div class="buttons">
-                                            <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                            <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                            <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+               
 
             </div>
         </div>

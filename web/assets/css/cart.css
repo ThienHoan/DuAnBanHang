@@ -1,0 +1,44 @@
+/* Đảm bảo hình ảnh sản phẩm không bị vượt quá kích thước container */
+.product-thumbnail figure img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Kiểm soát chiều rộng của các cột trong bảng giỏ hàng */
+.shop_table th, .shop_table td {
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap; /* Ngăn văn bản bị tràn ra ngoài */
+}
+
+/* Đảm bảo chiều rộng tối đa của bảng */
+.shop_table {
+    width: 100%;
+    table-layout: fixed; /* Giúp các cột giữ kích thước ổn định */
+}
+
+/* Điều chỉnh hành động xóa và chỉnh sửa */
+.action {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+/* Đảm bảo nút không bị vượt quá màn hình nhỏ */
+.wrap-btn-control .btn {
+    display: inline-block;
+    width: auto;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    font-size: 14px;
+}
+
+/* Bố cục dạng cột trên các thiết bị nhỏ */
+@media (max-width: 768px) {
+    .shopping-cart-container .row {
+        display: flex;
+        flex-direction: column;
+    }
+}

@@ -3,16 +3,52 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/filter/LoggingFilter.java</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/entity/Account.java</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/nbproject/build-impl.xml</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/entity/Category.java</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/AddControl.java</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/UpdateControl.java</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/DetailControl.java</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/entity/Product.java</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/web/WEB-INF/web.xml</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/context/DBContext.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/entity/Product.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/orderDao/OrderDAO.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/assets/css/bootstrap.min.css</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/orderDao/IOrderDAO.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/ManagerProductt.jsp</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/chatbot_component.jsp</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/Edit.jsp</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/filter/LoggingFilter.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/control/ChatbotControl.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/service/CartService.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/control/ManagerControl.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/entity/Order.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/Login.jsp</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/control/CartControl.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/control/UpdateControl.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/control/LoginControl.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/entity/Account.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/control/CategoryControl.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/service/ICartService.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/control/DetailControl.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/assets/css/style.css</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/ManagerProduct.jsp</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/control/HomeControl.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/assets/images/minicart/pr-01.jpg</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/control/RegisterControl.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/entity/CartItem.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/assets/css/nice-select.css</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/assets/css/font-awesome.min.css</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/entity/Cart.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/assets/css/slick.min.css</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/landing/css/bootstrap.min.css</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/ManagerAccount.jsp</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/control/AddControl.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/Register.jsp</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/dao/DAO.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/Menu.jsp</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/control/DeleteControl.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/assets/css/main-color01.css</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/Home.jsp</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/ShoppingCart.jsp</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/entity/Category.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/src/java/context/DBContext.java</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/assets/css/cart.css</file>
+            <file>file:/C:/Users/ASUS/git/DuAnBanHang/web/Category.jsp</file>
         </group>
     </open-files>
 </project-private>

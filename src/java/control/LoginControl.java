@@ -61,7 +61,10 @@ public class LoginControl extends HttpServlet {
         }else{
             HttpSession session= request.getSession();
             session.setAttribute("account", a);
-            session.setMaxInactiveInterval(600); //10p
+        
+            session.setAttribute("userID", a.getUserID());  // Lưu userID vào session
+        
+            session.setMaxInactiveInterval(6000); //10p
             response.sendRedirect("home");
         }
         

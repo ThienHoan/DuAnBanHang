@@ -8,15 +8,19 @@ package dao;
 import context.DBContext;
 import entity.Account;
 import entity.Category;
+import entity.Order;
 import entity.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import java.time.LocalDate; // Thư viện java.time.LocalDate
 
 /**
  *
@@ -164,6 +168,33 @@ public class DAO {
         }
         return null;
     }
+public Product getProductID(int id) {
+    String query = "select * from Product where pid = ?";
+    try {
+        conn = new DBContext().getConnection(); // Mở kết nối với SQL
+        ps = conn.prepareStatement(query);
+        ps.setInt(1, id); // Đặt giá trị id kiểu int vào câu lệnh SQL
+        rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            return new Product(
+                rs.getInt("pid"),
+                rs.getString("name"),
+                rs.getDouble("price"),
+                rs.getString("description"),
+                rs.getInt("stock"),
+                rs.getString("import_date"),
+                rs.getInt("status"),
+                rs.getInt("sell_id"),
+                rs.getInt("cateID"),
+                rs.getString("img")
+            );
+        }
+    } catch (Exception e) {
+        e.printStackTrace(); // In ra lỗi nếu có
+    }
+    return null; // Trả về null nếu không tìm thấy sản phẩm
+}
 
     public List<Category> getAllCategory() {
         List<Category> list = new ArrayList<>();
@@ -352,6 +383,7 @@ public class DAO {
         }
     }
 
+
     public static void main(String[] args) {
         DAO dao = new DAO();
         List<Product> list = dao.getAllProduct();
@@ -361,5 +393,4 @@ public class DAO {
             System.out.println(o);
         }
     }
-
 }

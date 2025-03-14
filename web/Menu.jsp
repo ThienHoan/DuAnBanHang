@@ -331,10 +331,11 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <p class="btn-control">
-                                            <a href="#" class="btn view-cart">view cart</a>
-                                            <a href="#" class="btn">checkout</a>
-                                        </p>
+                                     <p class="btn-control">
+    <a href="ShoppingCart.jsp" class="btn view-cart">view cart</a>
+    <a href="checkout.jsp" class="btn">checkout</a>
+</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -370,14 +371,7 @@
                                 <c:forEach items="${listCC}" var="o">
                                     <li class="list-group-item text-white"><a href="category?cid=${o.cid}">${o.cname}</a></li>
                                     </c:forEach>
-                                <li class="menu-item"><a href="#" class="menu-name" data-title="Ocean Foods"><i class="biolife-icon icon-fish"></i>Ocean Foods</a></li>
-
-                                <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-fast-food"></i>Fastfood</a></li>
-                                <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-beef"></i>Fresh Meat</a></li>
-                                <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-onions"></i>Fresh Onion</a></li>
-                                <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-avocado"></i>Papaya & Crisps</a></li>
-                                <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-contain"></i>Oatmeal</a></li>
-                                <li class="menu-item"><a href="#" class="menu-title"><i class="biolife-icon icon-fresh-juice"></i>Fresh Bananas & Plantains</a></li>
+                               
                             </ul>
                         </div>
                     </div>

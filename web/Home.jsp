@@ -389,7 +389,15 @@
                             <p class="message">${o.description}</p>
                             <div class="buttons">
                                 <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> add to cart</a>
+<div class="buttons">
+    <form action="cart?action=add" method="post">
+        <input type="hidden" name="productId" value="${o.id}" />
+        <input type="number" name="quantity" value="1" min="1" />
+        <button type="submit" class="btn add-to-cart-btn">
+            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i> add to cart
+        </button>
+    </form>
+</div>
                                 <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                             </div>
                         </div>
