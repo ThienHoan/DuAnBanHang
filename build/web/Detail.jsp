@@ -10,7 +10,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Biolife - Organic Food</title>
+        <title>Công Ty Gia Truyền Hồng Đức</title>
         <link href="https://fonts.googleapis.com/css?family=Cairo:400,600,700&amp;display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Poppins:600&amp;display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400i,700i" rel="stylesheet">
@@ -22,7 +22,9 @@
         <link rel="stylesheet" href="assets/css/nice-select.css">
         <link rel="stylesheet" href="assets/css/slick.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/main-color.css">
+        <link rel="stylesheet" href="assets/css/main-color.css">s
+        <link rel="stylesheet" href="assets/css/main-color03-green.css">
+
     </head>
     <body class="biolife-body">
 
@@ -42,7 +44,7 @@
 
             <!--Hero Section-->
             <div class="hero-section hero-background">
-                <h1 class="page-title">Organic Fruits</h1>
+                <h1 class="page-title">Essential Oils</h1>
             </div>
 
             <!--Navigation section-->
@@ -50,7 +52,7 @@
                 <nav class="biolife-nav">
                     <ul>
                         <li class="nav-item"><a href="index-2.html" class="permal-link">Home</a></li>
-                        <li class="nav-item"><a href="#" class="permal-link">Natural Organic</a></li>
+                        <li class="nav-item"><a href="#" class="permal-link">Tinh dầu</a></li>
                         <li class="nav-item"><span class="current-page">Fresh Fruit</span></li>
                     </ul>
                 </nav>
@@ -67,18 +69,18 @@
                             <div class="media">
                                 <ul class="biolife-carousel slider-for" data-slick='{"arrows":false,"dots":false,"slidesMargin":30,"slidesToShow":1,"slidesToScroll":1,"fade":true,"asNavFor":".slider-nav"}'>
                                     <li><img src="${detail.image}" alt="" width="500" height="500"></li>
-<!--                                Nào muốn phát triển sản phẩm thì mở ra            <li><img src="assets/images/details-product/p02.jpg" alt="" width="500" height="500"></li>
-                                                            <li><img src="assets/images/details-product/p03.jpg" alt="" width="500" height="500"></li>
-                                                            <li><img src="assets/images/details-product/p06.jpg" alt="" width="500" height="500"></li>
-                                                            <li><img src="assets/images/details-product/p07.jpg" alt="" width="500" height="500"></li>
+                                <li><img src="assets/images/details-product/p02.jpg" alt="" width="500" height="500"></li>
+                                <li><img src="assets/images/details-product/p03.jpg" alt="" width="500" height="500"></li>
+                                <li><img src="assets/images/details-product/p06.jpg" alt="" width="500" height="500"></li>
+                                <li><img src="assets/images/details-product/p07.jpg" alt="" width="500" height="500"></li>
                             </ul>
-                                                    <ul class="biolife-carousel slider-nav" data-slick='{"arrows":false,"dots":false,"centerMode":false,"focusOnSelect":true,"slidesMargin":10,"slidesToShow":4,"slidesToScroll":1,"asNavFor":".slider-for"}'>
-                                                        <li><img src="assets/images/details-product/thumb_p01.jpg" alt="" width="88" height="88"></li>
-                                                        <li><img src="assets/images/details-product/thumb_p02.jpg" alt="" width="88" height="88"></li>
-                                                        <li><img src="assets/images/details-product/thumb_p03.jpg" alt="" width="88" height="88"></li>
-                                                        <li><img src="assets/images/details-product/thumb_p06.jpg" alt="" width="88" height="88"></li>
-                                                        <li><img src="assets/images/details-product/thumb_p07.jpg" alt="" width="88" height="88"></li>
-                                                    </ul>-->
+                            <ul class="biolife-carousel slider-nav" data-slick='{"arrows":false,"dots":false,"centerMode":false,"focusOnSelect":true,"slidesMargin":10,"slidesToShow":4,"slidesToScroll":1,"asNavFor":".slider-for"}'>
+                                <li><img src="assets/images/details-product/thumb_p01.jpg" alt="" width="88" height="88"></li>
+                                <li><img src="assets/images/details-product/thumb_p02.jpg" alt="" width="88" height="88"></li>
+                                <li><img src="assets/images/details-product/thumb_p03.jpg" alt="" width="88" height="88"></li>
+                                <li><img src="assets/images/details-product/thumb_p06.jpg" alt="" width="88" height="88"></li>
+                                <li><img src="assets/images/details-product/thumb_p07.jpg" alt="" width="88" height="88"></li>
+                            </ul>
                         </div>
                         <div class="product-attribute">
                             <h3 class="title">${detail.name}</h3>
@@ -117,30 +119,29 @@
                             <div class="location-shipping-to">
                                 <span class="title">Ship to:</span>
                                 <select name="shipping_to" class="country">
-                                    <option value="-1">Select Country</option>
-                                    <option value="america">America</option>
-                                    <option value="france">France</option>
-                                    <option value="germany">Germany</option>
-                                    <option value="japan">Japan</option>
+                                    <option value="-1">Select City</option>
+                                    <option value="america">Huế</option>
+                                    <option value="france">Đà Nẵng</option>
+                                    <option value="germany">Quảng Nam</option>
                                 </select>
                             </div>
                             <div class="social-media">
                                 <ul class="social-list">
-                                    <li><a href="#" class="social-link"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                                     <li><a href="#" class="social-link"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" class="social-link"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
                                     <li><a href="#" class="social-link"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                                    <li><a href="#" class="social-link"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+
+                                    <!-- <li><a href="#" class="social-link"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                    <li><a href="#" class="social-link"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>-->
                                 </ul>
                             </div>
-                            <div class="acepted-payment-methods">
-                                <ul class="payment-methods">
-                                    <li><img src="assets/images/card1.jpg" alt="" width="51" height="36"></li>
-                                    <li><img src="assets/images/card2.jpg" alt="" width="51" height="36"></li>
-                                    <li><img src="assets/images/card3.jpg" alt="" width="51" height="36"></li>
-                                    <li><img src="assets/images/card4.jpg" alt="" width="51" height="36"></li>
-                                </ul>
-                            </div>
+                            <!--                            <div class="acepted-payment-methods">
+                                                            <ul class="payment-methods">
+                                                                <li><img src="assets/images/card1.jpg" alt="" width="51" height="36"></li>
+                                                                <li><img src="assets/images/card2.jpg" alt="" width="51" height="36"></li>
+                                                                <li><img src="assets/images/card3.jpg" alt="" width="51" height="36"></li>
+                                                                <li><img src="assets/images/card4.jpg" alt="" width="51" height="36"></li>
+                                                            </ul>
+                                                        </div>-->
                         </div>
                     </div>
 
@@ -442,9 +443,9 @@
             </div>
         </div>
 
-        <!-- FOOTER -->
-        <jsp:include page="Footer.jsp"></jsp:include>
-
+        <c:catch var="footerException">
+            <jsp:include page="Footer.jsp"></jsp:include>
+        </c:catch>
         <!--Footer For Mobile-->
         <div class="mobile-footer">
             <div class="mobile-footer-inner">
