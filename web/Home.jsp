@@ -1615,6 +1615,244 @@
         <script src="assets/js/slick.min.js"></script>
         <script src="assets/js/biolife.framework.js"></script>
         <script src="assets/js/functions.js"></script>
+      <!-- Replace your entire chat widget implementation with this code -->
+<style>
+    #chat-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #4CAF50;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: transform 0.3s;
+    }
+    
+    #chat-button:hover {
+        transform: scale(1.05);
+    }
+    
+    #chat-container {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        width: 350px;
+        height: 500px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        z-index: 9998;
+        display: none;
+        overflow: hidden;
+        flex-direction: column;
+    }
+    
+    .chat-header {
+        background: #4CAF50;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 18px;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .chat-close {
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 20px;
+    }
+    
+    .chat-messages {
+        padding: 15px;
+        height: 380px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .message {
+        margin-bottom: 15px;
+        clear: both;
+        max-width: 80%;
+    }
+    
+    .user-message {
+        background: #e0e0e0;
+        color: #333;
+        padding: 10px 15px;
+        border-radius: 18px;
+        float: right;
+        align-self: flex-end;
+    }
+    
+    .bot-message {
+        background: #4CAF50;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 18px;
+        float: left;
+        align-self: flex-start;
+    }
+    
+    .chat-input {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #e0e0e0;
+    }
+    
+    .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+    
+    .chat-input button {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+</style>
+
+<!-- Chat Button -->
+<div id="chat-button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+</div>
+
+<!-- Chat Container (Replaces iframe with direct interface) -->
+<div id="chat-container">
+    <div class="chat-header">
+        <span>Wiish - Hỗ trợ mua tinh dầu</span>
+        <span class="chat-close" id="chat-close">&times;</span>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+        <!-- Messages will be added here dynamically -->
+    </div>
+    <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Nhập câu hỏi của bạn...">
+        <button id="send-button">Gửi</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const chatButton = document.getElementById('chat-button');
+    const chatContainer = document.getElementById('chat-container');
+    const chatClose = document.getElementById('chat-close');
+    const messagesContainer = document.getElementById('chat-messages');
+    const userInput = document.getElementById('user-input');
+    const sendButton = document.getElementById('send-button');
+    
+    // Add welcome message when chat is first opened
+    let isFirstOpen = true;
+    
+    // Open chat
+    chatButton.addEventListener('click', function() {
+        chatContainer.style.display = 'flex';
+        
+        if (isFirstOpen) {
+            addBotMessage("Xin chào! Mình là Wiish - trợ lý ảo của shop tinh dầu. Bạn cần hỗ trợ gì nào?");
+            isFirstOpen = false;
+        }
+        
+        userInput.focus();
+    });
+    
+    // Close chat
+    chatClose.addEventListener('click', function() {
+        chatContainer.style.display = 'none';
+    });
+    
+    // Send message
+    function sendMessage() {
+        const message = userInput.value.trim();
+        if (message === '') return;
+        
+        // Add user message to chat
+        addUserMessage(message);
+        userInput.value = '';
+        
+        // Show typing indicator
+        const typingIndicator = document.createElement('div');
+        typingIndicator.className = 'message bot-message';
+        typingIndicator.id = 'typing-indicator';
+        typingIndicator.innerText = 'Đang trả lời...';
+        messagesContainer.appendChild(typingIndicator);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        
+        // Send request to Flask backend
+        fetch('http://localhost:5000/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: message })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Remove typing indicator
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) messagesContainer.removeChild(indicator);
+            
+            // Add bot response
+            addBotMessage(data.response);
+        })
+        .catch(error => {
+            // Remove typing indicator
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) messagesContainer.removeChild(indicator);
+            
+            // Show error message
+            addBotMessage("Xin lỗi, có lỗi khi kết nối với máy chủ. Vui lòng thử lại sau.");
+            console.error('Error:', error);
+        });
+    }
+    
+    // Add event listeners for sending
+    sendButton.addEventListener('click', sendMessage);
+    userInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+    
+    // Function to add user message to chat
+    function addUserMessage(message) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message user-message';
+        messageDiv.innerText = message;
+        messagesContainer.appendChild(messageDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+    
+    // Function to add bot message to chat
+    function addBotMessage(message) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message bot-message';
+        
+        // Handle markdown-like formatting from Python
+        message = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        message = message.replace(/\n/g, '<br>');
+        
+        messageDiv.innerHTML = message;
+        messagesContainer.appendChild(messageDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+});
+</script>
     </body>
 
 </html>

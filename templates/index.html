@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiish - Hỗ trợ mua tinh dầu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .chat-container {
+            max-width: 400px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background: white;
+        }
+        .chat-header {
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .chat-messages {
+            padding: 15px;
+            height: 400px;
+            overflow-y: auto;
+        }
+        .message {
+            margin-bottom: 15px;
+            clear: both;
+        }
+        .user-message {
+            background: #e0e0e0;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 18px;
+            float: right;
+            max-width: 70%;
+        }
+        .bot-message {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 18px;
+            float: left;
+            max-width: 70%;
+        }
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .chat-input button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            Wiish - Hỗ trợ mua tinh dầu
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message">
+                <div class="bot-message">Xin chào! Tôi là trợ lý ảo của Wiish. Tôi có thể giúp gì cho bạn?</div>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Nhập câu hỏi của bạn...">
+            <button onclick="sendMessage()">Gửi</button>
+        </div>
+    </div>
+
+    <script>
+        function addMessage(message, isUser) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = isUser ? 'user-message' : 'bot-message';
+            
+            // Xử lý Markdown đơn giản
+            let formattedMessage = message;
+            
+            // Xử lý bold text
+            formattedMessage = formattedMessage.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            // Xử lý emoji và các định dạng khác
+            messageContent.innerHTML = formattedMessage;
+            
+            messageDiv.appendChild(messageContent);
+            chatMessages.appendChild(messageDiv);
+            
+            // Cuộn xuống tin nhắn mới nhất
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim();
+            
+            if (message === '') return;
+            
+            // Hiển thị tin nhắn của người dùng
+            addMessage(message, true);
+            
+            // Gửi tin nhắn đến server và nhận phản hồi
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hiển thị phản hồi của bot
+                addMessage(data.response, false);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                addMessage('Xin lỗi, có lỗi xảy ra khi kết nối với server.', false);
+            });
+            
+            // Xóa tin nhắn cũ
+            userInput.value = '';
+        }
+
+        // Cho phép người dùng nhấn Enter để gửi tin nhắn
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
