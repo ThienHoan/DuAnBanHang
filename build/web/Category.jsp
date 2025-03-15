@@ -1059,7 +1059,7 @@
                                         </div>
                                         <div class="info">
                                             <b class="categories">${categoryName}</b>
-                                            <h4 class="product-title"><a href="#" class="pr-name">${p.name}</a></h4>
+                                            <h4 class="product-title"><a href="detail?pid=${p.id}" class="pr-name">${p.name}</a></h4>
                                             <p class="excerpt">${p.description}</p>
                                             <div class="price">
                                                 <ins><span class="price-amount"><span class="currencySymbol"></span><fmt:formatNumber value="${p.price}" type="currency"/></span></ins>
@@ -1067,7 +1067,7 @@
                                             </div>
                                             <div class="buttons">
                                                 <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                                <a href="detail?pid=${p.id}" class="btn add-to-cart-btn">add to cart</a>
+                                                <a href="#" class="btn add-to-cart-btn">add to cart</a>
                                                 <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                             </div>
                                         </div>
