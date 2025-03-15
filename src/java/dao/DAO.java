@@ -29,6 +29,8 @@ import java.util.logging.Logger;
 public class DAO {
 
     private static final String TOP_3 = "SELECT TOP 5 * FROM Product ORDER BY pid DESC";
+    private static final String SELECT_ALL_PRODUCT = "SELECT * FROM Product";
+    private static final String SELECT_PRODUCT_BY_CATEID = "SELECT * FROM Product WHERE cateID=?";
 
     Connection conn = null;
     PreparedStatement ps = null;
@@ -36,9 +38,8 @@ public class DAO {
 
     public List<Product> getAllProduct() {
         List<Product> list = new ArrayList<>();
-        String query = "select * from Product";
         try (Connection conn = new DBContext().getConnection();//mo ket noi voi sql
-                 PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery();) {
+                 PreparedStatement ps = conn.prepareStatement(SELECT_ALL_PRODUCT); ResultSet rs = ps.executeQuery();) {
 
             while (rs.next()) {
                 list.add(new Product(
@@ -63,29 +64,31 @@ public class DAO {
 
     public List<Product> getProductByCID(String cid) {
         List<Product> list = new ArrayList<>();
-        String query = "select * from Product\n"
-                + "where cateID = ?";
-        try {
-            conn = new DBContext().getConnection();//mo ket noi voi sql
-            ps = conn.prepareStatement(query);
+
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(SELECT_PRODUCT_BY_CATEID)) {
+
             ps.setString(1, cid);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Product(
-                        rs.getInt("pid"),
-                        rs.getString("name"),
-                        rs.getDouble("price"),
-                        rs.getString("description"),
-                        rs.getInt("stock"),
-                        rs.getString("import_date"),
-                        rs.getInt("status"),
-                        rs.getInt("sell_id"),
-                        rs.getInt("cateID"),
-                        rs.getString("img")
-                ));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(new Product(
+                            rs.getInt("pid"),
+                            rs.getString("name"),
+                            rs.getDouble("price"),
+                            rs.getString("description"),
+                            rs.getInt("stock"),
+                            rs.getString("import_date"),
+                            rs.getInt("status"),
+                            rs.getInt("sell_id"),
+                            rs.getInt("cateID"),
+                            rs.getString("img")
+                    ));
+                }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
+
         return list;
     }
 
@@ -390,7 +393,6 @@ public class DAO {
         }
         return productList;
     }
-
 
     //--------------------------------------------
     public static void main(String[] args) {

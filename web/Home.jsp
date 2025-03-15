@@ -67,132 +67,132 @@
                                     </div>
                                 </div>
                             </li>
-<!--                            <li>
-                                <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
-                                    <div class="media background-geen-02"></div>
-                                    <div class="text-content">
-                                        <i class="first-line">Pomegranate</i>
-                                        <h3 class="second-line">Vegetables 100% Organic</h3>
-                                        <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
-                                        <p class="buttons">
-                                            <a href="#" class="btn btn-bold">Shop now</a>
-                                            <a href="#" class="btn btn-thin">View lookbook</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
-                                    <div class="media background-geen-01"></div>
-                                    <div class="text-content">
-                                        <i class="first-line">Pomegranate</i>
-                                        <h3 class="second-line">Vegetables 100% Organic</h3>
-                                        <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
-                                        <p class="buttons">
-                                            <a href="#" class="btn btn-bold">Shop now</a>
-                                            <a href="#" class="btn btn-thin">View lookbook</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
-                                    <div class="media background-geen-02"></div>
-                                    <div class="text-content">
-                                        <i class="first-line">Pomegranate</i>
-                                        <h3 class="second-line">Vegetables 100% Organic</h3>
-                                        <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
-                                        <p class="buttons">
-                                            <a href="#" class="btn btn-bold">Shop now</a>
-                                            <a href="#" class="btn btn-thin">View lookbook</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
-                                    <div class="media background-geen-01"></div>
-                                    <div class="text-content">
-                                        <i class="first-line">Pomegranate</i>
-                                        <h3 class="second-line">Vegetables 100% Organic</h3>
-                                        <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
-                                        <p class="buttons">
-                                            <a href="#" class="btn btn-bold">Shop now</a>
-                                            <a href="#" class="btn btn-thin">View lookbook</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
-                                    <div class="media background-geen-02"></div>
-                                    <div class="text-content">
-                                        <i class="first-line">Pomegranate</i>
-                                        <h3 class="second-line">Vegetables 100% Organic</h3>
-                                        <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
-                                        <p class="buttons">
-                                            <a href="#" class="btn btn-bold">Shop now</a>
-                                            <a href="#" class="btn btn-thin">View lookbook</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
-                                    <div class="media background-geen-01"></div>
-                                    <div class="text-content">
-                                        <i class="first-line">Pomegranate</i>
-                                        <h3 class="second-line">Vegetables 100% Organic</h3>
-                                        <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
-                                        <p class="buttons">
-                                            <a href="#" class="btn btn-bold">Shop now</a>
-                                            <a href="#" class="btn btn-thin">View lookbook</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
-                                    <div class="media background-geen-02"></div>
-                                    <div class="text-content">
-                                        <i class="first-line">Pomegranate</i>
-                                        <h3 class="second-line">Vegetables 100% Organic</h3>
-                                        <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
-                                        <p class="buttons">
-                                            <a href="#" class="btn btn-bold">Shop now</a>
-                                            <a href="#" class="btn btn-thin">View lookbook</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
-                                    <div class="media background-geen-01"></div>
-                                    <div class="text-content">
-                                        <i class="first-line">Pomegranate</i>
-                                        <h3 class="second-line">Vegetables 100% Organic</h3>
-                                        <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
-                                        <p class="buttons">
-                                            <a href="#" class="btn btn-bold">Shop now</a>
-                                            <a href="#" class="btn btn-thin">View lookbook</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
-                                    <div class="media background-geen-02"></div>
-                                    <div class="text-content">
-                                        <i class="first-line">Pomegranate</i>
-                                        <h3 class="second-line">Vegetables 100% Organic</h3>
-                                        <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
-                                        <p class="buttons">
-                                            <a href="#" class="btn btn-bold">Shop now</a>
-                                            <a href="#" class="btn btn-thin">View lookbook</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>-->
+                            <!--                            <li>
+                                                            <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
+                                                                <div class="media background-geen-02"></div>
+                                                                <div class="text-content">
+                                                                    <i class="first-line">Pomegranate</i>
+                                                                    <h3 class="second-line">Vegetables 100% Organic</h3>
+                                                                    <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
+                                                                    <p class="buttons">
+                                                                        <a href="#" class="btn btn-bold">Shop now</a>
+                                                                        <a href="#" class="btn btn-thin">View lookbook</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
+                                                                <div class="media background-geen-01"></div>
+                                                                <div class="text-content">
+                                                                    <i class="first-line">Pomegranate</i>
+                                                                    <h3 class="second-line">Vegetables 100% Organic</h3>
+                                                                    <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
+                                                                    <p class="buttons">
+                                                                        <a href="#" class="btn btn-bold">Shop now</a>
+                                                                        <a href="#" class="btn btn-thin">View lookbook</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
+                                                                <div class="media background-geen-02"></div>
+                                                                <div class="text-content">
+                                                                    <i class="first-line">Pomegranate</i>
+                                                                    <h3 class="second-line">Vegetables 100% Organic</h3>
+                                                                    <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
+                                                                    <p class="buttons">
+                                                                        <a href="#" class="btn btn-bold">Shop now</a>
+                                                                        <a href="#" class="btn btn-thin">View lookbook</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
+                                                                <div class="media background-geen-01"></div>
+                                                                <div class="text-content">
+                                                                    <i class="first-line">Pomegranate</i>
+                                                                    <h3 class="second-line">Vegetables 100% Organic</h3>
+                                                                    <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
+                                                                    <p class="buttons">
+                                                                        <a href="#" class="btn btn-bold">Shop now</a>
+                                                                        <a href="#" class="btn btn-thin">View lookbook</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
+                                                                <div class="media background-geen-02"></div>
+                                                                <div class="text-content">
+                                                                    <i class="first-line">Pomegranate</i>
+                                                                    <h3 class="second-line">Vegetables 100% Organic</h3>
+                                                                    <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
+                                                                    <p class="buttons">
+                                                                        <a href="#" class="btn btn-bold">Shop now</a>
+                                                                        <a href="#" class="btn btn-thin">View lookbook</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
+                                                                <div class="media background-geen-01"></div>
+                                                                <div class="text-content">
+                                                                    <i class="first-line">Pomegranate</i>
+                                                                    <h3 class="second-line">Vegetables 100% Organic</h3>
+                                                                    <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
+                                                                    <p class="buttons">
+                                                                        <a href="#" class="btn btn-bold">Shop now</a>
+                                                                        <a href="#" class="btn btn-thin">View lookbook</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
+                                                                <div class="media background-geen-02"></div>
+                                                                <div class="text-content">
+                                                                    <i class="first-line">Pomegranate</i>
+                                                                    <h3 class="second-line">Vegetables 100% Organic</h3>
+                                                                    <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
+                                                                    <p class="buttons">
+                                                                        <a href="#" class="btn btn-bold">Shop now</a>
+                                                                        <a href="#" class="btn btn-thin">View lookbook</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
+                                                                <div class="media background-geen-01"></div>
+                                                                <div class="text-content">
+                                                                    <i class="first-line">Pomegranate</i>
+                                                                    <h3 class="second-line">Vegetables 100% Organic</h3>
+                                                                    <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
+                                                                    <p class="buttons">
+                                                                        <a href="#" class="btn btn-bold">Shop now</a>
+                                                                        <a href="#" class="btn btn-thin">View lookbook</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-contain slider-opt03__layout02 slide_animation type_02">
+                                                                <div class="media background-geen-02"></div>
+                                                                <div class="text-content">
+                                                                    <i class="first-line">Pomegranate</i>
+                                                                    <h3 class="second-line">Vegetables 100% Organic</h3>
+                                                                    <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
+                                                                    <p class="buttons">
+                                                                        <a href="#" class="btn btn-bold">Shop now</a>
+                                                                        <a href="#" class="btn btn-thin">View lookbook</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </li>-->
                         </ul>
                     </div>
 
@@ -207,106 +207,106 @@
                                             <div class="media">
                                                 <a href="#" class="bn-link">
                                                     <figure><img src="${p.img}" width="616" height="450" alt="${p.name}"></figure>
-                                            </a>
-                                        </div>  
-                                        <div class="text-content">
-                                            <b class="first-line"></b>
-                                            <!--<span class="second-line">${p.name}</span>-->
-                                            <span class="third-line"><i>${p.name}</i></span>
-                                            <h3>${p.description}</h3>
-                                            <div class="product-detail">
-                                                
-                                                <h4 class="product-name"></h4>
-                                                <div class="price price-contain">
-                                                    <ins><span class="price-amount"><span class="currencySymbol"></span><fmt:formatNumber value="${p.price}" type="currency"/></span></ins>
-                                                </div>
-                                                <div class="buttons">
-                                                    <a href="#" class="btn add-to-cart-btn"></i>add to cart</a>
+                                                </a>
+                                            </div>  
+                                            <div class="text-content">
+                                                <b class="first-line"></b>
+                                                <!--<span class="second-line">${p.name}</span>-->
+                                                <span class="third-line"><i>${p.name}</i></span>
+                                                <h3>${p.description}</h3>
+                                                <div class="product-detail">
+
+                                                    <h4 class="product-name"></h4>
+                                                    <div class="price price-contain">
+                                                        <ins><span class="price-amount"><span class="currencySymbol"></span><fmt:formatNumber value="${p.price}" type="currency"/></span></ins>
+                                                    </div>
+                                                    <div class="buttons">
+                                                        <a href="detail?pid=${p.id}" class="btn add-to-cart-btn"></i>add to cart</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
                             </c:forEach>
-<!--                            <li>
-                                <div class="slide-contain biolife-banner__special">
-                                    <div class="banner-contain">
-                                        <div class="media">
-                                            <a href="#" class="bn-link">
-                                                <figure><img src="assets/images/home-03/bn_special_org.jpg" width="616" height="483" alt=""></figure>
-                                            </a>
-                                        </div>
-                                        <div class="text-content">
-                                            <b class="first-line">Pomegranate</b>
-                                            <span class="second-line">Organic Heaven Made</span>
-                                            <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
-                                            <div class="product-detail">
-                                                <h4 class="product-name">National Fresh Fruit Production</h4>
-                                                <div class="price price-contain">
-                                                    <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                    <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                </div>
-                                                <div class="buttons">
-                                                    <a href="#" class="btn add-to-cart-btn"></i>add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="slide-contain biolife-banner__special">
-                                    <div class="banner-contain">
-                                        <div class="media">
-                                            <a href="#" class="bn-link">
-                                                <figure><img src="assets/images/home-03/bn_special_org.jpg" width="616" height="483" alt=""></figure>
-                                            </a>
-                                        </div>
-                                        <div class="text-content">
-                                            <b class="first-line">Pomegranate</b>
-                                            <span class="second-line">Organic Heaven Made</span>
-                                            <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
-                                            <div class="product-detail">
-                                                <h4 class="product-name">National Fresh Fruit Production</h4>
-                                                <div class="price price-contain">
-                                                    <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                    <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                </div>
-                                                <div class="buttons">
-                                                    <a href="#" class="btn add-to-cart-btn">add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="slide-contain biolife-banner__special">
-                                    <div class="banner-contain">
-                                        <div class="media">
-                                            <a href="#" class="bn-link">
-                                                <figure><img src="assets/images/home-03/bn_special_org.jpg" width="616" height="483" alt=""></figure>
-                                            </a>
-                                        </div>
-                                        <div class="text-content">
-                                            <b class="first-line">Pomegranate</b>
-                                            <span class="second-line">Organic Heaven Made</span>
-                                            <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
-                                            <div class="product-detail">
-                                                <h4 class="product-name">National Fresh Fruit Production</h4>
-                                                <div class="price price-contain">
-                                                    <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                    <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                </div>
-                                                <div class="buttons">
-                                                    <a href="#" class="btn add-to-cart-btn">add to cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>-->
+                            <!--                            <li>
+                                                            <div class="slide-contain biolife-banner__special">
+                                                                <div class="banner-contain">
+                                                                    <div class="media">
+                                                                        <a href="#" class="bn-link">
+                                                                            <figure><img src="assets/images/home-03/bn_special_org.jpg" width="616" height="483" alt=""></figure>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="text-content">
+                                                                        <b class="first-line">Pomegranate</b>
+                                                                        <span class="second-line">Organic Heaven Made</span>
+                                                                        <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
+                                                                        <div class="product-detail">
+                                                                            <h4 class="product-name">National Fresh Fruit Production</h4>
+                                                                            <div class="price price-contain">
+                                                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
+                                                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                                            </div>
+                                                                            <div class="buttons">
+                                                                                <a href="#" class="btn add-to-cart-btn"></i>add to cart</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-contain biolife-banner__special">
+                                                                <div class="banner-contain">
+                                                                    <div class="media">
+                                                                        <a href="#" class="bn-link">
+                                                                            <figure><img src="assets/images/home-03/bn_special_org.jpg" width="616" height="483" alt=""></figure>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="text-content">
+                                                                        <b class="first-line">Pomegranate</b>
+                                                                        <span class="second-line">Organic Heaven Made</span>
+                                                                        <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
+                                                                        <div class="product-detail">
+                                                                            <h4 class="product-name">National Fresh Fruit Production</h4>
+                                                                            <div class="price price-contain">
+                                                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
+                                                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                                            </div>
+                                                                            <div class="buttons">
+                                                                                <a href="#" class="btn add-to-cart-btn">add to cart</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="slide-contain biolife-banner__special">
+                                                                <div class="banner-contain">
+                                                                    <div class="media">
+                                                                        <a href="#" class="bn-link">
+                                                                            <figure><img src="assets/images/home-03/bn_special_org.jpg" width="616" height="483" alt=""></figure>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="text-content">
+                                                                        <b class="first-line">Pomegranate</b>
+                                                                        <span class="second-line">Organic Heaven Made</span>
+                                                                        <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
+                                                                        <div class="product-detail">
+                                                                            <h4 class="product-name">National Fresh Fruit Production</h4>
+                                                                            <div class="price price-contain">
+                                                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
+                                                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                                            </div>
+                                                                            <div class="buttons">
+                                                                                <a href="#" class="btn add-to-cart-btn">add to cart</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>-->
                         </ul>
                         <div class="biolife-service type01 biolife-service__type01 sm-margin-top-0 xs-margin-top-45px">
                             <b class="txt-show-01" >100%Nature</b>
@@ -392,7 +392,16 @@
                                                         <div class="price">
                                                             <ins><span class="price-amount"><span class="currencySymbol"></span> <fmt:formatNumber value="${o.price}" type="currency"/></span></ins>
                                                         </div>
+                                                        <div class="slide-down-box">
+                                                        <p class="message">"Tinh dầu cao cấp, thuần khiết & an toàn."</p>
+                                                        <div class="buttons">
+                                                            <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                                                            <a href="detail?pid=${o.id}" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
+                                                            <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
+                                                        </div>
                                                     </div>
+                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -1330,125 +1339,127 @@
         </div>
 
         <!-- FOOTER -->
-        <footer id="footer" class="footer layout-03">
-            <div class="footer-content background-footer-03">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-9">
-                            <section class="footer-item">
-                                <a href="home-03-green.html" class="logo footer-logo"><img src="hinh anh/Logo/logo-gia-truyen-hong-duc1.png" alt="biolife logo" width="220" height="60"></a>
-                                <div class="footer-phone-info">
-                                    <i class="biolife-icon icon-head-phone"></i>
-                                    <p class="r-info">
-                                        <span>Got Questions ?</span>
-                                        <span>0914 145 788</span>
-                                    </p>
+        <jsp:include page="Footer.jsp"></jsp:include>
+
+        <!--        <footer id="footer" class="footer layout-03">
+                    <div class="footer-content background-footer-03">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-9">
+                                    <section class="footer-item">
+                                        <a href="home-03-green.html" class="logo footer-logo"><img src="hinh anh/Logo/logo-gia-truyen-hong-duc1.png" alt="biolife logo" width="220" height="60"></a>
+                                        <div class="footer-phone-info">
+                                            <i class="biolife-icon icon-head-phone"></i>
+                                            <p class="r-info">
+                                                <span>Got Questions ?</span>
+                                                <span>0914 145 788</span>
+                                            </p>
+                                        </div>
+                                        <div class="newsletter-block layout-01">
+                                            <h4 class="title">Newsletter Signup</h4>
+                                            <div class="form-content">
+                                                <form action="#" name="new-letter-foter">
+                                                    <input type="email" class="input-text email" value="" placeholder="Your email here...">
+                                                    <button type="submit" class="bnt-submit" name="ok">Sign up</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </section>
                                 </div>
-                                <div class="newsletter-block layout-01">
-                                    <h4 class="title">Newsletter Signup</h4>
-                                    <div class="form-content">
-                                        <form action="#" name="new-letter-foter">
-                                            <input type="email" class="input-text email" value="" placeholder="Your email here...">
-                                            <button type="submit" class="bnt-submit" name="ok">Sign up</button>
-                                        </form>
-                                    </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 md-margin-top-5px sm-margin-top-50px xs-margin-top-40px">
+                                    <section class="footer-item">
+                                        <h3 class="section-title">Thông tin cần thiết</h3>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-6 col-xs-6">
+                                                <div class="wrap-custom-menu vertical-menu-2">
+                                                    <ul class="menu">
+                                                        <li><a href="#">About Us</a></li>
+                                                        <li><a href="#">Giới thiệu cửa hàng</a></li>
+                                                        <li><a href="#">Mua sắm an toàn</a></li>
+                                                        <li><a href="#">Thông tin giao hàng</a></li>
+                                                        <li><a href="#">Chính sách bảo mật</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-xs-6">
+                                                <div class="wrap-custom-menu vertical-menu-2">
+                                                    <ul class="menu">
+                                                        <li><a href="#">Liên hệ với chúng tôi</a></li>
+                                                        <li><a href="#">Đổi mới sáng tạo</a></li>
+                                                        <li><a href="#">Khách hàng đánh giá</a></li>
+                                                        <li><a href="#">Điều khoản sử dụng</a></li>
+                                                        <li><a href="#">Chính sách đổi trả</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
                                 </div>
-                            </section>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 md-margin-top-5px sm-margin-top-50px xs-margin-top-40px">
-                            <section class="footer-item">
-                                <h3 class="section-title">Thông tin cần thiết</h3>
-                                <div class="row">
-                                    <div class="col-lg-6 col-sm-6 col-xs-6">
-                                        <div class="wrap-custom-menu vertical-menu-2">
-                                            <ul class="menu">
-                                                <li><a href="#">About Us</a></li>
-                                                <li><a href="#">Giới thiệu cửa hàng</a></li>
-                                                <li><a href="#">Mua sắm an toàn</a></li>
-                                                <li><a href="#">Thông tin giao hàng</a></li>
-                                                <li><a href="#">Chính sách bảo mật</a></li>
+                                <div class="col-lg-4 col-md-4 col-sm-6 md-margin-top-5px sm-margin-top-50px xs-margin-top-40px">
+                                    <section class="footer-item">
+                                        <h3 class="section-title">Chi nhánh trung tâm</h3>
+                                        <div class="contact-info-block footer-layout xs-padding-top-10px">
+                                            <ul class="contact-lines">
+                                                <li>
+                                                    <p class="info-item">
+                                                        <i class="biolife-icon icon-location"></i>
+                                                        <b class="desc">67 Nguyễn Phúc Thái - Phường Kim Long - Thành Phố Thừa Thiên Huế . , Hue, Vietnam</b>
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="info-item">
+                                                        <i class="biolife-icon icon-phone"></i>
+                                                        <b class="desc">Phone: 0914 145 788</b>
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="info-item">
+                                                        <i class="biolife-icon icon-letter"></i>
+                                                        <b class="desc">Email:  hoan64735@gmail.com</b>
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="info-item">
+                                                        <i class="biolife-icon icon-clock"></i>
+                                                        <b class="desc">Works: 7 am - 5.30 pm</b>
+                                                    </p>
+                                                </li>
                                             </ul>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6 col-sm-6 col-xs-6">
-                                        <div class="wrap-custom-menu vertical-menu-2">
-                                            <ul class="menu">
-                                                <li><a href="#">Liên hệ với chúng tôi</a></li>
-                                                <li><a href="#">Đổi mới sáng tạo</a></li>
-                                                <li><a href="#">Khách hàng đánh giá</a></li>
-                                                <li><a href="#">Điều khoản sử dụng</a></li>
-                                                <li><a href="#">Chính sách đổi trả</a></li>
+                                        <div class="biolife-social inline">
+                                            <ul class="socials">
+                                                <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                                <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                                <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                                <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                                                <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
                                             </ul>
                                         </div>
-                                    </div>
+                                    </section>
                                 </div>
-                            </section>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 md-margin-top-5px sm-margin-top-50px xs-margin-top-40px">
-                            <section class="footer-item">
-                                <h3 class="section-title">Chi nhánh trung tâm</h3>
-                                <div class="contact-info-block footer-layout xs-padding-top-10px">
-                                    <ul class="contact-lines">
-                                        <li>
-                                            <p class="info-item">
-                                                <i class="biolife-icon icon-location"></i>
-                                                <b class="desc">67 Nguyễn Phúc Thái - Phường Kim Long - Thành Phố Thừa Thiên Huế . , Hue, Vietnam</b>
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="info-item">
-                                                <i class="biolife-icon icon-phone"></i>
-                                                <b class="desc">Phone: 0914 145 788</b>
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="info-item">
-                                                <i class="biolife-icon icon-letter"></i>
-                                                <b class="desc">Email:  hoan64735@gmail.com</b>
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="info-item">
-                                                <i class="biolife-icon icon-clock"></i>
-                                                <b class="desc">Works: 7 am - 5.30 pm</b>
-                                            </p>
-                                        </li>
-                                    </ul>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="separator sm-margin-top-62px xs-margin-top-40px"></div>
                                 </div>
-                                <div class="biolife-social inline">
-                                    <ul class="socials">
-                                        <!--<li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>-->
-                                        <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                        <!--<li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>-->
-                                        <!--<li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>-->
-                                        <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                    </ul>
+                                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                            <div class="copy-right-text"><p><a href="templateshub.net">Templates Hub</a></p></div>
+                                                        </div>
+                                <div class="col-lg-6 col-sm-6 col-xs-12">
+                                                                <div class="payment-methods">
+                                                                    <ul>
+                                                                        <li><a href="#" class="payment-link"><img src="assets/images/card1.jpg" width="51" height="36" alt=""></a></li>
+                                                                        <li><a href="#" class="payment-link"><img src="assets/images/card2.jpg" width="51" height="36" alt=""></a></li>
+                                                                        <li><a href="#" class="payment-link"><img src="assets/images/card3.jpg" width="51" height="36" alt=""></a></li>
+                                                                        <li><a href="#" class="payment-link"><img src="assets/images/card4.jpg" width="51" height="36" alt=""></a></li>
+                                                                        <li><a href="#" class="payment-link"><img src="assets/images/card5.jpg" width="51" height="36" alt=""></a></li>
+                                                                    </ul>
+                                                                </div>
                                 </div>
-                            </section>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="separator sm-margin-top-62px xs-margin-top-40px"></div>
-                        </div>
-                        <!--                        <div class="col-lg-6 col-sm-6 col-xs-12">
-                                                    <div class="copy-right-text"><p><a href="templateshub.net">Templates Hub</a></p></div>
-                                                </div>-->
-                        <div class="col-lg-6 col-sm-6 col-xs-12">
-                            <!--                            <div class="payment-methods">
-                                                            <ul>
-                                                                <li><a href="#" class="payment-link"><img src="assets/images/card1.jpg" width="51" height="36" alt=""></a></li>
-                                                                <li><a href="#" class="payment-link"><img src="assets/images/card2.jpg" width="51" height="36" alt=""></a></li>
-                                                                <li><a href="#" class="payment-link"><img src="assets/images/card3.jpg" width="51" height="36" alt=""></a></li>
-                                                                <li><a href="#" class="payment-link"><img src="assets/images/card4.jpg" width="51" height="36" alt=""></a></li>
-                                                                <li><a href="#" class="payment-link"><img src="assets/images/card5.jpg" width="51" height="36" alt=""></a></li>
-                                                            </ul>
-                                                        </div>-->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+                </footer>-->
 
         <!--Footer For Mobile-->
         <div class="mobile-footer">

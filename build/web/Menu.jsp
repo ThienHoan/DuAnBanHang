@@ -62,10 +62,16 @@
                             <li class="menu-item menu-item-has-children has-child">
                                 <a href="#" class="menu-name" data-title="Product">Product</a>
                                 <ul class="sub-menu">
-                                    <li class="menu-item"><a href="#">Tinh dầu xông phòng</a></li>
-                                    <li class="menu-item"><a href="#">Tinh dầu xe hơi</a></li>
-                                    <li class="menu-item"><a href="#">Tinh dầu massage</a></li>
-                                    <li class="menu-item"><a href="#">Tinh dầu dạng xịt</a></li>
+                                    <c:forEach items="${listCC}" var="c">
+                                        <li class="menu-item"><a href="category?cid=${c.cid}&cname=${c.cname}">${c.cname}</a></li>
+                                        </c:forEach>
+                                    <!--                                    <li class="menu-item"><a href="#">Tinh dầu xông phòng</a></li>
+                                                                        <li class="menu-item"><a href="#">Tinh dầu xe hơi</a></li>
+                                                                        <li class="menu-item"><a href="#">Tinh dầu massage</a></li>
+                                                                        <li class="menu-item"><a href="#">Tinh dầu dạng xịt</a></li>-->
+
+
+
                                     <!--                                    <li class="menu-item menu-item-has-children has-child"><a href="#" class="menu-name" data-title="Eggs & other considerations">Eggs & other considerations</a>
                                                                             <ul class="sub-menu">
                                                                                 <li class="menu-item"><a href="#">Classic Breakfast</a></li>
@@ -183,10 +189,10 @@
                         <div class="mobile-search">
                             <a href="javascript:void(0)" class="open-searchbox"><i class="biolife-icon icon-search"></i></a>
                             <div class="mobile-search-content">
-                                <form action="search" method="post" class="form-search" name="mobile-seacrh" method="get">
+<!--                                <form action="search" method="post" class="form-search" name="mobile-seacrh" method="get">
                                     <a href="#" class="btn-close"><span class="biolife-icon icon-close-menu"></span></a>
-                                    <input type="text" name="txt" class="input-text" value="" placeholder="Search here...">
-                                    <!--                                            <select name="category">
+                                    <input type="text" name="txt" class="input-text" value="" placeholder="Search here">
+                                                                                <select name="category">
                                                                                     <option value="-1" selected>All Categories</option>
                                                                                     <option value="vegetables">Vegetables</option>
                                                                                     <option value="fresh_berries">Fresh Berries</option>
@@ -197,9 +203,9 @@
                                                                                     <option value="fresh_onion">Fresh Onion</option>
                                                                                     <option value="papaya_crisps">Papaya & Crisps</option>
                                                                                     <option value="oatmeal">Oatmeal</option>
-                                                                                </select>-->
+                                                                                </select>
                                     <button type="submit" class="btn-submit">go</button>
-                                </form>
+                                </form>-->
                             </div>
                         </div>
                         <div class="wishlist-block hidden-sm hidden-xs">
@@ -391,17 +397,24 @@
                             <input type="text" name="txt" class="input-text" value="" placeholder="Search here...">
                             <select name="category">
                                 <option value="-1" selected>All Categories</option>
-                                <option value="vegetables">Tinh dầu xông phòng</option>
-                                <option value="fresh_berries">Tinh dầu xe hơi</option>
-                                <option value="ocean_foods">Tinh dầu massage</option>
-                                <option value="butter_eggs">Tinh dầu dạng xịt</option>
+                                <c:forEach items="${listCC}" var="c">
+                                    <option value="${c.cid}" ${c.cid == selectedCid ? 'selected' : ''}>${c.cname}</option>
+                                </c:forEach>
                             </select>
+
+                            <!--                            <select name="category">
+                                                            <option value="-1" selected>All Categories</option>
+                                                            <option value="vegetables">Tinh dầu xông phòng</option>
+                                                            <option value="fresh_berries">Tinh dầu xe hơi</option>
+                                                            <option value="ocean_foods">Tinh dầu massage</option>
+                                                            <option value="butter_eggs">Tinh dầu dạng xịt</option>
+                                                        </select>-->
                             <button type="submit" class="btn-submit"><i class="biolife-icon icon-search"></i></button>
                         </form>
                     </div>
                     <div class="live-info">
                         <p class="telephone"><i class="fa fa-phone" aria-hidden="true"></i><b class="phone-number">0914 145 788</b></p>
-                        <p class="working-time">7.am - 5.pm</p>
+                        <p class="working-time">7 am - 5 pm</p>
                     </div>
                 </div>
             </div>
