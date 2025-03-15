@@ -23,7 +23,7 @@ public class HomeControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         // Lấy danh sách tất cả sản phẩm
-        List<Product> list = dao.getAllProduct();
+        List<Product> list = dao.getAllProductUser();
         request.setAttribute("listP", list);
 
         // Lấy danh sách tất cả danh mục

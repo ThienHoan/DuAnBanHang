@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  */
 public class DAO {
 
-    private static final String TOP_3 = "SELECT TOP 5 * FROM Product ORDER BY pid DESC";
+    private static final String TOP_3 = "SELECT TOP 5 * FROM Product WHERE status = 1 ORDER BY pid DESC";
 
     Connection conn = null;
     PreparedStatement ps = null;
@@ -37,6 +37,33 @@ public class DAO {
     public List<Product> getAllProduct() {
         List<Product> list = new ArrayList<>();
         String query = "select * from Product";
+        try (Connection conn = new DBContext().getConnection();//mo ket noi voi sql
+                 PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery();) {
+
+            while (rs.next()) {
+                list.add(new Product(
+                        rs.getInt("pid"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getString("description"),
+                        rs.getInt("stock"),
+                        rs.getString("import_date"),
+                        rs.getInt("status"),
+                        rs.getInt("sell_id"),
+                        rs.getInt("cateID"),
+                        rs.getString("img")
+                ));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    public List<Product> getAllProductUser() {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM Product WHERE status=1";
         try (Connection conn = new DBContext().getConnection();//mo ket noi voi sql
                  PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery();) {
 
@@ -262,7 +289,7 @@ public class DAO {
         }
     }
 
-    public void insertProduct(String name, String image, String price, String description, String category, int sid, int stock) {
+    public void insertProduct(String name, String image, String price, String description, String category, int sid, String stock,String status) {
         String query = "INSERT INTO [dbo].[Product] ([name], [img], [price], [description], [cateID], [sell_id], [stock], [status]) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -272,10 +299,10 @@ public class DAO {
             ps.setString(2, image);
             ps.setString(3, price);
             ps.setString(4, description);
-            ps.setInt(5, Integer.parseInt(category));
+            ps.setString(5, category);
             ps.setInt(6, sid);
-            ps.setInt(7, stock);
-            ps.setInt(8, 1); // status mặc định
+            ps.setString(7, stock);
+            ps.setString(8, status); // status mặc định
             ps.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error inserting product: " + e.getMessage());
@@ -293,21 +320,22 @@ public class DAO {
         }
     }
 
-    public void updateProduct(int id, String name, String image, double price, String description, int category, int stock) {
-        String sql = "UPDATE [dbo].[Product] SET name=?, img=?, price=?, description=?, cateID=?, stock=? WHERE pid=?";
-        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, name);
-            ps.setString(2, image);
-            ps.setDouble(3, price);
-            ps.setString(4, description);
-            ps.setInt(5, category);
-            ps.setInt(6, stock);
-            ps.setInt(7, id);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Error updating product: " + e.getMessage());
-        }
+    public void updateProduct(int id, String name, String image, double price, String description, int stock, int status, int category) {
+    String sql = "UPDATE [dbo].[Product] SET name=?, img=?, price=?, description=?, cateID=?, stock=?, status=? WHERE pid=?";
+    try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, name);
+        ps.setString(2, image);
+        ps.setDouble(3, price);
+        ps.setString(4, description);
+        ps.setInt(5, category);
+        ps.setInt(6, stock);
+        ps.setInt(7, status);
+        ps.setInt(8, id);
+        ps.executeUpdate();
+    } catch (Exception e) {
+        System.out.println("Error updating product: " + e.getMessage());
     }
+}
 
     // Check if account with email already exists
     public boolean checkAccountExists(String email) {

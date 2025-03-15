@@ -30,25 +30,33 @@ public class AddControl extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        String name = request.getParameter("name");
-        String image = request.getParameter("image");
-        String price = request.getParameter("price");
-        String title = request.getParameter("title");
-        String description = request.getParameter("description");
-        String category = request.getParameter("category");
-        HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("account");
-        int sid = a.getUserID();
-        DAO dao = new DAO();
-        dao.insertProduct(name, image, price, description, category, sid, sid);
-        response.sendRedirect("manager");
-        
-    }
+    response.setContentType("text/html;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
 
+    // Lấy các tham số từ form
+    String name = request.getParameter("name");
+    String image = request.getParameter("image");
+    String price = request.getParameter("price");
+    String description = request.getParameter("description");
+    String stock = request.getParameter("stock");
+    String status = request.getParameter("status");
+    String category = request.getParameter("category");
+
+    // Lấy thông tin người dùng từ session
+    HttpSession session = request.getSession();
+    Account a = (Account) session.getAttribute("account");
+    int sid = a.getUserID();
+
+    // Gọi DAO để thêm sản phẩm
+    DAO dao = new DAO();
+    // Giả định rằng phương thức insertProduct sẽ được cập nhật để nhận các tham số mới
+
+    dao.insertProduct(name, image, price, description, category, sid, stock, status);
+    // Chuyển hướng về trang manager
+    response.sendRedirect("manager");
+}
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

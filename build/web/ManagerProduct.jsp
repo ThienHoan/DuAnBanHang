@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : Manager
     Created on : Feb 15, 2025, 11:24:22 PM
     Author     : hoan6
@@ -256,6 +256,32 @@
                 object-fit: cover; /* Cắt hình ảnh để lấp đầy kích thước */
                 border-radius: 5px; /* Bo góc nhẹ để đẹp hơn */
             }
+            .pagination {
+                display: flex; /* Hiển thị các nút theo hàng ngang */
+                justify-content: center; /* Căn giữa */
+                margin-top: 20px;
+                gap: 5px; /* Khoảng cách giữa các nút */
+            }
+
+            .pagination a {
+                padding: 8px 15px;
+                background-color: #4CAF50;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background 0.3s ease;
+                font-weight: bold;
+            }
+
+            .pagination a:hover {
+                background-color: #19422D;
+            }
+
+            .pagination a.active {
+                background-color: #007bff;
+                color: white;
+            }
+
 
         </style>
         <script>
@@ -296,110 +322,132 @@
                                     <h2>Manage <b>Product</b></h2>
                                 </div>
                                 <div class="col-sm-6">
+                                    <a href="home" class="btn btn-primary">
+                                        <i class="material-icons">&#xe88a;</i> <span>Home</span>
+                                    </a>
                                     <a href="#addProductModal" class="btn btn-success" data-toggle="modal">
                                         <i class="material-icons">&#xE147;</i> <span>Add New Product</span>
                                     </a>
                                     <!-- Nút mở Modal Xác nhận xóa -->
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">
                                         <i class="material-icons">&#xE15C;</i> <span>Delete</span>
-                                    </button>		
+                                    </button>
                                 </div>
                             </div>
                         </div>
+                        <!-- Thiết lập thông tin phân trang -->
+                        <c:set var="pageSize" value="5"/>
+                        <c:set var="currentPage" value="${param.page != null ? param.page : 1}"/>
+                        <c:set var="start" value="${(currentPage - 1) * pageSize}"/>
+                        <c:set var="end" value="${start + pageSize}"/>
+                        <c:set var="totalProducts" value="${listS.size()}"/>
+                        <c:set var="totalPages" value="${(totalProducts % pageSize == 0) ? (totalProducts / pageSize) : (totalProducts / pageSize + 1)}"/>
 
                         <table class="table table-striped table-hover">
-                            ...
-<thead>
-    <tr>
-        <th>
-            <span class="custom-checkbox">
-                <input type="checkbox" id="selectAll">
-                <label for="selectAll"></label>
-            </span>
-        </th>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Image</th>
-        <th>Price</th>
-        <th>Stock</th> <!-- Thêm cột Stock -->
-        <th>Actions</th>
-    </tr>
-</thead>
-...
-<tbody>
-    <c:forEach items="${listS}" var="o">
-        <tr>
-            <td>
-                <span class="custom-checkbox">
-                    <input type="checkbox" class="product-checkbox" name="selectedProducts" value="${o.id}">
-                    <label></label>
-                </span>
-            </td>
-            <td>${o.id}</td>
-            <td>${o.name}</td>
-            <td><img src="${o.img}" alt="alt"/></td>
-            <td>${o.price} vnđ</td>
-            <td>
-                <c:if test="${o.stock == 0}">
-                    <span class="badge badge-warning">Hết hàng</span>
-                </c:if>
-                <c:if test="${o.stock != 0}">
-                    ${o.stock}
-                </c:if>
-            </td> <!-- Hiển thị trạng thái hết hàng hoặc số lượng stock -->
-            <td>
-                <!-- Hiển thị trạng thái khả dụng hoặc không khả dụng -->
-                <c:choose>
-                    <c:when test="${o.status == 0}">
-                        <span class="badge badge-danger">Không khả dụng</span>
-                    </c:when>
-                    <c:otherwise>
-                        <span class="badge badge-success">Khả dụng</span>
-                    </c:otherwise>
-                </c:choose>
-                <a href="#editProductModal" class="edit" 
-                   data-toggle="modal"
-                   data-id="${o.id}" 
-                   data-name="${o.name}" 
-                   data-image="${o.img}" 
-                   data-price="${o.price}"  
-                   data-description="${o.description}"
-                   data-stock="${o.stock}"
-                   data-status="${o.status}"
-                   data-category="${o.cateID}">
-                    <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-                </a>
-                <a href="#deleteProductModal${o.id}" class="delete" data-toggle="modal">
-                    <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                </a>
-            </td>
-        </tr>
-        <!-- Modal Xóa từng sản phẩm -->
-        <div id="deleteProductModal${o.id}" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="delete" method="post">
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Delete Product</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">					
-                            <p>Are you sure you want to delete this product?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="hidden" name="pid" value="${o.id}">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </c:forEach>
-</tbody>
-
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="custom-checkbox">
+                                            <input type="checkbox" id="selectAll">
+                                            <label for="selectAll"></label>
+                                        </span>
+                                    </th>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Image</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${listS}" var="o" varStatus="status">
+                                    <c:if test="${status.index >= start && status.index < end}">
+                                        <tr>
+                                            <td>
+                                                <span class="custom-checkbox">
+                                                    <input type="checkbox" class="product-checkbox" name="selectedProducts" value="${o.id}">
+                                                    <label></label>
+                                                </span>
+                                            </td>
+                                            <td>${o.id}</td>
+                                            <td>${o.name}</td>
+                                            <td><img src="${o.img}" alt="alt"/></td>
+                                            <td>${o.price} vnđ</td>
+                                            <td>
+                                                <c:if test="${o.stock == 0}">
+                                                    <span class="badge badge-warning">Hết hàng</span>
+                                                </c:if>
+                                                <c:if test="${o.stock != 0}">
+                                                    ${o.stock}
+                                                </c:if>
+                                            </td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${o.status == 0}">
+                                                        <span class="badge badge-danger">Không khả dụng</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="badge badge-success">Khả dụng</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <a href="#editProductModal" class="edit" 
+                                                   data-toggle="modal"
+                                                   data-id="${o.id}" 
+                                                   data-name="${o.name}" 
+                                                   data-image="${o.img}" 
+                                                   data-price="${o.price}"  
+                                                   data-description="${o.description}"
+                                                   data-stock="${o.stock}"
+                                                   data-status="${o.status}"
+                                                   data-category="${o.cateID}">
+                                                    <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+                                                </a>
+                                                <a href="#deleteProductModal${o.id}" class="delete" data-toggle="modal">
+                                                    <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <!-- Modal Xóa từng sản phẩm -->
+                                    <div id="deleteProductModal${o.id}" class="modal fade">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <form action="delete" method="post">
+                                                    <div class="modal-header">						
+                                                        <h4 class="modal-title">Delete Product</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;"></button>
+                                                    </div>
+                                                    <div class="modal-body">					
+                                                        <p>Are you sure you want to delete this product?</p>
+                                                        <p class="text-warning"><small>This action cannot be undone.</small></p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <input type="hidden" name="pid" value="${o.id}">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
+                            </tbody>
                         </table>
+
+                        <div class="pagination">
+                            <c:if test="${currentPage > 1}">
+                                <a href="manager?page=${currentPage - 1}#product-list" class="prev">&laquo; Previous</a>
+                            </c:if>
+
+                            <c:forEach var="i" begin="1" end="${totalPages}">
+                                <a href="manager?page=${i}#product-list" class="page-link ${i == currentPage ? 'active' : ''}">${i}</a>
+                            </c:forEach>
+
+                            <c:if test="${currentPage < totalPages}">
+                                <a href="manager?page=${currentPage + 1}#product-list" class="next">Next &raquo;</a>
+                            </c:if>
+                        </div>
                     </form>
 
                     <!-- Modal Xác Nhận Xóa Nhiều Sản Phẩm -->
@@ -423,6 +471,8 @@
                             </div>
                         </div>
                     </div>
+
+
 
                     <script>
                         // Khi nhấn "Select All", chọn tất cả các ô checkbox
@@ -462,7 +512,7 @@
                                 $("#editProductModal textarea[name='title']").val(title);
                                 $("#editProductModal textarea[name='description']").val(description);
                                 console.log("ID sản phẩm:", id);
-                                console.log("Category được truyền:", category); 
+                                console.log("Category được truyền:", category);
                                 $("#editProductModal select[name='category']").val(category);
 
                                 // Thay đổi action của form để gửi dữ liệu update
@@ -474,31 +524,20 @@
 
 
 
-                    <div class="clearfix">
-                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                        <ul class="pagination">
-                            <li class="page-item disabled"><a href="#">Previous</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                        </ul>
-                    </div>
+
                 </div>
-            </div>        
+            </div>
         </div>
-        <!-- Edit Modal HTML -->
+        <!-- Add Modal HTML -->
         <div id="addProductModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form action="add" method="post">
-                        <div class="modal-header">						
+                        <div class="modal-header">
                             <h4 class="modal-title">Add Product</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                        <div class="modal-body">					
+                        <div class="modal-body">
                             <div class="form-group">
                                 <label>Name</label>
                                 <input name="name" type="text" class="form-control" required>
@@ -509,25 +548,31 @@
                             </div>
                             <div class="form-group">
                                 <label>Price</label>
-                                <input name="price" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Title</label>
-                                <textarea name="title" class="form-control" required></textarea>
+                                <input name="price" type="number"  min="0" class="form-control no-spinners" required>
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
                                 <textarea name="description" class="form-control" required></textarea>
                             </div>
                             <div class="form-group">
+                                <label>Stock</label>
+                                <input name="stock" type="number" class="form-control" value="1" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select name="status" class="form-control" required>
+                                    <option value="1" selected>Khả dụng</option>
+                                    <option value="0">Không khả dụng</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label>Category</label>
-                                <select name="category" class="form-select" aria-label="Default select example">
+                                <select name="category" class="form-control" required>
                                     <c:forEach items="${listCC}" var="o">
-                                        <option value="${o.cid}" >${o.cname}</option>
+                                        <option value="${o.cid}" ${o.cid == 1 ? 'selected' : ''}>${o.cname}</option>
                                     </c:forEach>
                                 </select>
                             </div>
-
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -537,91 +582,90 @@
                 </div>
             </div>
         </div>
+
         <!-- Edit Modal HTML -->
-
-<!-- Edit Modal HTML -->
-<div id="editProductModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="update" method="post">
-                <input type="hidden" name="id"> <!-- ID ẩn -->
-                <div class="modal-header">						
-                    <h4 class="modal-title">Edit Product</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div id="editProductModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="update" method="post">
+                        <input type="hidden" name="id"> <!-- ID ẩn -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Product</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input name="name" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Image</label>
+                                <input name="image" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input name="price" type="number"  min="0" class="form-control no-spinners" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea name="description" class="form-control" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Stock</label>
+                                <input name="stock" type="number" class="form-control" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select name="status" class="form-control" required>
+                                    <option value="1">Khả dụng</option>
+                                    <option value="0">Không khả dụng</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select name="category" class="form-select" aria-label="Default select example">
+                                    <c:forEach items="${listCC}" var="o">
+                                        <option value="${o.cid}">${o.cname}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input type="submit" class="btn btn-success" value="Save">
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-body">					
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input name="name" type="text" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Image</label>
-                        <input name="image" type="text" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Price</label>
-                        <input name="price" type="text" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea name="description" class="form-control" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Stock</label>
-                        <input name="stock" type="number" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select name="status" class="form-control" required>
-                            <option value="1">Khả dụng</option>
-                            <option value="0">Không khả dụng</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select name="category" class="form-select" aria-label="Default select example">
-                            <c:forEach items="${listCC}" var="o">
-                                <option value="${o.cid}">${o.cname}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn btn-success" value="Save">
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
-</div>
-...
-<script>
-    $(document).ready(function () {
-        $(".edit").click(function () {
-            var id = $(this).data("id");
-            var name = $(this).data("name");
-            var image = $(this).data("image");
-            var price = $(this).data("price");
-            var description = $(this).data("description");
-            var stock = $(this).data("stock");
-            var status = $(this).data("status");
-            var category = $(this).data("category");
+        <!--        edit-->
+        <script>
+            $(document).ready(function () {
+                $(".edit").click(function () {
+                    var id = $(this).data("id");
+                    var name = $(this).data("name");
+                    var image = $(this).data("image");
+                    var price = $(this).data("price");
+                    var description = $(this).data("description");
+                    var stock = $(this).data("stock");
+                    var status = $(this).data("status");
+                    var category = $(this).data("category");
 
-            // Gán dữ liệu vào form trong modal
-            $("#editProductModal input[name='id']").val(id);
-            $("#editProductModal input[name='name']").val(name);
-            $("#editProductModal input[name='image']").val(image);
-            $("#editProductModal input[name='price']").val(price);
-            $("#editProductModal textarea[name='description']").val(description);
-            $("#editProductModal input[name='stock']").val(stock);
-            $("#editProductModal select[name='status']").val(status);
-            $("#editProductModal select[name='category']").val(category);
+                    // Gán dữ liệu vào form trong modal
+                    $("#editProductModal input[name='id']").val(id);
+                    $("#editProductModal input[name='name']").val(name);
+                    $("#editProductModal input[name='image']").val(image);
+                    $("#editProductModal input[name='price']").val(price);
+                    $("#editProductModal textarea[name='description']").val(description);
+                    $("#editProductModal input[name='stock']").val(stock);
+                    $("#editProductModal select[name='status']").val(status);
+                    $("#editProductModal select[name='category']").val(category);
 
-            // Thay đổi action của form để gửi dữ liệu update
-            $("#editProductModal form").attr("action", "update?id=" + id);
-        });
-    });
-</script>
+                    // Thay đổi action của form để gửi dữ liệu update
+                    $("#editProductModal form").attr("action", "update?id=" + id);
+                });
+            });
+        </script>
 
 
     </body>

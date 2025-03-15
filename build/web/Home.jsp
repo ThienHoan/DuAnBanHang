@@ -28,6 +28,14 @@
         <link rel="stylesheet" href="assets/css/slick.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/main-color03-green.css">
+        <script>
+        function addToCart(productId) {
+    fetch("cart?action=add&id=" + productId , { method: "POST" })
+        .then(response => response.text())
+        .then(data => { alert("Đã thêm sản phẩm vào giỏ hàng!"); }) 
+        .catch(error => console.error("Lỗi:", error));
+}
+    </script>
     </head>
     <body class="biolife-body">
 
@@ -221,7 +229,8 @@
                                                     <ins><span class="price-amount"><span class="currencySymbol"></span><fmt:formatNumber value="${p.price}" type="currency"/></span></ins>
                                                 </div>
                                                 <div class="buttons">
-                                                    <a href="#" class="btn add-to-cart-btn"></i>add to cart</a>
+                                                    <a onclick="addToCart(${p.id})" class="btn add-to-cart-btn">add to cart</a>
+                                                    
                                                 </div>
                                             </div>
                                         </div>

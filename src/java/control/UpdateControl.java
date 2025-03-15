@@ -68,12 +68,14 @@ public class UpdateControl extends HttpServlet {
      */
     @Override
 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    int id = Integer.parseInt(request.getParameter("id"));
+    // Lấy các tham số từ form
+    int id = Integer.parseInt(request.getParameter("id")); // Giả định rằng id được truyền từ form hoặc URL
     String name = request.getParameter("name");
     String image = request.getParameter("image");
     double price = Double.parseDouble(request.getParameter("price"));
-    String title = request.getParameter("title");
     String description = request.getParameter("description");
+    int stock = Integer.parseInt(request.getParameter("stock"));
+    int status = Integer.parseInt(request.getParameter("status"));
     int category = Integer.parseInt(request.getParameter("category"));
 
     // In ra để kiểm tra dữ liệu
@@ -81,14 +83,19 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     System.out.println("Name: " + name);
     System.out.println("Image: " + image);
     System.out.println("Price: " + price);
-    System.out.println("Title: " + title);
     System.out.println("Description: " + description);
+    System.out.println("Stock: " + stock);
+    System.out.println("Status: " + status);
     System.out.println("Category: " + category);
 
+    // Gọi DAO để cập nhật sản phẩm
     DAO dao = new DAO();
-    dao.updateProduct(id, name, image, price, description, category, id);
+    // Giả định rằng phương thức updateProduct sẽ được cập nhật để nhận các tham số mới
+    dao.updateProduct(id, name, image, price, description, stock, status, category);
+    
 
-    response.sendRedirect("product-list"); // Chuyển hướng sau khi cập nhật
+    // Chuyển hướng sau khi cập nhật
+    response.sendRedirect("manager");
 }
 
 
