@@ -212,7 +212,7 @@
                                             <div class="text-content">
                                                 <b class="first-line"></b>
                                                 <!--<span class="second-line">${p.name}</span>-->
-                                                <span class="third-line"><i>${p.name}</i></span>
+                                                <span class="third-line"><a href="detail?pid=${p.id}"><i>${p.name}</i></a></span>
                                                 <h3>${p.description}</h3>
                                                 <div class="product-detail">
 
@@ -221,7 +221,7 @@
                                                         <ins><span class="price-amount"><span class="currencySymbol"></span><fmt:formatNumber value="${p.price}" type="currency"/></span></ins>
                                                     </div>
                                                     <div class="buttons">
-                                                        <a href="detail?pid=${p.id}" class="btn add-to-cart-btn"></i>add to cart</a>
+                                                        <a href="#" class="btn add-to-cart-btn"></i>add to cart</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -396,7 +396,7 @@
                                                         <p class="message">"Tinh dầu cao cấp, thuần khiết & an toàn."</p>
                                                         <div class="buttons">
                                                             <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                                            <a href="detail?pid=${o.id}" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
+                                                            <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
                                                             <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                         </div>
                                                     </div>

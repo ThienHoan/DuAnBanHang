@@ -105,6 +105,28 @@ public class Account {
         this.status = status;
     }
 
+    // Add or fix these getter methods:
+
+    public int getId() {
+        return userID;
+    }
+
+    public String getUser() {
+        return userName;
+    }
+
+    public String getPass() {
+        return password;
+    }
+
+    public int getIsSell() {
+        return roleID;  // assuming roleID of 2 means seller
+    }
+
+    public int getIsAdmin() {
+        return roleID == 3 ? 1 : 0;  // assuming roleID of 3 means admin
+    }
+
     // Phương thức toString để in thông tin đối tượng (tuỳ chọn)
     @Override
     public String toString() {
