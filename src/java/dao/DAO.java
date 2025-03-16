@@ -5,16 +5,18 @@ import entity.Account;
 import entity.Category;
 import entity.Product;
 import java.math.BigDecimal;
-import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,15 +26,15 @@ import java.util.logging.Logger;
  */
 public class DAO {
 
-    private static final String TOP_3 = "SELECT TOP 5 * FROM Product ORDER BY pid DESC";
+    private static final String TOP_3 = "SELECT TOP 5 * FROM Product WHERE status = 1 ORDER BY pid DESC";
+
+    private static final String TOP_5 = "SELECT TOP 5 * FROM Product ORDER BY pid DESC";
     
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
     // Logger for this class
     private static final Logger LOGGER = Logger.getLogger(DAO.class.getName());
-    
-    // Add these instance variables for database connections
-    private Connection conn = null;
-    private PreparedStatement ps = null;
-    private ResultSet rs = null;
 
     // Helper method to close connections
     private void closeResources(Connection conn, PreparedStatement ps, ResultSet rs) {
@@ -71,20 +73,62 @@ public class DAO {
                 ));
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error getting all products", e);
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public boolean updateRole(int userID, int roleID) {
+        String query = "UPDATE Account SET roleID = ? WHERE userID = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, roleID);
+            ps.setInt(2, userID);
+            
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error updating role for account ID: " + userID, e);
+            return false;
         } finally {
-            closeResources(conn, ps, rs);
+            closeResources(conn, ps, null);
+    }
+}
+    
+    public List<Product> getAllProductUser() {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM Product WHERE status=1";
+        try (Connection conn = new DBContext().getConnection();//mo ket noi voi sql
+                 PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery();) {
+
+            while (rs.next()) {
+                list.add(new Product(
+                        rs.getInt("pid"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getString("description"),
+                        rs.getInt("stock"),
+                        rs.getString("import_date"),
+                        rs.getInt("status"),
+                        rs.getInt("sell_id"),
+                        rs.getInt("cateID"),
+                        rs.getString("img")
+                ));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return list;
     }
 
     public List<Product> getProductByCID(String cid) {
         List<Product> list = new ArrayList<>();
-        String query = "select * from Product where cateID = ?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
+        String query = "select * from Product\n"
+                + "where cateID = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -105,22 +149,16 @@ public class DAO {
                 ));
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error getting products by category ID: " + cid, e);
-        } finally {
-            closeResources(conn, ps, rs);
         }
         return list;
     }
 
     public List<Product> getProductBySellID(int id) {
         List<Product> list = new ArrayList<>();
-        String query = "select * from Product where sell_id = ?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
+        String query = "select * from Product\n"
+                + "where sell_id = ?";
         try {
-            conn = new DBContext().getConnection();
+            conn = new DBContext().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -181,17 +219,14 @@ public class DAO {
     }
 
     public Product getProductByID(String id) {
-        String query = "select * from Product where pid = ?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
+        String query = "select * from Product\n"
+                + "where pid = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1, id);
             rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 return new Product(
                         rs.getInt("pid"),
                         rs.getString("name"),
@@ -596,6 +631,56 @@ public class DAO {
         }
     }
 
+    public boolean debugPasswordCheck(int id, String currentPassword) {
+        try {
+            Connection conn = new DBContext().getConnection();
+            
+            String query = "SELECT userID, userName, password FROM Account WHERE userID = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                int userId = rs.getInt("userID");
+                String username = rs.getString("userName");
+                String dbPassword = rs.getString("password");
+                
+                System.out.println("DEBUG - Found user in 'Account' table:");
+                System.out.println("  ID: " + userId);
+                System.out.println("  Username: " + username);
+                System.out.println("  Password in DB: [" + dbPassword + "]");
+                System.out.println("  Password provided: [" + currentPassword + "]");
+                System.out.println("  Match result: " + currentPassword.equals(dbPassword));
+                
+                return currentPassword.equals(dbPassword);
+            }
+            
+            System.out.println("DEBUG - User not found in Account table with ID: " + id);
+            return false;
+        } catch (Exception e) {
+            System.out.println("Error in debug password check: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public void updateAccountInfo(int id, String fullName, String email, String phone, String address) {
+        String query = "UPDATE Account SET address=?, email=?, phoneNumber=? WHERE userID=?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, address);
+            ps.setString(2, email);
+            ps.setString(3, phone);
+            ps.setInt(4, id);
+            ps.executeUpdate();
+            System.out.println("Account info updated for userID: " + id);
+        } catch (Exception e) {
+            System.out.println("Error updating account info: " + e.getMessage());
+        }
+    }
+
     public Account getAccountByID(int accountID) {
         String query = "SELECT * FROM Account WHERE userID = ?";
         Connection conn = null;
@@ -651,6 +736,45 @@ public class DAO {
             return false;
         } finally {
             closeResources(conn, ps, null);
+        }
+    }
+    public Account getAccountById(int id) {
+        String query = "SELECT * FROM Account WHERE userID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Account(
+                    rs.getInt("userID"),
+                    rs.getString("userName"),
+                    rs.getString("password"),
+                    rs.getString("email"),
+                    rs.getString("address"),
+                    rs.getString("phoneNumber"),
+                    rs.getInt("roleID"),
+                    rs.getInt("status")
+                );
+            }
+        } catch (Exception e) {
+            System.out.println("Error getting account by ID: " + e.getMessage());
+        }
+        return null;
+    }
+
+    
+    public void updateAccountPassword(int id, String newPassword) {
+        String query = "UPDATE Account SET password=? WHERE userID=?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, newPassword);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+            System.out.println("Password updated successfully for userID: " + id);
+        } catch (Exception e) {
+            System.out.println("Error updating password: " + e.getMessage());
         }
     }
 
@@ -764,49 +888,81 @@ public class DAO {
         return null;
     }
 
-    /**
-     * Update account role
-     * @param userID the user ID to update
-     * @param roleID the new role ID
-     * @return true if successful, false otherwise
-     */
-    public boolean updateRole(int userID, int roleID) {
-        String query = "UPDATE Account SET roleID = ? WHERE userID = ?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        
+    
+
+    public void insertProduct(String name, String image, String price, String description, String category, int sid, String stock,String status) {
+        String query = "INSERT INTO [dbo].[Product] ([name], [img], [price], [description], [cateID], [sell_id], [stock], [status]) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
-            ps.setInt(1, roleID);
-            ps.setInt(2, userID);
-            
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
+            ps.setString(1, name);
+            ps.setString(2, image);
+            ps.setString(3, price);
+            ps.setString(4, description);
+            ps.setString(5, category);
+            ps.setInt(6, sid);
+            ps.setString(7, stock);
+            ps.setString(8, status); // status mặc định
+            ps.executeUpdate();
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error updating role for account ID: " + userID, e);
-            return false;
+            System.out.println("Error inserting product: " + e.getMessage());
         } finally {
-            closeResources(conn, ps, null);
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
+        }
+    }
+
+    public void updateProduct(int id, String name, String image, double price, String description, int stock, int status, int category) {
+    String sql = "UPDATE [dbo].[Product] SET name=?, img=?, price=?, description=?, cateID=?, stock=?, status=? WHERE pid=?";
+    try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, name);
+        ps.setString(2, image);
+        ps.setDouble(3, price);
+        ps.setString(4, description);
+        ps.setInt(5, category);
+        ps.setInt(6, stock);
+        ps.setInt(7, status);
+        ps.setInt(8, id);
+        ps.executeUpdate();
+    } catch (Exception e) {
+        System.out.println("Error updating product: " + e.getMessage());
     }
 }
 
-    public Account checkAccountExist(String username) {
-        return getAccount(username);
+
+    
+    // Helper method to close connections
+    private void closeConnection() {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     //--------------------------------------------
     //lấy 3 sản phẩm mới nhất vào block 2: banner
     public List<Product> getTop5NewestProducts() {
         List<Product> productList = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
 
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(TOP_3);
-            rs = ps.executeQuery();
+        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(TOP_3); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Product p = new Product();
@@ -818,217 +974,11 @@ public class DAO {
                 productList.add(p);
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error getting top 5 newest products", e);
-        } finally {
-            closeResources(conn, ps, rs);
+            e.printStackTrace();
         }
         return productList;
     }
 
-    public void updateAccountInfo(int id, String fullName, String email, String phone, String address) {
-        String query = "UPDATE Account SET address=?, email=?, phoneNumber=? WHERE userID=?";
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, address);
-            ps.setString(2, email);
-            ps.setString(3, phone);
-            ps.setInt(4, id);
-            ps.executeUpdate();
-            System.out.println("Account info updated for userID: " + id);
-        } catch (Exception e) {
-            System.out.println("Error updating account info: " + e.getMessage());
-        }
-    }
-
-    public void updateAccountPassword(int id, String newPassword) {
-        String query = "UPDATE Account SET password=? WHERE userID=?";
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, newPassword);
-            ps.setInt(2, id);
-            ps.executeUpdate();
-            System.out.println("Password updated successfully for userID: " + id);
-        } catch (Exception e) {
-            System.out.println("Error updating password: " + e.getMessage());
-        }
-    }
-
-    public Account getAccountById(int id) {
-        String query = "SELECT * FROM Account WHERE userID = ?";
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                return new Account(
-                    rs.getInt("userID"),
-                    rs.getString("userName"),
-                    rs.getString("password"),
-                    rs.getString("email"),
-                    rs.getString("address"),
-                    rs.getString("phoneNumber"),
-                    rs.getInt("roleID"),
-                    rs.getInt("status")
-                );
-            }
-        } catch (Exception e) {
-            System.out.println("Error getting account by ID: " + e.getMessage());
-        }
-        return null;
-    }
-
-    /**
-     * Checks if the provided password matches the user's current password
-     * @param userId User ID
-     * @param password Password to check
-     * @return true if the password matches, false otherwise
-     */
-    public boolean checkPassword(int userId, String password) {
-        String query = "SELECT password FROM Account WHERE userID = ?"; 
-        
-        try (Connection conn = new DBContext().getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
-
-            ps.setInt(1, userId);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    String storedPassword = rs.getString("password");
-
-                    if (storedPassword != null) {
-                        // Chuẩn hóa chuỗi trước khi so sánh
-                        storedPassword = storedPassword.trim();
-                        password = password.trim();
-
-                        System.out.println("Debug - DB Password: [" + storedPassword + "]");
-                        System.out.println("Debug - Input Password: [" + password + "]");
-
-                        return storedPassword.equals(password);
-                    }
-                } else {
-                    System.out.println("Debug - No user found with ID: " + userId);
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error checking password: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     * Updates the user's password
-     * @param userId User ID
-     * @param newPassword New password
-     * @return true if update was successful, false otherwise
-     */
-    public boolean updatePassword(int userId, String newPassword) {
-        String query = "UPDATE Account SET password = ? WHERE userID = ?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, newPassword);
-            ps.setInt(2, userId);
-            
-            int rowsUpdated = ps.executeUpdate();
-            return rowsUpdated > 0;
-        } catch (Exception e) {
-            System.out.println("Error updating password: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            closeResources(conn, ps, null);
-        }
-        return false;
-    }
-
-    // Add this method to your DAO class:
-
-    public boolean checkPassword(String username, String password) {
-        try {
-            // For plaintext passwords, no hashing needed
-            String query = "SELECT * FROM Account WHERE [user] = ? AND pass = ?";
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, username);
-            ps.setString(2, password); // Use plaintext password directly
-            rs = ps.executeQuery();
-            
-            return rs.next(); // Returns true if a matching account was found
-            
-        } catch (Exception e) {
-            System.out.println("Error checking password: " + e.getMessage());
-            return false;
-        }
-    }
-    
-    // Add hashPassword method to DAO class - make sure this matches the one in UpdateProfileController
-    private String hashPassword(String password) {
-        try {
-            // Log the password being hashed for debugging
-            System.out.println("DAO - Original password to hash: " + password);
-            
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes("UTF-8")); // Explicitly use UTF-8
-            byte[] digest = md.digest();
-            
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : digest) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) {
-                    hexString.append('0');
-                }
-                hexString.append(hex);
-            }
-            
-            String result = hexString.toString();
-            System.out.println("DAO - Generated hash: " + result);
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return password; // fallback if MD5 is not available
-        }
-    }
-
-    /**
-     * Debug method to directly check if a password matches for a user ID
-     */
-    public boolean debugPasswordCheck(int id, String currentPassword) {
-        try {
-            Connection conn = new DBContext().getConnection();
-            
-            String query = "SELECT userID, userName, password FROM Account WHERE userID = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            
-            if (rs.next()) {
-                int userId = rs.getInt("userID");
-                String username = rs.getString("userName");
-                String dbPassword = rs.getString("password");
-                
-                System.out.println("DEBUG - Found user in 'Account' table:");
-                System.out.println("  ID: " + userId);
-                System.out.println("  Username: " + username);
-                System.out.println("  Password in DB: [" + dbPassword + "]");
-                System.out.println("  Password provided: [" + currentPassword + "]");
-                System.out.println("  Match result: " + currentPassword.equals(dbPassword));
-                
-                return currentPassword.equals(dbPassword);
-            }
-            
-            System.out.println("DEBUG - User not found in Account table with ID: " + id);
-            return false;
-        } catch (Exception e) {
-            System.out.println("Error in debug password check: " + e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     //--------------------------------------------
     public static void main(String[] args) {
@@ -1044,4 +994,5 @@ public class DAO {
             System.out.println(p.toString());
         }
     }
+
 }

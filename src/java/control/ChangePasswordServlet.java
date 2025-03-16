@@ -95,6 +95,7 @@ public class ChangePasswordServlet extends HttpServlet {
         // Update the password - no hashing needed for plaintext storage
         dao.updateAccountPassword(id, newPassword);
         
+        
         // Refresh account info in session
         Account updatedAccount = dao.getAccountById(id);
         if (updatedAccount != null) {

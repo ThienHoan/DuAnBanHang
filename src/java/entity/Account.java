@@ -40,19 +40,6 @@ public class Account {
         this.status = status;
     }
 
-    // Add this constructor to match the one used in DAO.getAccountById method
-    public Account(int id, String user, String pass, int isSell, int isAdmin, String fullName, String email, String phone, String address) {
-        this.id = id;
-        this.user = user;
-        this.pass = pass;
-        this.isSell = isSell;
-        this.isAdmin = isAdmin;
-        this.fullName = fullName;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-    }
-
     // Getter và Setter cho userID
     public int getUserID() {
         return userID;

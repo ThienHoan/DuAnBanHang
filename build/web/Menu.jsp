@@ -40,7 +40,38 @@
                                 <ul class="sub-menu">
                                     <c:forEach items="${listCC}" var="c">
                                         <li class="menu-item"><a href="category?cid=${c.cid}&cname=${c.cname}">${c.cname}</a></li>
-                                    </c:forEach>
+                                        </c:forEach>
+                                    <!--                                    <li class="menu-item"><a href="#">Tinh dầu xông phòng</a></li>
+                                                                        <li class="menu-item"><a href="#">Tinh dầu xe hơi</a></li>
+                                                                        <li class="menu-item"><a href="#">Tinh dầu massage</a></li>
+                                                                        <li class="menu-item"><a href="#">Tinh dầu dạng xịt</a></li>-->
+
+
+
+                                    <!--                                    <li class="menu-item menu-item-has-children has-child"><a href="#" class="menu-name" data-title="Eggs & other considerations">Eggs & other considerations</a>
+                                                                            <ul class="sub-menu">
+                                                                                <li class="menu-item"><a href="#">Classic Breakfast</a></li>
+                                                                                <li class="menu-item"><a href="#">Huevos Rancheros</a></li>
+                                                                                <li class="menu-item"><a href="#">Everything Egg Sandwich</a></li>
+                                                                                <li class="menu-item"><a href="#">Egg Sandwich</a></li>
+                                                                                <li class="menu-item"><a href="#">Vegan Burrito</a></li>
+                                                                                <li class="menu-item"><a href="#">Biscuits and Gravy</a></li>
+                                                                                <li class="menu-item"><a href="#">Bacon Avo Egg Sandwich</a></li>
+                                                                            </ul>
+                                                                        </li>-->
+                                    <!--                                    <li class="menu-item"><a href="#">Griddle</a></li>
+                                                                        <li class="menu-item menu-item-has-children has-child"><a href="#" class="menu-name" data-title="Sides & Extras">Sides & Extras</a>
+                                                                            <ul class="sub-menu">
+                                                                                <li class="menu-item"><a href="#">Breakfast Burrito</a></li>
+                                                                                <li class="menu-item"><a href="#">Crab Cake Benedict</a></li>
+                                                                                <li class="menu-item"><a href="#">Corned Beef Hash</a></li>
+                                                                                <li class="menu-item"><a href="#">Steak & Eggs</a></li>
+                                                                                <li class="menu-item"><a href="#">Oatmeal</a></li>
+                                                                                <li class="menu-item"><a href="#">Fruit & Yogurt Parfait</a></li>
+                                                                            </ul>
+                                                                        </li>-->
+                                    <!--                                    <li class="menu-item"><a href="#">Biscuits</a></li>
+                                                                        <li class="menu-item"><a href="#">Seasonal Fruit Plate</a></li>-->
                                 </ul>
                             </li>
                             <li class="menu-item"><a href="userprofile">Profile</a></li>
@@ -61,11 +92,23 @@
                         <div class="mobile-search">
                             <a href="javascript:void(0)" class="open-searchbox"><i class="biolife-icon icon-search"></i></a>
                             <div class="mobile-search-content">
-                                <form action="search" method="post" class="form-search" name="mobile-seacrh">
+<!--                                <form action="search" method="post" class="form-search" name="mobile-seacrh" method="get">
                                     <a href="#" class="btn-close"><span class="biolife-icon icon-close-menu"></span></a>
-                                    <input type="text" name="txt" class="input-text" value="" placeholder="Search here...">
+                                    <input type="text" name="txt" class="input-text" value="" placeholder="Search here">
+                                                                                <select name="category">
+                                                                                    <option value="-1" selected>All Categories</option>
+                                                                                    <option value="vegetables">Vegetables</option>
+                                                                                    <option value="fresh_berries">Fresh Berries</option>
+                                                                                    <option value="ocean_foods">Ocean Foods</option>
+                                                                                    <option value="butter_eggs">Butter & Eggs</option>
+                                                                                    <option value="fastfood">Fastfood</option>
+                                                                                    <option value="fresh_meat">Fresh Meat</option>
+                                                                                    <option value="fresh_onion">Fresh Onion</option>
+                                                                                    <option value="papaya_crisps">Papaya & Crisps</option>
+                                                                                    <option value="oatmeal">Oatmeal</option>
+                                                                                </select>
                                     <button type="submit" class="btn-submit">go</button>
-                                </form>
+                                </form>-->
                             </div>
                         </div>
                         
@@ -98,10 +141,9 @@
                         <!-- Shopping cart -->
                         <div class="minicart-block">
                             <div class="minicart-contain">
-                                <a href="javascript:void(0)" class="link-to">
+                                <a href="cart" class="link-to">
                                     <span class="icon-qty-combine">
                                         <i class="icon-cart-mini biolife-icon"></i>
-                                        <span class="qty">8</span>
                                     </span>
                                     <span class="title">Giỏ hàng : </span>
                                     <span class="sub-total">0 VNĐ</span>
@@ -167,6 +209,14 @@
                                     <option value="${c.cid}" ${c.cid == selectedCid ? 'selected' : ''}>${c.cname}</option>
                                 </c:forEach>
                             </select>
+
+                            <!--                            <select name="category">
+                                                            <option value="-1" selected>All Categories</option>
+                                                            <option value="vegetables">Tinh dầu xông phòng</option>
+                                                            <option value="fresh_berries">Tinh dầu xe hơi</option>
+                                                            <option value="ocean_foods">Tinh dầu massage</option>
+                                                            <option value="butter_eggs">Tinh dầu dạng xịt</option>
+                                                        </select>-->
                             <button type="submit" class="btn-submit"><i class="biolife-icon icon-search"></i></button>
                         </form>
                     </div>

@@ -21,8 +21,8 @@ public class HomeControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        // Lấy danh sách tất cả sản phẩm
+        //b1: get data from dao
+        DAO dao = new DAO();
         List<Product> list = dao.getAllProduct();
         request.setAttribute("listP", list);
 
