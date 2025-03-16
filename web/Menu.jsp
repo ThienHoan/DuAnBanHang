@@ -218,10 +218,9 @@
                         </div>
                         <div class="minicart-block">
                             <div class="minicart-contain">
-                                <a href="javascript:void(0)" class="link-to">
+                                <a href="cart" class="link-to">
                                     <span class="icon-qty-combine">
                                         <i class="icon-cart-mini biolife-icon"></i>
-                                        <span class="qty">8</span>
                                     </span>
                                     <span class="title">Giỏ hàng : </span>
                                     <span class="sub-total">0 VNĐ</span>

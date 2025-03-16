@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <filter>
+        <filter-name>LoggingFilter</filter-name>
+        <filter-class>filter.LoggingFilter</filter-class>
+    </filter>
+
+
+    <filter-mapping>
+        <filter-name>LoggingFilter</filter-name>
+        <url-pattern>/Category.jsp</url-pattern>
+        <url-pattern>/category</url-pattern>
+        <url-pattern>/ManagerProduct.jsp</url-pattern>
+        <url-pattern>/ManagerAccount.jsp</url-pattern>
+<!--        <url-pattern>/Home.jsp</url-pattern>
+        <url-pattern>/home</url-pattern>
+        -->
+    </filter-mapping>
+    <servlet>
+        <servlet-name>HomeControl</servlet-name>
+        <servlet-class>control.HomeControl</servlet-class>
+    </servlet>
+    <session-config>
+    <session-timeout>30</session-timeout> <!-- 30 phút -->
+</session-config>
+    <servlet-mapping>
+        <servlet-name>HomeControl</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+</web-app>

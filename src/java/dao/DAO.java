@@ -4,12 +4,19 @@ import context.DBContext;
 import entity.Account;
 import entity.Category;
 import entity.Product;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,8 +26,13 @@ import java.util.logging.Logger;
  */
 public class DAO {
 
+    private static final String TOP_3 = "SELECT TOP 5 * FROM Product WHERE status = 1 ORDER BY pid DESC";
+
     private static final String TOP_5 = "SELECT TOP 5 * FROM Product ORDER BY pid DESC";
     
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
     // Logger for this class
     private static final Logger LOGGER = Logger.getLogger(DAO.class.getName());
 
@@ -61,20 +73,62 @@ public class DAO {
                 ));
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error getting all products", e);
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public boolean updateRole(int userID, int roleID) {
+        String query = "UPDATE Account SET roleID = ? WHERE userID = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, roleID);
+            ps.setInt(2, userID);
+            
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error updating role for account ID: " + userID, e);
+            return false;
         } finally {
-            closeResources(conn, ps, rs);
+            closeResources(conn, ps, null);
+    }
+}
+    
+    public List<Product> getAllProductUser() {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM Product WHERE status=1";
+        try (Connection conn = new DBContext().getConnection();//mo ket noi voi sql
+                 PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery();) {
+
+            while (rs.next()) {
+                list.add(new Product(
+                        rs.getInt("pid"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getString("description"),
+                        rs.getInt("stock"),
+                        rs.getString("import_date"),
+                        rs.getInt("status"),
+                        rs.getInt("sell_id"),
+                        rs.getInt("cateID"),
+                        rs.getString("img")
+                ));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return list;
     }
 
     public List<Product> getProductByCID(String cid) {
         List<Product> list = new ArrayList<>();
-        String query = "select * from Product where cateID = ?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
+        String query = "select * from Product\n"
+                + "where cateID = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -95,22 +149,16 @@ public class DAO {
                 ));
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error getting products by category ID: " + cid, e);
-        } finally {
-            closeResources(conn, ps, rs);
         }
         return list;
     }
 
     public List<Product> getProductBySellID(int id) {
         List<Product> list = new ArrayList<>();
-        String query = "select * from Product where sell_id = ?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
+        String query = "select * from Product\n"
+                + "where sell_id = ?";
         try {
-            conn = new DBContext().getConnection();
+            conn = new DBContext().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -171,17 +219,14 @@ public class DAO {
     }
 
     public Product getProductByID(String id) {
-        String query = "select * from Product where pid = ?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
+        String query = "select * from Product\n"
+                + "where pid = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1, id);
             rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 return new Product(
                         rs.getInt("pid"),
                         rs.getString("name"),
@@ -754,49 +799,81 @@ public class DAO {
         return null;
     }
 
-    /**
-     * Update account role
-     * @param userID the user ID to update
-     * @param roleID the new role ID
-     * @return true if successful, false otherwise
-     */
-    public boolean updateRole(int userID, int roleID) {
-        String query = "UPDATE Account SET roleID = ? WHERE userID = ?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        
+    
+
+    public void insertProduct(String name, String image, String price, String description, String category, int sid, String stock,String status) {
+        String query = "INSERT INTO [dbo].[Product] ([name], [img], [price], [description], [cateID], [sell_id], [stock], [status]) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
-            ps.setInt(1, roleID);
-            ps.setInt(2, userID);
-            
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
+            ps.setString(1, name);
+            ps.setString(2, image);
+            ps.setString(3, price);
+            ps.setString(4, description);
+            ps.setString(5, category);
+            ps.setInt(6, sid);
+            ps.setString(7, stock);
+            ps.setString(8, status); // status mặc định
+            ps.executeUpdate();
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error updating role for account ID: " + userID, e);
-            return false;
+            System.out.println("Error inserting product: " + e.getMessage());
         } finally {
-            closeResources(conn, ps, null);
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
+        }
+    }
+
+    public void updateProduct(int id, String name, String image, double price, String description, int stock, int status, int category) {
+    String sql = "UPDATE [dbo].[Product] SET name=?, img=?, price=?, description=?, cateID=?, stock=?, status=? WHERE pid=?";
+    try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, name);
+        ps.setString(2, image);
+        ps.setDouble(3, price);
+        ps.setString(4, description);
+        ps.setInt(5, category);
+        ps.setInt(6, stock);
+        ps.setInt(7, status);
+        ps.setInt(8, id);
+        ps.executeUpdate();
+    } catch (Exception e) {
+        System.out.println("Error updating product: " + e.getMessage());
     }
 }
 
-    public Account checkAccountExist(String username) {
-        return getAccount(username);
+
+    
+    // Helper method to close connections
+    private void closeConnection() {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     //--------------------------------------------
     //lấy 3 sản phẩm mới nhất vào block 2: banner
     public List<Product> getTop5NewestProducts() {
         List<Product> productList = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
 
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(TOP_5);
-            rs = ps.executeQuery();
+        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(TOP_3); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Product p = new Product();
@@ -808,9 +885,7 @@ public class DAO {
                 productList.add(p);
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error getting top 5 newest products", e);
-        } finally {
-            closeResources(conn, ps, rs);
+            e.printStackTrace();
         }
         return productList;
     }
@@ -831,3 +906,4 @@ public class DAO {
         }
     }
 }
+

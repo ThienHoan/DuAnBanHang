@@ -15,6 +15,7 @@
         <group/>
 =======
         <group>
+<<<<<<< HEAD
             <file>file:/D:/CODE/PRJ/DuAnBanHang/web/META-INF/context.xml</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/dao/DAO.java</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/nbproject/build-impl.xml</file>
@@ -24,6 +25,27 @@
             <file>file:/D:/CODE/PRJ/DuAnBanHang/web/ManagerAccount.jsp</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/web/Category.jsp</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/context/DBContext.java</file>
+=======
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/WEB-INF/web.xml</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/context/DBContext.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/dao/DAO.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/ManagerControl.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/HomeControl.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/ManagerProduct.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/productDao/ProductDao.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/service/ICartService.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/Cart.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/CartControll.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/UpdateControl.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/Product.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/ShoppingCart.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/LoginControl.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/AddControl.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/CartItem.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Home.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Login.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/service/CartService.java</file>
+>>>>>>> khalam
         </group>
 >>>>>>> Stashed changes
     </open-files>
