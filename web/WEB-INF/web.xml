@@ -20,11 +20,30 @@
         <servlet-name>HomeControl</servlet-name>
         <servlet-class>control.HomeControl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserProfileController</servlet-name>
+        <servlet-class>control.UserProfileController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <servlet-class>control.ChangePasswordServlet</servlet-class>
+    </servlet>
     <session-config>
-    <session-timeout>30</session-timeout> <!-- 30 phút -->
-</session-config>
+        <session-timeout>30</session-timeout> <!-- 30 phút -->
+    </session-config>
     <servlet-mapping>
         <servlet-name>HomeControl</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserProfileController</servlet-name>
+        <url-pattern>/userprofile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>home</welcome-file>
+    </welcome-file-list>
 </web-app>

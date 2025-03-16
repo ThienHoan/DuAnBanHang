@@ -1,4 +1,3 @@
-
 package control;
 
 import dao.DAO;
@@ -61,6 +60,7 @@ public class LoginControl extends HttpServlet {
         }else{
             HttpSession session= request.getSession();
             session.setAttribute("account", a);
+            session.setAttribute("acc", a);  // Make sure this line exists and runs
             session.setMaxInactiveInterval(600); //10p
             response.sendRedirect("home");
         }

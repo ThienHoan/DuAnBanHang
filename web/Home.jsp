@@ -1618,3 +1618,15 @@
     </body>
 
 </html>
+
+<!-- This assumes that there is a session attribute called "acc" that stores the logged-in user information -->
+<div class="minicart-block">
+    <div class="minicart-contain">
+        <c:if test="${sessionScope.acc != null}">
+            <a href="userprofile" class="login-link"><i class="biolife-icon icon-login"></i>Hello ${sessionScope.acc.user}</a>
+        </c:if>
+        <c:if test="${sessionScope.acc == null}">
+            <a href="Login.jsp" class="login-link"><i class="biolife-icon icon-login"></i>Login/Register</a>
+        </c:if>
+    </div>
+</div>

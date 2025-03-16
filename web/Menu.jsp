@@ -1,4 +1,3 @@
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <header id="header" class="header-area style-01 layout-03">
@@ -209,6 +208,20 @@
                                     <span class="qty">4</span>
                                 </span>
                             </a>
+                        </div>
+                        <div class="minicart-block">
+                            <div class="minicart-contain">
+                                <c:if test="${sessionScope.acc != null}">
+                                    <a href="userprofile" class="login-link">
+                                        <i class="biolife-icon icon-login"></i>Hello ${sessionScope.acc.user}
+                                    </a>
+                                </c:if>
+                                <c:if test="${sessionScope.acc == null}">
+                                    <a href="Login.jsp" class="login-link">
+                                        <i class="biolife-icon icon-login"></i>Login/Register
+                                    </a>
+                                </c:if>
+                            </div>
                         </div>
                         <div class="minicart-block">
                             <div class="minicart-contain">
