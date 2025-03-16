@@ -5,7 +5,7 @@ import entity.Account;
 import entity.Category;
 import entity.Product;
 import java.math.BigDecimal;
-import java.security.MessageDigest; // Add this import
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
