@@ -39,24 +39,27 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 md-margin-top-5px sm-margin-top-50px xs-margin-top-40px">
                     <section class="footer-item">
-                        <h3 class="section-title">Useful Links</h3>
+                        <h3 class="section-title">Thông tin cần thiết</h3>
                         <div class="row">
                             <div class="col-lg-6 col-sm-6 col-xs-6">
                                 <div class="wrap-custom-menu vertical-menu-2">
                                     <ul class="menu">
-                                        <li><a href="https://giatruyenhongduc.com/2020/04/27/chinh-sach-dai-ly/" target="_blank">Chính sách dành cho Đại Lý</a></li>
-                                        <li><a href="https://giatruyenhongduc.com/2020/07/10/chinh-sach-uu-dai-khach-hang/" target="_blank">Chính sách dành cho Cộng Tác Viên</a></li>
-                                        <li><a href="https://giatruyenhongduc.com/2020/07/10/tu-van-chon-san-pham-phu-hop/" target="_blank">Tư vấn miễn phí chọn sản phẩm phù hợp</a></li>
+                                        <li><a href="#">About Us</a></li>
+                                        <li><a href="#">Giới thiệu cửa hàng</a></li>
+                                        <li><a href="#">Mua sắm an toàn</a></li>
+                                        <li><a href="#">Thông tin giao hàng</a></li>
+                                        <li><a href="#">Chính sách bảo mật</a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-sm-6 col-xs-6">
                                 <div class="wrap-custom-menu vertical-menu-2">
                                     <ul class="menu">
-                                        <li><a href="https://giatruyenhongduc.com/2020/05/04/chinh-sach-giao-hang-2/" target="_blank">Chính sách giao hàng</a></li>
-                                        <li><a href="https://giatruyenhongduc.com/2020/04/27/chinh-sach-doi-tra-san-pham/" target="_blank">Chính sách đổi trả sản phẩm</a></li>
-                                        <li><a href="https://giatruyenhongduc.com/2019/12/24/chinh-sach-mua-hang/">Chính sách mua hàng</a></li>
-                                        <li><a href="https://giatruyenhongduc.com/2019/12/24/chinh-sach-bao-mat-thanh-toan/" target="_blank">Chính sách bảo mật thanh toán</a></li>
+                                        <li><a href="#">Liên hệ với chúng tôi</a></li>
+                                        <li><a href="#">Đổi mới sáng tạo</a></li>
+                                        <li><a href="#">Khách hàng đánh giá</a></li>
+                                        <li><a href="#">Điều khoản sử dụng</a></li>
+                                        <li><a href="#">Chính sách đổi trả</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -89,7 +92,7 @@
                                 <li>
                                     <p class="info-item">
                                         <i class="biolife-icon icon-clock"></i>
-                                        <b class="desc">Works: 7 am - 5.30 pm</b>
+                                        <b class="desc">Works: 7am - 5.30pm</b>
                                     </p>
                                 </li>
                             </ul>
@@ -114,7 +117,7 @@
                                             <div class="copy-right-text"><p><a href="templateshub.net">Templates Hub</a></p></div>
                                         </div>-->
                 <div class="col-lg-6 col-sm-6 col-xs-12">
-<!--                    <div class="payment-methods">
+                    <div class="payment-methods">
                         <ul>
                             <li><a href="#" class="payment-link"><img src="assets/images/card1.jpg" width="51" height="36" alt=""></a></li>
                             <li><a href="#" class="payment-link"><img src="assets/images/card2.jpg" width="51" height="36" alt=""></a></li>
@@ -122,7 +125,7 @@
                             <li><a href="#" class="payment-link"><img src="assets/images/card4.jpg" width="51" height="36" alt=""></a></li>
                             <li><a href="#" class="payment-link"><img src="assets/images/card5.jpg" width="51" height="36" alt=""></a></li>
                         </ul>
-                    </div>-->
+                    </div>
                 </div>
             </div>
         </div>

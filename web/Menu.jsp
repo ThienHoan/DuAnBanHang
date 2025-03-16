@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <header id="header" class="header-area style-01 layout-03">
+    
     <div class="header-top bg-main hidden-xs">
         <div class="container">
             <div class="top-bar left">
@@ -62,10 +63,16 @@
                             <li class="menu-item menu-item-has-children has-child">
                                 <a href="#" class="menu-name" data-title="Product">Product</a>
                                 <ul class="sub-menu">
-                                    <li class="menu-item"><a href="#">Tinh dầu xông phòng</a></li>
-                                    <li class="menu-item"><a href="#">Tinh dầu xe hơi</a></li>
-                                    <li class="menu-item"><a href="#">Tinh dầu massage</a></li>
-                                    <li class="menu-item"><a href="#">Tinh dầu dạng xịt</a></li>
+                                    <c:forEach items="${listCC}" var="c">
+                                        <li class="menu-item"><a href="category?cid=${c.cid}&cname=${c.cname}">${c.cname}</a></li>
+                                        </c:forEach>
+                                    <!--                                    <li class="menu-item"><a href="#">Tinh dầu xông phòng</a></li>
+                                                                        <li class="menu-item"><a href="#">Tinh dầu xe hơi</a></li>
+                                                                        <li class="menu-item"><a href="#">Tinh dầu massage</a></li>
+                                                                        <li class="menu-item"><a href="#">Tinh dầu dạng xịt</a></li>-->
+
+
+
                                     <!--                                    <li class="menu-item menu-item-has-children has-child"><a href="#" class="menu-name" data-title="Eggs & other considerations">Eggs & other considerations</a>
                                                                             <ul class="sub-menu">
                                                                                 <li class="menu-item"><a href="#">Classic Breakfast</a></li>
@@ -183,10 +190,10 @@
                         <div class="mobile-search">
                             <a href="javascript:void(0)" class="open-searchbox"><i class="biolife-icon icon-search"></i></a>
                             <div class="mobile-search-content">
-                                <form action="search" method="post" class="form-search" name="mobile-seacrh" method="get">
+<!--                                <form action="search" method="post" class="form-search" name="mobile-seacrh" method="get">
                                     <a href="#" class="btn-close"><span class="biolife-icon icon-close-menu"></span></a>
-                                    <input type="text" name="txt" class="input-text" value="" placeholder="Search here...">
-                                    <!--                                            <select name="category">
+                                    <input type="text" name="txt" class="input-text" value="" placeholder="Search here">
+                                                                                <select name="category">
                                                                                     <option value="-1" selected>All Categories</option>
                                                                                     <option value="vegetables">Vegetables</option>
                                                                                     <option value="fresh_berries">Fresh Berries</option>
@@ -197,149 +204,30 @@
                                                                                     <option value="fresh_onion">Fresh Onion</option>
                                                                                     <option value="papaya_crisps">Papaya & Crisps</option>
                                                                                     <option value="oatmeal">Oatmeal</option>
-                                                                                </select>-->
+                                                                                </select>
                                     <button type="submit" class="btn-submit">go</button>
-                                </form>
+                                </form>-->
                             </div>
                         </div>
                         <div class="wishlist-block hidden-sm hidden-xs">
                             <a href="#" class="link-to">
                                 <span class="icon-qty-combine">
                                     <i class="icon-heart-bold biolife-icon"></i>
-                                    <span class="qty">4</span>
+                                    
                                 </span>
                             </a>
                         </div>
-                        <div class="minicart-block">
+                        <div class="gio-hang-icon">
                             <div class="minicart-contain">
-                                <a href="javascript:void(0)" class="link-to">
+                                <a href="cart" class="link-to">
                                     <span class="icon-qty-combine">
                                         <i class="icon-cart-mini biolife-icon"></i>
-                                        <span class="qty">8</span>
+                                        
                                     </span>
-                                    <span class="title">Giỏ hàng : </span>
-                                    <span class="sub-total">0 VNĐ</span>
+                                    <span class="title">Giỏ hàng </span>
+                                    
                                 </a>
-                                <div class="cart-content">
-                                    <div class="cart-inner">
-                                        <ul class="products">
-                                            <li>
-                                                <div class="minicart-item">
-                                                    <div class="thumb">
-                                                        <a href="#"><img src="assets/images/minicart/pr-01.jpg" width="90" height="90" alt="National Fresh"></a>
-                                                    </div>
-                                                    <div class="left-info">
-                                                        <div class="product-title"><a href="#" class="product-name">National Fresh Fruit</a></div>
-                                                        <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                        </div>
-                                                        <div class="qty">
-                                                            <label for="cart[id123][qty]">Qty:</label>
-                                                            <input type="number" class="input-qty" name="cart[id123][qty]" id="cart[id123][qty]" value="1" disabled>
-                                                        </div>
-                                                    </div>
-                                                    <div class="action">
-                                                        <a href="#" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                        <a href="#" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="minicart-item">
-                                                    <div class="thumb">
-                                                        <a href="#"><img src="assets/images/minicart/pr-02.jpg" width="90" height="90" alt="National Fresh"></a>
-                                                    </div>
-                                                    <div class="left-info">
-                                                        <div class="product-title"><a href="#" class="product-name">National Fresh Fruit</a></div>
-                                                        <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                        </div>
-                                                        <div class="qty">
-                                                            <label for="cart[id124][qty]">Qty:</label>
-                                                            <input type="number" class="input-qty" name="cart[id124][qty]" id="cart[id124][qty]" value="1" disabled>
-                                                        </div>
-                                                    </div>
-                                                    <div class="action">
-                                                        <a href="#" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                        <a href="#" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="minicart-item">
-                                                    <div class="thumb">
-                                                        <a href="#"><img src="assets/images/minicart/pr-03.jpg" width="90" height="90" alt="National Fresh"></a>
-                                                    </div>
-                                                    <div class="left-info">
-                                                        <div class="product-title"><a href="#" class="product-name">National Fresh Fruit</a></div>
-                                                        <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                        </div>
-                                                        <div class="qty">
-                                                            <label for="cart[id125][qty]">Qty:</label>
-                                                            <input type="number" class="input-qty" name="cart[id125][qty]" id="cart[id125][qty]" value="1" disabled>
-                                                        </div>
-                                                    </div>
-                                                    <div class="action">
-                                                        <a href="#" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                        <a href="#" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="minicart-item">
-                                                    <div class="thumb">
-                                                        <a href="#"><img src="assets/images/minicart/pr-04.jpg" width="90" height="90" alt="National Fresh"></a>
-                                                    </div>
-                                                    <div class="left-info">
-                                                        <div class="product-title"><a href="#" class="product-name">National Fresh Fruit</a></div>
-                                                        <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                        </div>
-                                                        <div class="qty">
-                                                            <label for="cart[id126][qty]">Qty:</label>
-                                                            <input type="number" class="input-qty" name="cart[id126][qty]" id="cart[id126][qty]" value="1" disabled>
-                                                        </div>
-                                                    </div>
-                                                    <div class="action">
-                                                        <a href="#" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                        <a href="#" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="minicart-item">
-                                                    <div class="thumb">
-                                                        <a href="#"><img src="assets/images/minicart/pr-05.jpg" width="90" height="90" alt="National Fresh"></a>
-                                                    </div>
-                                                    <div class="left-info">
-                                                        <div class="product-title"><a href="#" class="product-name">National Fresh Fruit</a></div>
-                                                        <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                        </div>
-                                                        <div class="qty">
-                                                            <label for="cart[id127][qty]">Qty:</label>
-                                                            <input type="number" class="input-qty" name="cart[id127][qty]" id="cart[id127][qty]" value="1" disabled>
-                                                        </div>
-                                                    </div>
-                                                    <div class="action">
-                                                        <a href="#" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                        <a href="#" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <p class="btn-control">
-                                            <a href="#" class="btn view-cart">view cart</a>
-                                            <a href="#" class="btn">checkout</a>
-                                        </p>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="mobile-menu-toggle">
@@ -391,17 +279,24 @@
                             <input type="text" name="txt" class="input-text" value="" placeholder="Search here...">
                             <select name="category">
                                 <option value="-1" selected>All Categories</option>
-                                <option value="vegetables">Tinh dầu xông phòng</option>
-                                <option value="fresh_berries">Tinh dầu xe hơi</option>
-                                <option value="ocean_foods">Tinh dầu massage</option>
-                                <option value="butter_eggs">Tinh dầu dạng xịt</option>
+                                <c:forEach items="${listCC}" var="c">
+                                    <option value="${c.cid}" ${c.cid == selectedCid ? 'selected' : ''}>${c.cname}</option>
+                                </c:forEach>
                             </select>
+
+                            <!--                            <select name="category">
+                                                            <option value="-1" selected>All Categories</option>
+                                                            <option value="vegetables">Tinh dầu xông phòng</option>
+                                                            <option value="fresh_berries">Tinh dầu xe hơi</option>
+                                                            <option value="ocean_foods">Tinh dầu massage</option>
+                                                            <option value="butter_eggs">Tinh dầu dạng xịt</option>
+                                                        </select>-->
                             <button type="submit" class="btn-submit"><i class="biolife-icon icon-search"></i></button>
                         </form>
                     </div>
                     <div class="live-info">
                         <p class="telephone"><i class="fa fa-phone" aria-hidden="true"></i><b class="phone-number">0914 145 788</b></p>
-                        <p class="working-time">7.am - 5.pm</p>
+                        <p class="working-time">7 am - 5 pm</p>
                     </div>
                 </div>
             </div>

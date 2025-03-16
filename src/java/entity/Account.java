@@ -40,6 +40,7 @@ public class Account {
 
     public void setUserID(int userID) {
         this.userID = userID;
+
     }
 
     // Getter và Setter cho userName
@@ -104,6 +105,7 @@ public class Account {
     public void setStatus(int status) {
         this.status = status;
     }
+
 
     // Phương thức toString để in thông tin đối tượng (tuỳ chọn)
     @Override
