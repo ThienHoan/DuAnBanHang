@@ -80,7 +80,14 @@
          @Override
          protected void doPost(HttpServletRequest request, HttpServletResponse response)
                  throws ServletException, IOException {
- 
+      HttpSession session = request.getSession();
+        Integer userID = (Integer) session.getAttribute("userID");
+
+        // Kiểm tra nếu người dùng chưa đăng nhập
+        if (userID == null) {
+            response.sendRedirect("Login.jsp");
+            return;
+        }
              String action = request.getParameter("action");
  
              if (action == null) {
