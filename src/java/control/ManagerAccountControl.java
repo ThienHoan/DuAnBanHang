@@ -158,6 +158,15 @@ public class ManagerAccountControl extends HttpServlet {
                 int roleID = Integer.parseInt(request.getParameter("roleID"));
                 int status = Integer.parseInt(request.getParameter("status"));
                 
+                // Check if password is empty or not provided
+                if (password == null || password.trim().isEmpty()) {
+                    // If password is empty, get the existing password from the database
+                    Account existingAccount = dao.getAccountByID(userID);
+                    if (existingAccount != null) {
+                        password = existingAccount.getPassword();
+                    }
+                }
+                
                 // Update the account
                 boolean success = dao.updateAccount(userID, userName, password, email, phoneNumber, address, roleID, status);
                 
