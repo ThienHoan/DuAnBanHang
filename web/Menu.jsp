@@ -80,7 +80,7 @@
                             <c:if test="${sessionScope.account.roleID == 3}">
                                 <li class="menu-item"><a href="ManagerAccount.jsp">Manager Account</a></li>
                             </c:if>
-                            <c:if test="${sessionScope.account.roleID == 2}">
+                            <c:if test="${sessionScope.account.roleID == 2 or sessionScope.account.roleID == 3}">
                                 <li class="menu-item"><a href="manager">Manager Product</a></li>
                             </c:if>
                         </ul>

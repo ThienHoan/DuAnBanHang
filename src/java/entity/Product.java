@@ -141,4 +141,8 @@ public class Product {
     public void setImg(String img) {
         this.img = img;
     }
+
+    public int getSellID() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

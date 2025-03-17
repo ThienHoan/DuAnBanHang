@@ -184,4 +184,8 @@ public class Account {
                 ", status=" + status +
                 '}';
     }
+
+    public String getUsername() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
