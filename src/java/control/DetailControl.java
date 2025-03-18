@@ -5,8 +5,10 @@
 package control;
 
 import dao.DAO;
+import dao.ReviewDAO;
 import entity.Category;
 import entity.Product;
+import entity.ProductReview;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -24,12 +26,14 @@ import java.util.List;
 public class DetailControl extends HttpServlet {
 
     DAO dao = new DAO();
+    ReviewDAO reviewDAO = new ReviewDAO();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
         String id = request.getParameter("pid");
+        int productId = Integer.parseInt(id);
 
         Product p = dao.getProductByID(id);
         request.setAttribute("detail", p);
@@ -40,10 +44,27 @@ public class DetailControl extends HttpServlet {
         request.setAttribute("description", p.getDescription());
         request.setAttribute("img", p.getImg());
         
+        // Get product reviews
+        List<ProductReview> reviews = reviewDAO.getReviewsByProductId(productId);
+        request.setAttribute("reviews", reviews);
+        
+        // Get review statistics
+        double avgRating = reviewDAO.getAverageRating(productId);
+        int reviewCount = reviewDAO.getReviewCount(productId);
+        int[] ratingDistribution = reviewDAO.getRatingDistribution(productId);
+        
+        request.setAttribute("avgRating", avgRating);
+        request.setAttribute("reviewCount", reviewCount);
+        request.setAttribute("ratingDistribution", ratingDistribution);
+        
+        // Calculate width percentage for star rating display
+        int widthPercentage = (int) (avgRating * 20); // 20% per star (5 stars = 100%)
+        request.setAttribute("ratingWidth", widthPercentage);
+        
         List<Product> list = dao.getAllProduct();
         request.setAttribute("listP", list);
         
-        List<Product> listP = dao.getProductByCID(id);
+        List<Product> listP = dao.getProductByCID(String.valueOf(p.getCateID()));
         request.setAttribute("listPP", listP);
 
         List<Category> listC = dao.getAllCategory();

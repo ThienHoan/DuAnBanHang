@@ -170,6 +170,9 @@ public class Account {
         this.phone = phone;
     }
 
+    public int getUserId() {
+        return userID; // Return the actual userID instead of throwing an exception
+    }   
     // Phương thức toString để in thông tin đối tượng (tuỳ chọn)
     @Override
     public String toString() {
