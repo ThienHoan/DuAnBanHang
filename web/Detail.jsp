@@ -1564,6 +1564,43 @@
     <script src="assets/js/slick.min.js"></script>
     <script src="assets/js/biolife.framework.js"></script>
     <script src="assets/js/functions.js"></script>
+    <script>
+    $(document).ready(function() {
+        const ratingBtns = document.querySelectorAll('.btn-rating');
+        const ratingInput = document.getElementById('selected-rating');
+        
+        ratingBtns.forEach((btn, index) => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Set the rating value (index + 1 because stars are 1-based)
+                const ratingValue = index + 1;
+                ratingInput.value = ratingValue;
+                
+                // Update the visual appearance
+                ratingBtns.forEach((b, i) => {
+                    const star = b.querySelector('i');
+                    if (i <= index) {
+                        star.className = 'fa fa-star';
+                    } else {
+                        star.className = 'fa fa-star-o';
+                    }
+                });
+            });
+        });
+        
+        // Check if hash contains tab=reviews to activate the reviews tab
+        if (window.location.hash === '#tab_4th' || window.location.search.includes('tab=reviews')) {
+            // Find the review tab link and trigger a click
+            const reviewTabLink = document.querySelector('a[href="#tab_4th"]');
+            if (reviewTabLink) {
+                setTimeout(() => {
+                    reviewTabLink.click();
+                }, 100);
+            }
+        }
+    });
+    </script>
 </body>
 
 </html>        const ratingBtns = document.querySelectorAll('.btn-rating');
