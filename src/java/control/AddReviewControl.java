@@ -1,4 +1,3 @@
-
 package control;
 
 import dao.ReviewDAO;
@@ -31,14 +30,27 @@ public class AddReviewControl extends HttpServlet {
         
         try {
             int productId = Integer.parseInt(request.getParameter("productId"));
-            int rating = Integer.parseInt(request.getParameter("rating"));
+            int rating = 5; // Default value
+            
+            try {
+                rating = Integer.parseInt(request.getParameter("rating"));
+                // Validate rating (1-5 stars)
+                if (rating < 1 || rating > 5) {
+                    rating = 5; // Default to 5 stars if invalid
+                }
+            } catch (NumberFormatException e) {
+                // Log error and use default rating
+                System.out.println("Invalid rating parameter: " + request.getParameter("rating"));
+            }
+            
             String reviewText = request.getParameter("reviewText");
             int userId = account.getUserId();
             
-            // Validate rating (1-5 stars)
-            if (rating < 1 || rating > 5) {
-                rating = 5; // Default to 5 stars if invalid
-            }
+            // Debug output
+            System.out.println("Adding review - ProductID: " + productId + 
+                              ", UserID: " + userId + 
+                              ", Rating: " + rating + 
+                              ", Text: " + reviewText);
             
             // Add the review
             ReviewDAO reviewDAO = new ReviewDAO();
