@@ -60,19 +60,38 @@
             <div class="container">
 
                 <div class="row">
-
+ <% 
+                 String usernameCookieSaved="";
+                String passwordCookieSaved="";
+                Cookie[] cookieListFromBrowser = request.getCookies() ;
+                if(cookieListFromBrowser!= null){
+                   for(Cookie c :cookieListFromBrowser){
+                    if(c.getName().equals("COOKIE_USERNAME")){
+                        usernameCookieSaved = c.getValue();
+                    }
+                    if(c.getName().equals("COOKIE_PASSWORD")){
+                        passwordCookieSaved = c.getValue();
+                    }
+                    }
+                    }
+                %>
                     <!--Form Sign In-->
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="signin-container">
                             <form action="login" name="frm-login" method="post">
                                 <p class="form-row">
                                     <label for="fid-name">Email Address:<span class="requite">*</span></label>
-                                    <input type="text" id="fid-name" name="user" value="" class="txt-input">
+                                    <input type="text" id="fid-name" name="user" value="<%= usernameCookieSaved %>" class="txt-input">
                                 </p>
                                 <p class="form-row">
                                     <label for="fid-pass">Password:<span class="requite">*</span></label>
-                                    <input type="password" id="fid-pass" name="pass" value="" class="txt-input">
+                                    <input type="password" id="fid-pass" name="pass" value="<%= passwordCookieSaved%>" class="txt-input">
                                 </p>
+                                   <p class="remember-me">
+                    <input type="checkbox" name="rememberMe" id="rememberMe"  />
+                    <label for="rememberMe">Remember me</label>
+                </p>
+
                                 <!-- Add error message display -->
                                 <c:if test="${not empty error}">
                                     <p class="form-row" style="color: red">

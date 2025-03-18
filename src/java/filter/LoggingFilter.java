@@ -29,7 +29,8 @@ public class LoggingFilter implements Filter {
         // Các đường dẫn không cần xác thực
         if (servletPath.equals("/login") || 
             servletPath.equals("/register") || 
-            servletPath.equals("/home") || 
+            servletPath.equals("/home") ||
+            servletPath.equals("/changePassword") ||  // Add this line to allow access
             requestURI.contains("assets/") || 
             requestURI.endsWith("Login.jsp") || 
             requestURI.endsWith("Register.jsp")) {

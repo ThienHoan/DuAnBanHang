@@ -41,5 +41,13 @@ public class Category {
     public String toString() {
         return "Category{" + "cid=" + cid + ", cname=" + cname + '}';
     }
+
+    public int getCateId() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Object getCateName() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

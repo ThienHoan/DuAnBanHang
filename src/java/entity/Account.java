@@ -13,6 +13,13 @@ public class Account {
     private String phoneNumber; // Số điện thoại
     private int roleID;         // Vai trò (mặc định là 1 - người dùng bình thường)
     private int status;         // Trạng thái (1: Hoạt động, 0: Bị khóa)
+    private int id;
+    private String user;
+    private String pass;
+    private int isSell;
+    private int isAdmin;
+    private String fullName;
+    private String phone;
 
     // Constructor mặc định
     public Account() {
@@ -32,8 +39,6 @@ public class Account {
         this.roleID = roleID;
         this.status = status;
     }
-
-    // Add or fix these getter methods:
 
     // Getter và Setter cho userID
     public int getUserID() {
@@ -107,6 +112,67 @@ public class Account {
         this.status = status;
     }
 
+    // Add or fix these getter methods:
+
+    public int getId() {
+        return userID; // Make sure this returns the userID, not id
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUser() {
+        return userName; // Make sure this returns userName, not user
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPass() {
+        return password; // Make sure this returns password, not pass
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public int getIsSell() {
+        return roleID;  // assuming roleID of 2 means seller
+    }
+
+    public void setIsSell(int isSell) {
+        this.isSell = isSell;
+    }
+
+    public int getIsAdmin() {
+        return roleID == 3 ? 1 : 0;  // assuming roleID of 3 means admin
+    }
+
+    public void setIsAdmin(int isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhone() {
+        return phoneNumber;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getUserId() {
+        return userID; // Return the actual userID instead of throwing an exception
+    }   
     // Phương thức toString để in thông tin đối tượng (tuỳ chọn)
     @Override
     public String toString() {
@@ -120,5 +186,9 @@ public class Account {
                 ", roleID=" + roleID +
                 ", status=" + status +
                 '}';
+    }
+
+    public String getUsername() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

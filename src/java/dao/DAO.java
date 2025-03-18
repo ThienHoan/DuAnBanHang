@@ -630,6 +630,56 @@ public class DAO {
         }
     }
 
+    public boolean debugPasswordCheck(int id, String currentPassword) {
+        try {
+            Connection conn = new DBContext().getConnection();
+            
+            String query = "SELECT userID, userName, password FROM Account WHERE userID = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                int userId = rs.getInt("userID");
+                String username = rs.getString("userName");
+                String dbPassword = rs.getString("password");
+                
+                System.out.println("DEBUG - Found user in 'Account' table:");
+                System.out.println("  ID: " + userId);
+                System.out.println("  Username: " + username);
+                System.out.println("  Password in DB: [" + dbPassword + "]");
+                System.out.println("  Password provided: [" + currentPassword + "]");
+                System.out.println("  Match result: " + currentPassword.equals(dbPassword));
+                
+                return currentPassword.equals(dbPassword);
+            }
+            
+            System.out.println("DEBUG - User not found in Account table with ID: " + id);
+            return false;
+        } catch (Exception e) {
+            System.out.println("Error in debug password check: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public void updateAccountInfo(int id, String fullName, String email, String phone, String address) {
+        String query = "UPDATE Account SET address=?, email=?, phoneNumber=? WHERE userID=?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, address);
+            ps.setString(2, email);
+            ps.setString(3, phone);
+            ps.setInt(4, id);
+            ps.executeUpdate();
+            System.out.println("Account info updated for userID: " + id);
+        } catch (Exception e) {
+            System.out.println("Error updating account info: " + e.getMessage());
+        }
+    }
+
     public Account getAccountByID(int accountID) {
         String query = "SELECT * FROM Account WHERE userID = ?";
         Connection conn = null;
@@ -685,6 +735,45 @@ public class DAO {
             return false;
         } finally {
             closeResources(conn, ps, null);
+        }
+    }
+    public Account getAccountById(int id) {
+        String query = "SELECT * FROM Account WHERE userID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Account(
+                    rs.getInt("userID"),
+                    rs.getString("userName"),
+                    rs.getString("password"),
+                    rs.getString("email"),
+                    rs.getString("address"),
+                    rs.getString("phoneNumber"),
+                    rs.getInt("roleID"),
+                    rs.getInt("status")
+                );
+            }
+        } catch (Exception e) {
+            System.out.println("Error getting account by ID: " + e.getMessage());
+        }
+        return null;
+    }
+
+    
+    public void updateAccountPassword(int id, String newPassword) {
+        String query = "UPDATE Account SET password=? WHERE userID=?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, newPassword);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+            System.out.println("Password updated successfully for userID: " + id);
+        } catch (Exception e) {
+            System.out.println("Error updating password: " + e.getMessage());
         }
     }
 
@@ -904,5 +993,5 @@ public class DAO {
             System.out.println(p.toString());
         }
     }
-}
 
+}

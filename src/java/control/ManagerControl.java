@@ -46,8 +46,14 @@ public class ManagerControl extends HttpServlet {
             System.out.println("Account is null!");
         } else {
             int id = a.getUserID();
+            int role=a.getRoleID();
             DAO dao = new DAO();
-            List<Product> list = dao.getProductBySellID(id);
+            List<Product> list;
+            if(role==2){
+             list = dao.getProductBySellID(id);
+            }else{
+             list =dao.getAllProduct();
+            }
             List<Category> listC = dao.getAllCategory();
             request.setAttribute("listS", list);
             request.setAttribute("listCC", listC);
