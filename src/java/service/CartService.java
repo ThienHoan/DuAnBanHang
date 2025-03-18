@@ -9,6 +9,7 @@ public class CartService implements ICartService {
     @Override
     public void addToCart(Cart cart, Product product, int quantity) {
         cart.addItem(product, quantity);
+        
     }
 
     @Override

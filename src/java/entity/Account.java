@@ -33,6 +33,8 @@ public class Account {
         this.status = status;
     }
 
+    // Add or fix these getter methods:
+
     // Getter và Setter cho userID
     public int getUserID() {
         return userID;
@@ -40,7 +42,6 @@ public class Account {
 
     public void setUserID(int userID) {
         this.userID = userID;
-
     }
 
     // Getter và Setter cho userName
@@ -105,7 +106,6 @@ public class Account {
     public void setStatus(int status) {
         this.status = status;
     }
-
 
     // Phương thức toString để in thông tin đối tượng (tuỳ chọn)
     @Override

@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <header id="header" class="header-area style-01 layout-03">
-    
     <div class="header-top bg-main hidden-xs">
         <div class="container">
             <div class="top-bar left">
@@ -222,7 +221,6 @@
                                 <a href="cart" class="link-to">
                                     <span class="icon-qty-combine">
                                         <i class="icon-cart-mini biolife-icon"></i>
-                                        
                                     </span>
                                     <span class="title">Giỏ hàng </span>
                                     

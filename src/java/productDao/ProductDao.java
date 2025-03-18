@@ -1,25 +1,32 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package productDao;
 
 import context.DBContext;
 import entity.Product;
-import java.sql.*;
-import java.util.*;
-import java.util.logging.Level;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
-public class ProductDao implements IProductDAO {
-    @Override
+/**
+ *
+ * @author DELL
+ */
+public class ProductDao {
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
     public Product getProductByID(String id) {
-        String query = "select * from Product where pid = ?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
+        String query = "select * from Product\n"
+                + "where pid = ?";
         try {
-            conn = new DBContext().getConnection();
+            conn = new DBContext().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setString(1, id);
             rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 return new Product(
                         rs.getInt("pid"),
                         rs.getString("name"),
@@ -34,7 +41,6 @@ public class ProductDao implements IProductDAO {
                 );
             }
         } catch (Exception e) {
-            
         }
         return null;
     }

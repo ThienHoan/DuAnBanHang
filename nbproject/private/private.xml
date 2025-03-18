@@ -1,35 +1,48 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
-    </open-files>
-</project-private>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
-<<<<<<< Updated upstream
-        <group/>
-=======
         <group>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/web/META-INF/context.xml</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/dao/DAO.java</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/nbproject/build-impl.xml</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/ManagerAccountControl.java</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/AddControl.java</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/web/EditAccount.jsp</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/web/ManagerAccount.jsp</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/web/Category.jsp</file>
-            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/context/DBContext.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/landing/css/font-awesome.min.css</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/context/DBContext.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/ManagerControl.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/HomeControl.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/Account.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/Cart.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/landing/css/owl.carousel.css</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/UpdateControl.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/Order.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/Product.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/ShoppingCart.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/landing/css/bootstrap.min.css</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/LoginControl.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/orderDao/IOrderDao.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/CartItem.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Home.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/nbproject/build-impl.xml</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/WEB-INF/web.xml</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/CheckoutServlet.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/dao/DAO.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/DetailControl.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/ManagerProduct.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/service/ICartService.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/productDao/ProductDao.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Menu.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/CartControll.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/ManagerAccount.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/DeleteControl.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/landing/css/style.css</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/CategoryControl.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/orderDao/OrderDao.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Register.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/AddControl.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Detail.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Login.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/ManagerProductt.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/productDao/IProductDAO.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/service/EmailService.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/service/CartService.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/landing/css/animate.css</file>
         </group>
->>>>>>> Stashed changes
->>>>>>> ae3efa2cfb8ecd1e68e43d7456b23091f78acd01
     </open-files>
 </project-private>
->>>>>>> feb2e15569914870f176a60de328c93fa310f4e3
