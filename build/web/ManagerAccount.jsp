@@ -372,8 +372,8 @@ $(document).ready(function(){
 							<a href="#addAccountModal" class="btn btn-success me-2" data-toggle="modal">
 								<i class="material-icons">&#xE147;</i> <span>Add New Account</span>
 							</a>
-							<a href="http://localhost:8080/DuAnBanHang/home" class="btn btn-primary" data-toggle="modal">
-								<i class="material-icons">&#xE88A;</i> <span>Back to Home</span>
+							<a href="home" class="btn btn-primary">
+								<i class="material-icons">&#xe88a;</i> <span>Home</span>
 							</a>
 						</div>
 					</div>
