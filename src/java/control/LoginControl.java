@@ -1,6 +1,5 @@
 package control;
 
-import entity.GoogleAccount;
 import dao.DAO;
 import dao.WishlistDAO;
 import entity.Account;
@@ -136,7 +135,7 @@ public class LoginControl extends HttpServlet {
             response.sendRedirect("home");
         }
     }
-
+}
     @Override
     public String getServletInfo() {
         return "Short description";
