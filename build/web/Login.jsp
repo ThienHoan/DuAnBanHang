@@ -90,6 +90,8 @@
                                    <p class="remember-me">
                     <input type="checkbox" name="rememberMe" id="rememberMe"  />
                     <label for="rememberMe">Remember me</label>
+                    <br>
+                    
                 </p>
 
                                 <!-- Add error message display -->

@@ -16,9 +16,9 @@
     <div class="footer-content background-footer-03">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-9">
+                <div class="col-lg-3 col-md-4 col-sm-9">
                     <section class="footer-item">
-                        <a href="home-03-green.html" class="logo footer-logo"><img src="hinh anh/Logo/logo-gia-truyen-hong-duc1.png" alt="biolife logo" width="220" height="60"></a>
+                        <a href="home" class="logo footer-logo"><img src="hinh anh/Logo/logo-gia-truyen-hong-duc1.png" alt="biolife logo" width="220" height="60"></a>
                         <div class="footer-phone-info">
                             <i class="biolife-icon icon-head-phone"></i>
                             <p class="r-info">
@@ -26,7 +26,7 @@
                                 <span>0914 145 788</span>
                             </p>
                         </div>
-                        <div class="newsletter-block layout-01">
+<!--                        <div class="newsletter-block layout-01">
                             <h4 class="title">Newsletter Signup</h4>
                             <div class="form-content">
                                 <form action="#" name="new-letter-foter">
@@ -34,10 +34,10 @@
                                     <button type="submit" class="bnt-submit" name="ok">Sign up</button>
                                 </form>
                             </div>
-                        </div>
+                        </div>-->
                     </section>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-6 md-margin-top-5px sm-margin-top-50px xs-margin-top-40px">
+                <div class="col-lg-5 col-md-4 col-sm-6 md-margin-top-5px sm-margin-top-50px xs-margin-top-40px">
                     <section class="footer-item">
                         <h3 class="section-title">Useful Links</h3>
                         <div class="row">
@@ -95,13 +95,13 @@
                             </ul>
                         </div>
                         <div class="biolife-social inline">
-                            <ul class="socials">
-                                <!--<li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>-->
+<!--                            <ul class="socials">
+                                <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                                 <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <!--<li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>-->
-                                <!--<li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>-->
+                                <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
                                 <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                            </ul>
+                            </ul>-->
                         </div>
                     </section>
                 </div>

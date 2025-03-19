@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <fmt:setLocale value="vi_VN"/>
@@ -58,7 +57,7 @@
 
             <!--Hero Section-->
             <div class="hero-section hero-background">
-                <h1 class="page-title">Essential Oils</h1>
+                <h1 class="page-title">Details</h1>
             </div>
 
             <!--Navigation section-->
@@ -79,10 +78,22 @@
                 <div id="main-content" class="main-content">
 
                     <!-- summary info -->
-                    <div class="sumary-product single-layout">
+                    <div class="sumary-product single-layout"" >
                         <div class="media">
                             <ul class="biolife-carousel slider-for" data-slick='{"arrows":false,"dots":false,"slidesMargin":30,"slidesToShow":1,"slidesToScroll":1,"fade":true,"asNavFor":".slider-nav"}'>
-                                <li><img src="${img}" alt="" width="500" height="500"></li>
+                                <li><img src="${img}" alt=""  style="
+                width: 400px;
+                height: 350px;
+                object-fit: contain;
+                display: block;
+                margin: 0 auto;
+                border-radius: 8px;
+                background-color: #f8f8f8;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                transition: transform 0.3s ease;
+             "
+             onmouseover="this.style.transform='scale(1.05)'" 
+             onmouseout="this.style.transform='scale(1)'"></li>
                                 <!--                            <li><img src="assets/images/details-product/detail_02.jpg" alt="" width="500" height="500"></li>
                                                             <li><img src="assets/images/details-product/detail_03.jpg" alt="" width="500" height="500"></li>
                                                             <li><img src="assets/images/details-product/detail_04.jpg" alt="" width="500" height="500"></li>
@@ -91,7 +102,18 @@
                                                             <li><img src="assets/images/details-product/detail_07.jpg" alt="" width="500" height="500"></li>-->
                             </ul>
                             <ul class="biolife-carousel slider-nav" data-slick='{"arrows":false,"dots":false,"centerMode":false,"focusOnSelect":true,"slidesMargin":10,"slidesToShow":4,"slidesToScroll":1,"asNavFor":".slider-for"}'>
-                                <li><img src="${img}" alt="" width="88" height="88"></li>
+                                <li><img src="${img}" alt="" style="
+                width: 88px;
+                height: 88px;
+                object-fit: contain;
+                border-radius: 4px;
+                border: 2px solid transparent;
+                background-color: #f8f8f8;
+                transition: all 0.3s ease;
+                cursor: pointer;
+             "
+             onmouseover="this.style.borderColor='#4CAF50'" 
+             onmouseout="this.style.borderColor='transparent'"></li>
                                 <!--                            <li><img src="assets/images/details-product/thumb_02.jpg" alt="" width="88" height="88"></li>
                                                             <li><img src="assets/images/details-product/thumb_03.jpg" alt="" width="88" height="88"></li>
                                                             <li><img src="assets/images/details-product/thumb_04.jpg" alt="" width="88" height="88"></li>
@@ -105,32 +127,32 @@
                             <div class="rating">
                                 <p class="star-rating"><span class="width-80percent"></span></p>
                                 <span class="review-count">(04 Reviews)</span>
-                                <span class="qa-text">Q&A</span>
-                                <b class="category">By: Natural food</b>
+<!--                                <span class="qa-text">Q&A</span>
+                                <b class="category">By: Natural food</b>-->
                             </div>
-                            <span class="sku">Sku: #76584HH</span>
-                            <p class="excerpt">${description}</p>
+<!--                            <span class="sku">Sku: #76584HH</span>
+                            <p class="excerpt">${description}</p>-->
                             <div class="price">
                                 <ins><span class="price-amount"><span class="currencySymbol"></span><fmt:formatNumber value="${price}" type="currency"/></span></ins>
                                 <!--<del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>-->
                             </div>
-                            <div class="product-atts">
-                                <div class="atts-item">
-                                    <span class="title">Color:</span>
-                                    <ul class="color-list">
-                                        <li class="color-item"><a href="#" class="c-link"><span class="symbol img-color"></span>Multi</a></li>
-                                        <li class="color-item"><a href="#" class="c-link"><span class="symbol hex-code color-01"></span>Red</a></li>
-                                        <li class="color-item"><a href="#" class="c-link"><span class="symbol hex-code color-02"></span>Orrange</a></li>
-                                        <li class="color-item"><a href="#" class="c-link"><span class="symbol hex-code color-03"></span>Other</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="shipping-info">
+                                <!--                            <div class="product-atts">
+                                                                <div class="atts-item">
+                                                                    <span class="title">Color:</span>
+                                                                    <ul class="color-list">
+                                                                        <li class="color-item"><a href="#" class="c-link"><span class="symbol img-color"></span>Multi</a></li>
+                                                                        <li class="color-item"><a href="#" class="c-link"><span class="symbol hex-code color-01"></span>Red</a></li>
+                                                                        <li class="color-item"><a href="#" class="c-link"><span class="symbol hex-code color-02"></span>Orrange</a></li>
+                                                                        <li class="color-item"><a href="#" class="c-link"><span class="symbol hex-code color-03"></span>Other</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>-->
+<!--                            <div class="shipping-info">
                                 <p class="shipping-day">3-Day Shipping</p>
                                 <p class="for-today">Pree Pickup Today</p>
-                            </div>
+                            </div>-->
                         </div>
-                        <div class="action-form">
+                                <div class="action-form">
                             <div class="quantity-box">
                                 <span class="title">Quantity:</span>
                                 <div class="qty-input">
@@ -155,7 +177,7 @@
                                                         </button>-->
 
 
-                            <div class="location-shipping-to">
+<!--                            <div class="location-shipping-to">
                                 <span class="title">Ship to:</span>
                                 <select name="shipping_to" class="country">
                                     <option value="-1">Select Country</option>
@@ -164,7 +186,7 @@
                                     <option value="germany">Germany</option>
                                     <option value="japan">Japan</option>
                                 </select>
-                            </div>
+                            </div>-->
                             <div class="social-media">
                                 <ul class="social-list">
                                     <li><a href="#" class="social-link"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
@@ -190,25 +212,24 @@
                     <div class="tab-head">
                         <ul class="tabs">
                             <li class="tab-element active"><a href="#tab_1st" class="tab-link">Products Descriptions</a></li>
-                            <li class="tab-element" ><a href="#tab_2nd" class="tab-link">Addtional information</a></li>
-                            <li class="tab-element" ><a href="#tab_3rd" class="tab-link">Shipping & Delivery</a></li>
+<!--                            <li class="tab-element" ><a href="#tab_2nd" class="tab-link">Addtional information</a></li>
+                            <li class="tab-element" ><a href="#tab_3rd" class="tab-link">Shipping & Delivery</a></li>-->
                             <li class="tab-element" ><a href="#tab_4th" class="tab-link">Customer Reviews <sup>(3)</sup></a></li>
                         </ul>
                     </div>
                     <div class="tab-content">
                         <div id="tab_1st" class="tab-contain desc-tab active">
-                            <p class="desc">Quisque quis ipsum venenatis, fermentum ante volutpat, ornare enim. Phasellus molestie risus non aliquet cursus. Integer vestibulum mi lorem, id hendrerit ante lobortis non. Nunc ante ante, lobortis non pretium non, vulputate vel nisi. Maecenas dolor elit, fringilla nec turpis ac, auctor vulputate nulla. Phasellus sed laoreet velit.
-                                Proin fringilla urna vel mattis euismod. Etiam sodales, massa non tincidunt iaculis, mauris libero scelerisque justo, ut rutrum lectus urna sit amet quam. Nulla maximus vestibulum mi vitae accumsan. Donec sit amet ligula et enim semper viverra a in arcu. Vestibulum enim ligula, varius sed enim vitae, posuere molestie velit. Morbi risus orci, congue in nulla at, sodales fermentum magna.</p>
+                            <p class="desc">${description}</p>
                             <div class="desc-expand">
-                                <span class="title">Organic Fresh Fruit</span>
+<!--                                <span class="title">name</span>
                                 <ul class="list">
                                     <li>100% real fruit ingredients</li>
                                     <li>100 fresh fruit bags individually wrapped</li>
                                     <li>Blending Eastern & Western traditions, naturally</li>
-                                </ul>
+                                </ul>-->
                             </div>
                         </div>
-                        <div id="tab_2nd" class="tab-contain addtional-info-tab">
+<!--                        <div id="tab_2nd" class="tab-contain addtional-info-tab">
                             <table class="tbl_attributes">
                                 <tbody>
                                 <tr>
@@ -221,8 +242,8 @@
                                 </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div id="tab_3rd" class="tab-contain shipping-delivery-tab">
+                        </div>-->
+<!--                        <div id="tab_3rd" class="tab-contain shipping-delivery-tab">
                             <div class="accodition-tab biolife-accodition">
                                 <ul class="tabs">
                                     <li class="tab-item">
@@ -267,7 +288,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div>-->
                         <div id="tab_4th" class="tab-contain review-tab">
                             <div class="container">
                                 <div class="row">
@@ -283,7 +304,7 @@
                                             <ul class="options">
                                                 <li>
                                                     <div class="detail-for">
-                                                        <span class="option-name">5stars</span>
+                                                        <span class="option-name">5 stars</span>
                                                         <span class="progres">
                                                             <span class="line-100percent">
                                                                 <span class="percent width-${ratingDistribution != null && ratingDistribution[4] > 0 && reviewCount > 0 ? (ratingDistribution[4] * 100 / reviewCount) : 0}percent"></span>
@@ -294,7 +315,7 @@
                                                 </li>
                                                 <li>
                                                     <div class="detail-for">
-                                                        <span class="option-name">4stars</span>
+                                                        <span class="option-name">4 stars</span>
                                                         <span class="progres">
                                                             <span class="line-100percent">
                                                                 <span class="percent width-${ratingDistribution != null && ratingDistribution[3] > 0 ? (ratingDistribution[3] * 100 / reviewCount) : 0}percent"></span>
@@ -305,7 +326,7 @@
                                                 </li>
                                                 <li>
                                                     <div class="detail-for">
-                                                        <span class="option-name">3stars</span>
+                                                        <span class="option-name">3 stars</span>
                                                         <span class="progres">
                                                             <span class="line-100percent">
                                                                 <span class="percent width-${ratingDistribution != null && ratingDistribution[2] > 0 ? (ratingDistribution[2] * 100 / reviewCount) : 0}percent"></span>
@@ -316,7 +337,7 @@
                                                 </li>
                                                 <li>
                                                     <div class="detail-for">
-                                                        <span class="option-name">2stars</span>
+                                                        <span class="option-name">2 stars</span>
                                                         <span class="progres">
                                                             <span class="line-100percent">
                                                                 <span class="percent width-${ratingDistribution != null && ratingDistribution[1] > 0 ? (ratingDistribution[1] * 100 / reviewCount) : 0}percent"></span>
@@ -327,7 +348,7 @@
                                                 </li>
                                                 <li>
                                                     <div class="detail-for">
-                                                        <span class="option-name">1star</span>
+                                                        <span class="option-name">1 star</span>
                                                         <span class="progres">
                                                             <span class="line-100percent">
                                                                 <span class="percent width-${ratingDistribution != null && ratingDistribution[0] > 0 ? (ratingDistribution[0] * 100 / reviewCount) : 0}percent"></span>
@@ -870,43 +891,8 @@
         }
     });
     </script>
-</body>
 
-</html>        const ratingBtns = document.querySelectorAll('.btn-rating');
-        const ratingInput = document.getElementById('selected-rating');
-        
-        ratingBtns.forEach((btn, index) => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Set the rating value (index + 1 because stars are 1-based)
-                const ratingValue = index + 1;
-                ratingInput.value = ratingValue;
-                
-                // Update the visual appearance
-                ratingBtns.forEach((b, i) => {
-                    const star = b.querySelector('i');
-                    if (i <= index) {
-                        star.className = 'fa fa-star';
-                    } else {
-                        star.className = 'fa fa-star-o';
-                    }
-                });
-            });
-        });
-        
-        // Check if hash contains tab=reviews to activate the reviews tab
-        if (window.location.hash === '#tab_4th' || window.location.search.includes('tab=reviews')) {
-            // Find the review tab link and trigger a click
-            const reviewTabLink = document.querySelector('a[href="#tab_4th"]');
-            if (reviewTabLink) {
-                setTimeout(() => {
-                    reviewTabLink.click();
-                }, 100);
-            }
-        }
-    });
-</script>
+</html>       
 </body>
 
 </html> 

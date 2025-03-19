@@ -803,7 +803,7 @@
 
             <!--Hero Section-->
             <div class="hero-section hero-background">
-                <h1 class="page-title">Essential Oils</h1>
+                <h1 class="page-title">Category</h1>
             </div>
 
             <!--Navigation section-->
@@ -823,35 +823,35 @@
                     <!-- Main content -->
                     <div id="main-content" class="main-content col-lg-9 col-md-8 col-sm-12 col-xs-12">
 
-                    <div class="block-item recently-products-cat md-margin-bottom-39">
-                        <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":0,"slidesToShow":5, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 3}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin": 10}},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":10 }}]}' >
-                            <c:forEach var="p" items="${listPP}">
-                            <li class="product-item">
-                                <div class="contain-product layout-02">
-                                    <div class="product-thumb">
-                                        <a href="#" class="link-to-product">
-                                            <img src="${p.img}" alt="dd" width="270" height="270" class="product-thumnail">
-                                        </a>
-                                    </div>
-                                    <div class="info">
-                                        <b class="categories">${categoryName}</b>
-                                        <h4 class="product-title"><a href="detail?pid=${p.id}" class="pr-name">${p.name}</a></h4>
-                                        <div class="price">
-                                            <ins><span class="price-amount"><span class="currencySymbol"></span><fmt:formatNumber value="${p.price}" type="currency"/></span></ins>
-                                            <!--<del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>-->
+                        <div class="block-item recently-products-cat md-margin-bottom-39">
+                            <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":0,"slidesToShow":5, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 3}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin": 10}},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":10 }}]}' >
+                                <c:forEach var="p" items="${listPP}">
+                                    <li class="product-item">
+                                        <div class="contain-product layout-02">
+                                            <div class="product-thumb">
+                                                <a href="detail?pid=${p.id}" class="link-to-product">
+                                                    <img src="${p.img}" alt="dd" width="270" height="270" class="product-thumnail">
+                                                </a>
+                                            </div>
+                                            <div class="info">
+                                                <b class="categories">${categoryName}</b>
+                                                <h4 class="product-title"><a href="detail?pid=${p.id}" class="pr-name">${p.name}</a></h4>
+                                                <div class="price">
+                                                    <ins><span class="price-amount"><span class="currencySymbol"></span><fmt:formatNumber value="${p.price}" type="currency"/></span></ins>
+                                                    <!--<del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>-->
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </li>
-                            </c:forEach>
-                            
-                            
-                        </ul>
-                    </div>
+                                    </li>
+                                </c:forEach>
+
+
+                            </ul>
+                        </div>
 
                         <div class="product-category list-style">
 
-                            <div id="top-functions-area" class="top-functions-area" >
+<!--                            <div id="top-functions-area" class="top-functions-area" >
                                 <div class="flt-item to-left group-on-mobile">
                                     <span class="flt-title">Refine</span>
                                     <a href="#" class="icon-for-mobile">
@@ -860,40 +860,37 @@
                                         <span></span>
                                     </a>
                                     <div class="wrap-selectors">
-                                        <form action="#" name="frm-refine" method="get">
+                                        <form action="category" name="frm-refine" method="get">
+                                            <input type="hidden" name="cid" value="${cid}">
                                             <span class="title-for-mobile">Refine Products By</span>
                                             <div data-title="Price:" class="selector-item">
-                                                <select name="price" class="selector">
-                                                    <option value="all">Price</option>
-                                                    <option value="class-1st">Less than 5$</option>
-                                                    <option value="class-2nd">$5-10$</option>
-                                                    <option value="class-3rd">$10-20$</option>
-                                                    <option value="class-4th">$20-45$</option>
-                                                    <option value="class-5th">$45-100$</option>
-                                                    <option value="class-6th">$100-150$</option>
-                                                    <option value="class-7th">More than 150$</option>
+                                                <select name="price" class="selector" onchange="this.form.submit()">
+                                                    <option value="all" ${selectedPrice == 'all' ? 'selected' : ''}>All Prices</option>
+                                                    <option value="0-100" ${selectedPrice == '0-100' ? 'selected' : ''}>Less than 100k</option>
+                                                    <option value="100-150" ${selectedPrice == '100-150' ? 'selected' : ''}>100k - 150k</option>
+                                                    <option value="150-max" ${selectedPrice == '150-max' ? 'selected' : ''}>More than 150k</option>
                                                 </select>
                                             </div>
-                                            <div data-title="Brand:" class="selector-item">
-                                                <select name="brad" class="selector">
-                                                    <option value="all">Top brands</option>
-                                                    <option value="br2">Brand first</option>
-                                                    <option value="br3">Brand second</option>
-                                                    <option value="br4">Brand third</option>
-                                                    <option value="br5">Brand fourth</option>
-                                                    <option value="br6">Brand fiveth</option>
-                                                </select>
-                                            </div>
-                                            <div data-title="Avalability:" class="selector-item">
-                                                <select name="ability" class="selector">
-                                                    <option value="all">Availability</option>
-                                                    <option value="vl2">Availability 1</option>
-                                                    <option value="vl3">Availability 2</option>
-                                                    <option value="vl4">Availability 3</option>
-                                                    <option value="vl5">Availability 4</option>
-                                                    <option value="vl6">Availability 5</option>
-                                                </select>
-                                            </div>
+                                                                                        <div data-title="Brand:" class="selector-item">
+                                                                                            <select name="brad" class="selector">
+                                                                                                <option value="all">Top brands</option>
+                                                                                                <option value="br2">Brand first</option>
+                                                                                                <option value="br3">Brand second</option>
+                                                                                                <option value="br4">Brand third</option>
+                                                                                                <option value="br5">Brand fourth</option>
+                                                                                                <option value="br6">Brand fiveth</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div data-title="Avalability:" class="selector-item">
+                                                                                            <select name="ability" class="selector">
+                                                                                                <option value="all">Availability</option>
+                                                                                                <option value="vl2">Availability 1</option>
+                                                                                                <option value="vl3">Availability 2</option>
+                                                                                                <option value="vl4">Availability 3</option>
+                                                                                                <option value="vl5">Availability 4</option>
+                                                                                                <option value="vl6">Availability 5</option>
+                                                                                            </select>
+                                                                                        </div>
                                             <p class="btn-for-mobile"><button type="submit" class="btn-submit">Go</button></p>
                                         </form>
                                     </div>
@@ -902,32 +899,71 @@
                                     <span class="flt-title">Sort</span>
                                     <div class="wrap-selectors">
                                         <div class="selector-item orderby-selector">
-                                            <select name="orderby" class="orderby" aria-label="Shop order">
-                                                <option value="menu_order" selected="selected">Default sorting</option>
-                                                <option value="popularity">popularity</option>
-                                                <option value="rating">average rating</option>
-                                                <option value="date">newness</option>
-                                                <option value="price">price: low to high</option>
-                                                <option value="price-desc">price: high to low</option>
+                                            <select name="orderby" class="orderby" aria-label="Shop order" onchange="this.form.submit()">
+                                                <option value="menu_order" ${param.orderby == 'menu_order' ? 'selected' : ''}>Mặc định</option>
+                                                <option value="date" ${param.orderby == 'date' ? 'selected' : ''}>Mới nhất</option>
+                                                <option value="price" ${param.orderby == 'price' ? 'selected' : ''}>Giá: Thấp đến Cao</option>
+                                                <option value="price-desc" ${param.orderby == 'price-desc' ? 'selected' : ''}>Giá: Cao đến Thấp</option>
                                             </select>
                                         </div>
-                                        <div class="selector-item viewmode-selector">
-                                            <a href="category-grid-left-sidebar.html" class="viewmode grid-mode"><i class="biolife-icon icon-grid"></i></a>
-                                            <a href="category-list-left-sidebar.html" class="viewmode detail-mode active"><i class="biolife-icon icon-list"></i></a>
-                                        </div>
+                                                                                <div class="selector-item viewmode-selector">
+                                                                                    <a href="category-grid-left-sidebar.html" class="viewmode grid-mode"><i class="biolife-icon icon-grid"></i></a>
+                                                                                    <a href="category-list-left-sidebar.html" class="viewmode detail-mode active"><i class="biolife-icon icon-list"></i></a>
+                                                                                </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
+
+<div id="top-functions-area" class="top-functions-area">
+    <div class="flt-item to-left group-on-mobile">
+        <span class="flt-title">Refine</span>
+        <a href="#" class="icon-for-mobile">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+        <div class="wrap-selectors">
+            <form action="category" name="frm-refine" method="get">
+                <input type="hidden" name="cid" value="${cid}">
+                <span class="title-for-mobile">Refine Products By</span>
+                <div data-title="Price:" class="selector-item">
+                    <select name="price" class="selector" onchange="this.form.submit()">
+                        <option value="all" ${selectedPrice == 'all' ? 'selected' : ''}>All Prices</option>
+                        <option value="0-100" ${selectedPrice == '0-100' ? 'selected' : ''}>Less than 100k</option>
+                        <option value="100-150" ${selectedPrice == '100-150' ? 'selected' : ''}>100k - 150k</option>
+                        <option value="150-max" ${selectedPrice == '150-max' ? 'selected' : ''}>More than 150k</option>
+                    </select>
+                </div>
+                <!-- Các phần tử khác nếu cần -->
+                <div class="flt-item to-right" style="padding-left: 100px">
+                    <span class="flt-title">Sort</span>
+                    <div class="wrap-selectors">
+                        <div class="selector-item orderby-selector">
+                            <select name="orderby" class="orderby" aria-label="Shop order" onchange="this.form.submit()">
+                                <option value="menu_order" ${param.orderby == 'menu_order' ? 'selected' : ''}>Mặc định</option>
+                                <option value="date" ${param.orderby == 'date' ? 'selected' : ''}>Mới nhất</option>
+                                <option value="price" ${param.orderby == 'price' ? 'selected' : ''}>Giá: Thấp đến Cao</option>
+                                <option value="price-desc" ${param.orderby == 'price-desc' ? 'selected' : ''}>Giá: Cao đến Thấp</option>
+                            </select>
+                        </div>
+                        <!-- Các phần tử khác nếu cần -->
+                    </div>
+                </div>
+                <p class="btn-for-mobile"><button type="submit" class="btn-submit">Go</button></p>
+            </form>
+        </div>
+    </div>
+</div>
 
 
                             <div class="row">
 
                                 <ul class="products-list">
-                                    <c:forEach var="p" items="${listPP}">
+                                    <c:forEach var="p" items="${productList}">
                                         <li class="product-item col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="contain-product pr-detail-layout">
                                                 <div class="product-thumb">
-                                                    <a href="#" class="link-to-product">
+                                                    <a href="detail?pid=${p.id}" class="link-to-product">
                                                         <img src="${p.img}" alt="dd" width="270" height="270" class="product-thumnail">
                                                     </a>
                                                 </div>
@@ -1166,109 +1202,115 @@
                                 </div>
                             </div>
 
-                            <div class="widget biolife-filter">
-                                <h4 class="wgt-title">Shipping & Pickup</h4>
-                                <div class="wgt-content">
-                                    <ul class="cat-list">
-                                        <li class="cat-list-item"><a href="#" class="cat-link">Show all</a></li>
-                                        <li class="cat-list-item"><a href="#" class="cat-link">2- Day shipping</a></li>
-                                        <li class="cat-list-item"><a href="#" class="cat-link">Shop to Home</a></li>
-                                        <li class="cat-list-item"><a href="#" class="cat-link">Free Pickup</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <!--                            <div class="widget biolife-filter">
+                                                            <h4 class="wgt-title">Shipping & Pickup</h4>
+                                                            <div class="wgt-content">
+                                                                <ul class="cat-list">
+                                                                    <li class="cat-list-item"><a href="#" class="cat-link">Show all</a></li>
+                                                                    <li class="cat-list-item"><a href="#" class="cat-link">2- Day shipping</a></li>
+                                                                    <li class="cat-list-item"><a href="#" class="cat-link">Shop to Home</a></li>
+                                                                    <li class="cat-list-item"><a href="#" class="cat-link">Free Pickup</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>-->
 
-                            <div class="widget price-filter biolife-filter">
+<!--                            <div class="widget price-filter biolife-filter">
                                 <h4 class="wgt-title">Price</h4>
                                 <div class="wgt-content">
                                     <div class="frm-contain">
-                                        <form action="#" name="price-filter" id="price-filter" method="get">
+                                        <form action="category" name="price-filter" id="price-filter" method="get">
+                                            <input type="hidden" name="cid" value="${param.cid}" />  Giữ lại danh mục đang chọn 
                                             <p class="f-item">
-                                                <label for="pr-from">$</label>
-                                                <input class="input-number" type="number" id="pr-from" value="" name="price-from">
+                                                <label for="pr-from">Từ </label>
+                                                <input class="input-number" type="number" id="pr-from" value="${param.priceFrom}" name="priceFrom">
                                             </p>
                                             <p class="f-item">
-                                                <label for="pr-to">to $</label>
-                                                <input class="input-number" type="number" id="pr-to" value="" name="price-from">
+                                                <label for="pr-to">Đến </label>
+                                                <input class="input-number" type="number" id="pr-to" value="${param.priceTo}" name="priceTo">
                                             </p>
                                             <p class="f-item"><button class="btn-submit" type="submit">go</button></p>
                                         </form>
                                     </div>
                                     <ul class="check-list bold single">
-                                        <li class="check-list-item"><a href="#" class="check-link">$0 - $5</a></li>
-                                        <li class="check-list-item"><a href="#" class="check-link">$5 - $10</a></li>
-                                        <li class="check-list-item"><a href="#" class="check-link">$15 - $20</a></li>
+                                        <li class="check-list-item">
+                                            <a href="category?cid=${param.cid}&priceFrom=0&priceTo=100" class="check-link">0k - 100k</a></li>
+                                        <li class="check-list-item">
+                                            <a href="category?cid=${param.cid}&priceFrom=100&priceTo=150" class="check-link">100k - 150k</a></li>
+                                        <li class="check-list-item">
+                                            <a href="category?cid=${param.cid}&priceFrom=150&priceTo=200" class="check-link">150k - 200k</a></li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div>-->
+
+                            <!--                            <div class="widget biolife-filter">
+                                                            <h4 class="wgt-title">Brand</h4>
+                                                            <div class="wgt-content">
+                                                                <ul class="check-list multiple">
+                                                                    <li class="check-list-item"><a href="#" class="check-link">Great Value Organic</a></li>
+                                                                    <li class="check-list-item"><a href="#" class="check-link">Plum Organic</a></li>
+                                                                    <li class="check-list-item"><a href="#" class="check-link">Shop to Home</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                            
+                                                        <div class="widget biolife-filter">
+                                                            <h4 class="wgt-title">Color</h4>
+                                                            <div class="wgt-content">
+                                                                <ul class="color-list">
+                                                                    <li class="color-item"><a href="#" class="c-link"><span class="symbol img-color"></span>Multi</a></li>
+                                                                    <li class="color-item"><a href="#" class="c-link"><span class="symbol hex-code color-01"></span>Red</a></li>
+                                                                    <li class="color-item"><a href="#" class="c-link"><span class="symbol hex-code color-02"></span>Orrange</a></li>
+                                                                    <li class="color-item"><a href="#" class="c-link"><span class="symbol hex-code color-03"></span>Other</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                            
+                                                        <div class="widget biolife-filter">
+                                                            <h4 class="wgt-title">Popular Size</h4>
+                                                            <div class="wgt-content">
+                                                                <ul class="check-list bold multiple">
+                                                                    <li class="check-list-item"><a href="#" class="check-link">8oz</a></li>
+                                                                    <li class="check-list-item"><a href="#" class="check-link">15oz</a></li>
+                                                                    <li class="check-list-item"><a href="#" class="check-link">6oz</a></li>
+                                                                    <li class="check-list-item"><a href="#" class="check-link">30oz</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                            
+                                                        <div class="widget biolife-filter">
+                                                            <h4 class="wgt-title">Number of Pieces</h4>
+                                                            <div class="wgt-content">
+                                                                <ul class="check-list bold">
+                                                                    <li class="check-list-item"><a href="#" class="check-link">1 to 9</a></li>
+                                                                    <li class="check-list-item"><a href="#" class="check-link">10 to 15</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>-->
 
                             <div class="widget biolife-filter">
-                                <h4 class="wgt-title">Brand</h4>
-                                <div class="wgt-content">
-                                    <ul class="check-list multiple">
-                                        <li class="check-list-item"><a href="#" class="check-link">Great Value Organic</a></li>
-                                        <li class="check-list-item"><a href="#" class="check-link">Plum Organic</a></li>
-                                        <li class="check-list-item"><a href="#" class="check-link">Shop to Home</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="widget biolife-filter">
-                                <h4 class="wgt-title">Color</h4>
-                                <div class="wgt-content">
-                                    <ul class="color-list">
-                                        <li class="color-item"><a href="#" class="c-link"><span class="symbol img-color"></span>Multi</a></li>
-                                        <li class="color-item"><a href="#" class="c-link"><span class="symbol hex-code color-01"></span>Red</a></li>
-                                        <li class="color-item"><a href="#" class="c-link"><span class="symbol hex-code color-02"></span>Orrange</a></li>
-                                        <li class="color-item"><a href="#" class="c-link"><span class="symbol hex-code color-03"></span>Other</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="widget biolife-filter">
-                                <h4 class="wgt-title">Popular Size</h4>
-                                <div class="wgt-content">
-                                    <ul class="check-list bold multiple">
-                                        <li class="check-list-item"><a href="#" class="check-link">8oz</a></li>
-                                        <li class="check-list-item"><a href="#" class="check-link">15oz</a></li>
-                                        <li class="check-list-item"><a href="#" class="check-link">6oz</a></li>
-                                        <li class="check-list-item"><a href="#" class="check-link">30oz</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="widget biolife-filter">
-                                <h4 class="wgt-title">Number of Pieces</h4>
-                                <div class="wgt-content">
-                                    <ul class="check-list bold">
-                                        <li class="check-list-item"><a href="#" class="check-link">1 to 9</a></li>
-                                        <li class="check-list-item"><a href="#" class="check-link">10 to 15</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="widget biolife-filter">
-                                <h4 class="wgt-title">Recently Viewed</h4>
+                                <h4 class="wgt-title">Newest</h4>
                                 <div class="wgt-content">
                                     <ul class="products">
+                                         <c:forEach var="p" items="${list5}">
                                         <li class="pr-item">
                                             <div class="contain-product style-widget">
                                                 <div class="product-thumb">
-                                                    <a href="#" class="link-to-product" tabindex="0">
-                                                        <img src="assets/images/products/p-13.jpg" alt="dd" width="270" height="270" class="product-thumnail">
+                                                    <a href="detail?pid=${p.id}" class="link-to-product" tabindex="0">
+                                                        <img src="${p.img}" alt="dd" width="270" height="270" class="product-thumnail">
                                                     </a>
                                                 </div>
                                                 <div class="info">
-                                                    <b class="categories">Fresh Fruit</b>
-                                                    <h4 class="product-title"><a href="#" class="pr-name" tabindex="0">National Fresh Fruit</a></h4>
+                                                    <b class="categories">${categoryName}</b>
+                                                    <h4 class="product-title"><a href="detail?pid=${p.id}" class="pr-name" tabindex="0">${p.name}</a></h4>
                                                     <div class="price">
-                                                        <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                        <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                        <ins><span class="price-amount"><span class="currencySymbol"></span><fmt:formatNumber value="${p.price}" type="currency"/></span></ins>
+                                                        <!--<del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>-->
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="pr-item">
+                                         </c:forEach>
+<!--                                        <li class="pr-item">
                                             <div class="contain-product style-widget">
                                                 <div class="product-thumb">
                                                     <a href="#" class="link-to-product" tabindex="0">
@@ -1301,7 +1343,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </li>
+                                        </li>-->
                                     </ul>
                                 </div>
                             </div>
@@ -1310,11 +1352,11 @@
                                 <h4 class="wgt-title">Product Tags</h4>
                                 <div class="wgt-content">
                                     <ul class="tag-cloud">
-                                        <li class="tag-item"><a href="#" class="tag-link">Fresh Fruit</a></li>
-                                        <li class="tag-item"><a href="#" class="tag-link">Natural Food</a></li>
-                                        <li class="tag-item"><a href="#" class="tag-link">Hot</a></li>
-                                        <li class="tag-item"><a href="#" class="tag-link">Organics</a></li>
-                                        <li class="tag-item"><a href="#" class="tag-link">Dried Organic</a></li>
+                                        <li class="tag-item"><a href="detail?pid=8" class="tag-link">Tinh dầu hoa lài</a></li>
+                                        <li class="tag-item"><a href="detail?pid=3" class="tag-link">Tinh dầu Cafe</a></li>
+                                        <li class="tag-item"><a href="category?cid=3" class="tag-link">Tinh dầu massage</a></li>
+                                        <li class="tag-item"><a href="detail?pid=6" class="tag-link">Hỗ trợ tuần hoàn máu</a></li>
+                                        <li class="tag-item"><a href="detail?pid=10" class="tag-link">Giúp thư giãn và tạo mùi hương dễ chịu</a></li>
                                     </ul>
                                 </div>
                             </div>

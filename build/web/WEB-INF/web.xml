@@ -4,21 +4,19 @@
         <filter-name>LoggingFilter</filter-name>
         <filter-class>filter.LoggingFilter</filter-class>
     </filter>
-
-
     <filter-mapping>
         <filter-name>LoggingFilter</filter-name>
         <url-pattern>/Category.jsp</url-pattern>
         <url-pattern>/category</url-pattern>
         <url-pattern>/ManagerProduct.jsp</url-pattern>
         <url-pattern>/ManagerAccount.jsp</url-pattern>
-<!--        <url-pattern>/Home.jsp</url-pattern>
+        <!--        <url-pattern>/Home.jsp</url-pattern>
         <url-pattern>/home</url-pattern>
         -->
     </filter-mapping>
     <servlet>
-        <servlet-name>HomeControl</servlet-name>
-        <servlet-class>control.HomeControl</servlet-class>
+        <servlet-name>LoginControl</servlet-name>
+        <servlet-class>control.LoginControl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserProfileController</servlet-name>
@@ -28,13 +26,14 @@
         <servlet-name>ChangePasswordServlet</servlet-name>
         <servlet-class>control.ChangePasswordServlet</servlet-class>
     </servlet>
-    <session-config>
-        <session-timeout>30</session-timeout> <!-- 30 phút -->
-    </session-config>
     <servlet-mapping>
-        <servlet-name>HomeControl</servlet-name>
-        <url-pattern>/home</url-pattern>
+        <servlet-name>LoginControl</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
+    <session-config>
+        <session-timeout>30</session-timeout>
+        <!-- 30 phút -->
+    </session-config>
     <servlet-mapping>
         <servlet-name>UserProfileController</servlet-name>
         <url-pattern>/userprofile</url-pattern>

@@ -75,7 +75,7 @@
                                 </ul>
                             </li>
                             <li class="menu-item"><a href="userprofile">Profile</a></li>
-                            <li class="menu-item"><a href="https://maps.app.goo.gl/Q7d33wn8c6E68J8W8" target="_blank">Contact</a></li>
+                            <!--<li class="menu-item"><a href="https://maps.app.goo.gl/Q7d33wn8c6E68J8W8" target="_blank">Contact</a></li>-->
                             
                             <c:if test="${sessionScope.account.roleID == 3}">
                                 <li class="menu-item"><a href="ManagerAccount.jsp">Manager Account</a></li>
@@ -112,6 +112,23 @@
                             </div>
                         </div>
                         
+                        
+                        
+                        <!-- User account -->
+                        <div class="minicart-block">
+                            <div class="minicart-contain">
+                                <c:if test="${sessionScope.account != null}">
+<!--                                    <a href="userprofile" class="login-link">
+                                        <i class="biolife-icon icon-login"></i>Hello ${sessionScope.account.userName}
+                                    </a>-->
+                                </c:if>
+                                <c:if test="${sessionScope.account == null}">
+                                    <a href="Login.jsp" class="login-link">
+                                        <i class="biolife-icon icon-login"></i>Login/Register
+                                    </a>
+                                </c:if>
+                            </div>
+                        </div>
                         <!-- Wishlist -->
                         <div class="wishlist-block hidden-sm hidden-xs">
                             <a href="#" class="link-to">
@@ -120,22 +137,6 @@
                                     
                                 </span>
                             </a>
-                        </div>
-                        
-                        <!-- User account -->
-                        <div class="minicart-block">
-                            <div class="minicart-contain">
-                                <c:if test="${sessionScope.account != null}">
-                                    <a href="userprofile" class="login-link">
-                                        <i class="biolife-icon icon-login"></i>Hello ${sessionScope.account.userName}
-                                    </a>
-                                </c:if>
-                                <c:if test="${sessionScope.account == null}">
-                                    <a href="Login.jsp" class="login-link">
-                                        <i class="biolife-icon icon-login"></i>Login/Register
-                                    </a>
-                                </c:if>
-                            </div>
                         </div>
                         
                         <!-- Shopping cart -->
@@ -148,17 +149,17 @@
                                     <span class="title">Giỏ hàng </span>
                                     
                                 </a>
-                                <div class="cart-content">
+<!--                                <div class="cart-content">
                                     <div class="cart-inner">
                                         <ul class="products">
-                                            <!-- Cart items would go here -->
+                                             Cart items would go here 
                                         </ul>
                                         <p class="btn-control">
                                             <a href="#" class="btn view-cart">view cart</a>
                                             <a href="#" class="btn">checkout</a>
                                         </p>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                         
@@ -210,13 +211,7 @@
                                 </c:forEach>
                             </select>
 
-                            <!--                            <select name="category">
-                                                            <option value="-1" selected>All Categories</option>
-                                                            <option value="vegetables">Tinh dầu xông phòng</option>
-                                                            <option value="fresh_berries">Tinh dầu xe hơi</option>
-                                                            <option value="ocean_foods">Tinh dầu massage</option>
-                                                            <option value="butter_eggs">Tinh dầu dạng xịt</option>
-                                                        </select>-->
+                           
                             <button type="submit" class="btn-submit"><i class="biolife-icon icon-search"></i></button>
                         </form>
                     </div>
