@@ -6,7 +6,7 @@ from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 
 # Thiết lập API key của OpenAI
-openai.api_key = "Sk-123"  # Thay bằng API key của bạn
+openai.api_key = ""  # Thay bằng API key của bạn
 
 # Khởi tạo Flask app
 app = Flask(__name__)
@@ -430,6 +430,58 @@ Bạn có thể cho tôi biết bạn đang quan tâm đến loại nào không?
         print(f"Lỗi trong get_product_recommendations: {str(e)}")
         return "Xin lỗi, hiện tại không thể lấy được thông tin gợi ý sản phẩm."
 
+# Thêm hàm mới để xử lý câu hỏi về giao hàng và vận chuyển
+def get_shipping_info(query: str) -> str:
+    """Hàm trả lời các câu hỏi về giao hàng và vận chuyển"""
+    query_lower = query.lower()
+    
+    # Câu hỏi về thời gian giao hàng
+    if any(phrase in query_lower for phrase in ["thời gian giao hàng", "mất bao lâu", "khi nào nhận được", "giao trong bao lâu"]):
+        return """🚚 **Thông tin về thời gian giao hàng:**
+
+- Nội thành TP.HCM: 1-2 ngày làm việc
+- Các tỉnh miền Nam: 2-3 ngày làm việc
+- Các tỉnh miền Trung và miền Bắc: 3-5 ngày làm việc
+- Khu vực miền núi và hải đảo: 5-7 ngày làm việc
+
+⏰ Lưu ý: Thời gian giao hàng có thể thay đổi tùy theo điều kiện thời tiết và tình trạng vận chuyển.
+
+Bạn có thể cung cấp địa chỉ cụ thể để mình kiểm tra thời gian giao hàng chính xác hơn."""
+
+    # Câu hỏi về phí vận chuyển
+    elif any(phrase in query_lower for phrase in ["phí vận chuyển", "phí giao hàng", "ship bao nhiêu", "cước vận chuyển"]):
+        return """💰 **Thông tin về phí vận chuyển:**
+
+- Nội thành TP.HCM: 15,000 VND
+- Các tỉnh thành khác: 30,000 - 50,000 VND tùy khu vực
+- Miễn phí vận chuyển cho đơn hàng từ 500,000 VND
+
+📦 Shop sử dụng các đơn vị vận chuyển uy tín như GHTK, GHN, Viettel Post để đảm bảo hàng đến tay bạn an toàn nhất."""
+
+    # Câu hỏi về hình thức thanh toán
+    elif any(phrase in query_lower for phrase in ["thanh toán", "trả tiền", "hình thức thanh toán", "cod"]):
+        return """💳 **Các hình thức thanh toán:**
+
+1. Thanh toán khi nhận hàng (COD)
+2. Chuyển khoản ngân hàng
+3. Ví điện tử (Momo, ZaloPay, VNPay)
+4. Thẻ tín dụng/ghi nợ
+
+Bạn có thể chọn phương thức thanh toán phù hợp khi tiến hành đặt hàng nhé!"""
+
+    # Thông tin đổi trả
+    elif any(phrase in query_lower for phrase in ["đổi trả", "hoàn tiền", "bảo hành", "đổi sản phẩm"]):
+        return """🔄 **Chính sách đổi trả:**
+
+- Thời gian đổi trả: Trong vòng 7 ngày kể từ khi nhận hàng
+- Điều kiện: Sản phẩm còn nguyên vẹn, chưa sử dụng, còn đầy đủ bao bì
+- Lý do đổi trả: Sản phẩm lỗi, hỏng, không đúng mô tả
+
+⚠️ Lưu ý: Tinh dầu là sản phẩm đặc biệt, chỉ được đổi trả khi sản phẩm bị lỗi từ nhà sản xuất."""
+    
+    # Không tìm thấy thông tin phù hợp
+    return None
+
 # Cập nhật hàm chatbot_response với thứ tự ưu tiên hợp lý
 def chatbot_response(user_input: str) -> str:
     try:
@@ -501,6 +553,12 @@ def chatbot_response(user_input: str) -> str:
         # Thêm phản hồi cá nhân hóa - ĐẶT SAU CÙNG
         if "chào" in input_lower or "hello" in input_lower or "hi" in input_lower:
             return f"Chào bạn! 👋 Mình là trợ lý của shop tinh dầu. Mình có thể giúp gì cho bạn hôm nay?"
+        
+        # Xử lý câu hỏi về giao hàng và vận chuyển
+        if any(keyword in input_lower for keyword in ["giao hàng", "vận chuyển", "ship", "thời gian", "phí", "thanh toán", "đổi trả"]):
+            shipping_info = get_shipping_info(input_lower)
+            if shipping_info:
+                return f"{greeting}{shipping_info}"
         
         # Sử dụng OpenAI cho các câu hỏi khác
         return f"{greeting}{get_openai_response(user_input)}"

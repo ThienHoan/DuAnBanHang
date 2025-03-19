@@ -45,6 +45,39 @@ public class DAO {
             LOGGER.log(Level.SEVERE, "Error closing database resources", e);
         }
     }
+    
+    public Account loginByEmail(String email) {
+    String query = "SELECT * FROM Account WHERE email = ?";
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+        conn = new DBContext().getConnection();
+        ps = conn.prepareStatement(query);
+        ps.setString(1, email);
+        rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            return new Account(
+                rs.getInt("userID"),
+                rs.getString("userName"),
+                rs.getString("password"),
+                rs.getString("email"),
+                rs.getString("address"),
+                rs.getString("phoneNumber"),
+                rs.getInt("roleID"),
+                rs.getInt("status")
+            );
+        }
+    } catch (Exception e) {
+        LOGGER.log(Level.SEVERE, "Error during loginByEmail for email: " + email, e);
+    } finally {
+        closeResources(conn, ps, rs);
+    }
+    return null;
+}
+
 
     public List<Product> getAllProduct() {
         List<Product> list = new ArrayList<>();
