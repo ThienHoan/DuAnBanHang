@@ -8,6 +8,7 @@
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/AddControl.java</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/UpdateControl.java</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/entity/Cart.java</file>
+            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/entity/ProductReview.java</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/ChatbotControl.java</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/UpdateProfileController.java</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/entity/Account.java</file>
@@ -19,6 +20,7 @@
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/productDao/ProductDao.java</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/filter/LoggingFilter.java</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/DeleteControl.java</file>
+            <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/RegisterControl.java</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/web/Menu.jsp</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/CartControll.java</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/web/Home.jsp</file>
@@ -30,6 +32,7 @@
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/AddReviewControl.java</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/UserProfileController.java</file>
             <file>file:/D:/CODE/PRJ/DuAnBanHang/src/java/control/ManagerControl.java</file>
+            <file>file:/D:/CODE/PRJ/DuAnBanHang/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>

@@ -1,3 +1,4 @@
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -1377,7 +1378,7 @@
                                 <i class="biolife-icon icon-head-phone"></i>
                                 <p class="r-info">
                                     <span>Got Questions ?</span>
-                                    <span>(700)  9001-1909  (900) 689 -66</span>
+                                    <span>(700)  9001-1909  (900) 689 -66</span>
                                 </p>
                             </div>
                             <div class="newsletter-block layout-01">
@@ -1564,9 +1565,10 @@
     <script src="assets/js/slick.min.js"></script>
     <script src="assets/js/biolife.framework.js"></script>
     <script src="assets/js/functions.js"></script>
-</body>
-
-</html>        const ratingBtns = document.querySelectorAll('.btn-rating');
+    
+    <script>
+    $(document).ready(function() {
+        const ratingBtns = document.querySelectorAll('.btn-rating');
         const ratingInput = document.getElementById('selected-rating');
         
         ratingBtns.forEach((btn, index) => {
@@ -1600,7 +1602,7 @@
             }
         }
     });
-</script>
+    </script>
 </body>
 
-</html> 
+</html>

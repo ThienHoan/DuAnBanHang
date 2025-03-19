@@ -938,6 +938,331 @@ public class DAO {
     }
 }
 
+    public boolean recordProductClick(int productId, Integer userId) {
+        String query = "INSERT INTO ProductClick (pid, uid) VALUES (?, ?)";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, productId);
+            
+            if (userId != null) {
+                ps.setInt(2, userId);
+            } else {
+                ps.setNull(2, java.sql.Types.INTEGER);
+            }
+            
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error recording product click for product ID: " + productId, e);
+            return false;
+        } finally {
+            closeResources(conn, ps, null);
+        }
+    }
+
+    /**
+     * Get the total number of clicks for a product
+     * 
+     * @param productId the product ID to get click count for
+     * @return the total number of clicks
+     */
+    public int getProductClickCount(int productId) {
+        String query = "SELECT COUNT(*) FROM ProductClick WHERE pid = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, productId);
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error getting click count for product ID: " + productId, e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return 0;
+    }
+
+    /**
+     * Get the most clicked products
+     * 
+     * @param limit the maximum number of products to return
+     * @return a list of products ordered by click count
+     */
+    public List<Product> getMostClickedProducts(int limit) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT p.*, COUNT(pc.pid) as click_count FROM Product p " +
+                       "JOIN ProductClick pc ON p.pid = pc.pid " +
+                       "WHERE p.status = 1 " +
+                       "GROUP BY p.pid, p.name, p.price, p.description, p.stock, p.import_date, p.status, p.sell_id, p.cateID, p.img " +
+                       "ORDER BY click_count DESC " +
+                       "SELECT TOP (?) p.*, ISNULL(pc.clickCount, 0) as clickCount";
+        
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, limit);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                list.add(new Product(
+                    rs.getInt("pid"),
+                    rs.getString("name"),
+                    rs.getDouble("price"),
+                    rs.getString("description"),
+                    rs.getInt("stock"),
+                    rs.getString("import_date"),
+                    rs.getInt("status"),
+                    rs.getInt("sell_id"),
+                    rs.getInt("cateID"),
+                    rs.getString("img")
+                ));
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error getting most clicked products", e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        return list;
+    }
+
+    public void incrementProductClickCount(int productId) throws Exception {
+        String checkSql = "SELECT clickCount FROM ProductClick WHERE pid = ?";
+        String insertSql = "INSERT INTO ProductClick (pid, clickCount) VALUES (?, 1)";
+        String updateSql = "UPDATE ProductClick SET clickCount = clickCount + 1 WHERE pid = ?";
+        
+        Connection conn = null;
+        PreparedStatement ps = null;
+        
+        try {
+            conn = new DBContext().getConnection();
+            
+            // First check if the product exists in the ProductClick table
+            ps = conn.prepareStatement(checkSql);
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                // Product exists, update the click count
+                ps = conn.prepareStatement(updateSql);
+                ps.setInt(1, productId);
+                ps.executeUpdate();
+            } else {
+                // Product doesn't exist, insert a new record
+                ps = conn.prepareStatement(insertSql);
+                ps.setInt(1, productId);
+                ps.executeUpdate();
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
+    public List<Product> getProductsSortedByClicks(int limit) {
+        List<Product> list = new ArrayList<>();
+        
+        // Improved SQL query that will work with MS SQL Server
+        String query = "SELECT p.*, ISNULL(pc.clickCount, 0) as clickCount " +
+                       "FROM Product p " +
+                       "LEFT JOIN ProductClick pc ON p.pid = pc.pid " +
+                       "ORDER BY ISNULL(pc.clickCount, 0) DESC";
+        
+        if (limit > 0) {
+            // Add TOP clause for SQL Server
+            query = "SELECT TOP " + limit + " p.*, ISNULL(pc.clickCount, 0) as clickCount " +
+                    "FROM Product p " +
+                    "LEFT JOIN ProductClick pc ON p.pid = pc.pid " +
+                    "ORDER BY ISNULL(pc.clickCount, 0) DESC";
+        }
+        
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            
+            LOGGER.log(Level.INFO, "Executing product clicks query: {0}", query);
+            
+            while (rs.next()) {
+                int productId = rs.getInt("pid");
+                String productName = rs.getString("name");
+                int productStatus = rs.getInt("status");
+                int clickCount = rs.getInt("clickCount");
+                
+                LOGGER.log(Level.FINE, "Found product: ID={0}, Name={1}, Status={2}, Clicks={3}", 
+                           new Object[]{productId, productName, productStatus, clickCount});
+                
+                Product product = new Product(
+                    productId,
+                    productName,
+                    rs.getDouble("price"),
+                    rs.getString("description"),
+                    rs.getInt("stock"),
+                    rs.getString("import_date"),
+                    productStatus,
+                    rs.getInt("sell_id"),
+                    rs.getInt("cateID"),
+                    rs.getString("img")
+                );
+                
+                // Set the click count properly
+                product.setClickCount(clickCount);
+                list.add(product);
+            }
+            
+            LOGGER.log(Level.INFO, "Total products loaded: {0}", list.size());
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error in getProductsSortedByClicks: {0}", e.getMessage());
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        
+        return list;
+    }
+
+    /**
+     * Initialize ProductClick table with entries for all products
+     * Call this method to ensure all products have click data
+     */
+    public void initializeProductClicks() {
+        String query = "SELECT p.pid FROM Product p " +
+                      "LEFT JOIN ProductClick pc ON p.pid = pc.pid " +
+                      "WHERE pc.pid IS NULL";
+        
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            
+            // Prepare insert statement
+            PreparedStatement insertPs = null;
+            
+            while (rs.next()) {
+                int pid = rs.getInt("pid");
+                String insertQuery = "INSERT INTO ProductClick (pid, clickCount) VALUES (?, 0)";
+                insertPs = conn.prepareStatement(insertQuery);
+                insertPs.setInt(1, pid);
+                insertPs.executeUpdate();
+            }
+            
+            if (insertPs != null) insertPs.close();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error initializing product clicks", e);
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+    }
+
+    /**
+     * Get products sorted by clicks with pagination and filtering for clicks > 0
+     * 
+     * @param page The page number (1-based)
+     * @param productsPerPage Number of products per page
+     * @return List of products with clicks > 0, sorted by clicks
+     */
+    public List<Product> getProductsSortedByClicksWithPaging(int page, int productsPerPage) {
+        List<Product> list = new ArrayList<>();
+        
+        // Calculate offset for pagination
+        int offset = (page - 1) * productsPerPage;
+        
+        // Query with pagination and filtering for clicks > 0
+        // Using SQL Server pagination with OFFSET-FETCH
+        String query = "SELECT p.*, ISNULL(pc.clickCount, 0) as clickCount " +
+                      "FROM Product p " +
+                      "LEFT JOIN ProductClick pc ON p.pid = pc.pid " +
+                      "WHERE ISNULL(pc.clickCount, 0) > 0 " +
+                      "ORDER BY ISNULL(pc.clickCount, 0) DESC " +
+                      "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, offset);
+            ps.setInt(2, productsPerPage);
+            rs = ps.executeQuery();
+            
+            LOGGER.log(Level.INFO, "Executing paginated product clicks query: {0} with offset {1}, limit {2}", 
+                       new Object[]{query, offset, productsPerPage});
+            
+            while (rs.next()) {
+                int productId = rs.getInt("pid");
+                String productName = rs.getString("name");
+                int productStatus = rs.getInt("status");
+                int clickCount = rs.getInt("clickCount");
+                
+                Product product = new Product(
+                    productId,
+                    productName,
+                    rs.getDouble("price"),
+                    rs.getString("description"),
+                    rs.getInt("stock"),
+                    rs.getString("import_date"),
+                    productStatus,
+                    rs.getInt("sell_id"),
+                    rs.getInt("cateID"),
+                    rs.getString("img")
+                );
+                
+                product.setClickCount(clickCount);
+                list.add(product);
+            }
+            
+            LOGGER.log(Level.INFO, "Products loaded for page {0}: {1}", new Object[]{page, list.size()});
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error in getProductsSortedByClicksWithPaging: {0}", e.getMessage());
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        
+        return list;
+    }
+
+    /**
+     * Count total number of products with clicks > 0
+     * @return Total count of products with clicks
+     */
+    public int countProductsWithClicks() {
+        String query = "SELECT COUNT(*) FROM Product p " +
+                      "LEFT JOIN ProductClick pc ON p.pid = pc.pid " +
+                      "WHERE ISNULL(pc.clickCount, 0) > 0";
+        
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error counting products with clicks: {0}", e.getMessage());
+        } finally {
+            closeResources(conn, ps, rs);
+        }
+        
+        return 0;
+    }
 
     
     // Helper method to close connections
@@ -979,6 +1304,56 @@ public class DAO {
         return productList;
     }
 
+    /**
+     * Test the database connection
+     * @return true if connected, false otherwise
+     */
+    public boolean testConnection() {
+        Connection conn = null;
+        try {
+            conn = new DBContext().getConnection();
+            return conn != null;
+        } catch (Exception e) {
+            System.out.println("Connection test error: " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                System.out.println("Error closing connection: " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Get the raw count of records in the ProductClick table
+     * @return the number of records
+     */
+    public int getProductClickCount() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = new DBContext().getConnection();
+            String query = "SELECT COUNT(*) FROM ProductClick";
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error counting ProductClick records: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
+        }
+        return 0;
+    }
 
     //--------------------------------------------
     public static void main(String[] args) {

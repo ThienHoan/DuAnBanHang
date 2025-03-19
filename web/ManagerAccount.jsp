@@ -338,8 +338,19 @@ $(document).ready(function(){
     });
 });
 </script>
-</head>
-<body>
+<script>
+    // ...existing code...
+    
+    // Add event listener for browser close to immediately update session count
+    window.addEventListener('beforeunload', function(e) {
+        // Send a synchronous request to invalidate session
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'invalidateSession', false);  // false makes it synchronous
+        xhr.send();
+    });
+</script>
+</body>
+</html>
 <div class="container-xl">
 	<div class="table-responsive">
 		<div class="table-wrapper">
@@ -348,10 +359,23 @@ $(document).ready(function(){
 					<div class="col-sm-6">
 						<h2>Manage <b>Accounts</b></h2>
 					</div>
-					<div class="col-sm-6">
-						<a href="http://localhost:8080/DuAnBanHang/home" class="btn btn-primary mr-2"><i class="material-icons">&#xE88A;</i> <span>Back to Home</span></a>
-						<a href="#addAccountModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Account</span></a>
-						<a href="#deleteAccountModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
+					<div class="col-sm-6 d-flex flex-column align-items-center">
+						<!-- Hộp hiển thị số người đang truy cập -->
+						<div class="d-flex align-items-center bg-primary text-white px-4 py-2 rounded mb-2 w-100 justify-content-center">
+							<span>${applicationScope.activeSessions} người đang truy cập</span>
+						</div>
+						<!-- Nhóm nút bấm -->
+						<div class="d-flex justify-content-center w-100">
+							<a href="#deleteAccountModal" class="btn btn-danger me-2" data-toggle="modal">
+								<i class="material-icons">&#xE15C;</i> <span>Delete</span>
+							</a>
+							<a href="#addAccountModal" class="btn btn-success me-2" data-toggle="modal">
+								<i class="material-icons">&#xE147;</i> <span>Add New Account</span>
+							</a>
+							<a href="http://localhost:8080/DuAnBanHang/home" class="btn btn-primary" data-toggle="modal">
+								<i class="material-icons">&#xE88A;</i> <span>Back to Home</span>
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -573,7 +597,7 @@ $(document).ready(function(){
 		</div>
 	</div>
 </div>
-</body>
+
 <script>
     // Show the Add Account modal if there was an error
     $(document).ready(function() {
