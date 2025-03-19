@@ -28,6 +28,9 @@
         <servlet-name>ChangePasswordServlet</servlet-name>
         <servlet-class>control.ChangePasswordServlet</servlet-class>
     </servlet>
+    <listener>
+        <listener-class>listener.SessionCounterListener</listener-class>
+    </listener>
     <session-config>
         <session-timeout>30</session-timeout> <!-- 30 phút -->
     </session-config>

@@ -323,6 +323,10 @@
                                     <h2>Manage <b>Product</b></h2>
                                 </div>
                                 <div class="col-sm-6">
+                                        <!-- Add this new button for product access data -->
+                                     <a href="manager?action=productAccessData" class="btn btn-primary btn-block">
+                                            <i class="fa fa-bar-chart"></i> Product Access Statistics
+                                        </a>
                                     <a href="home" class="btn btn-primary">
                                         <i class="material-icons">&#xe88a;</i> <span>Home</span>
                                     </a>
