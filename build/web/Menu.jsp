@@ -83,6 +83,9 @@
                             <c:if test="${sessionScope.account.roleID == 2 or sessionScope.account.roleID == 3}">
                                 <li class="menu-item"><a href="manager">Manager Product</a></li>
                             </c:if>
+                                <li class="nav-item">
+    <a class="nav-link" href="orders">Đơn hàng</a>
+</li>
                         </ul>
                     </div>
                 </div>

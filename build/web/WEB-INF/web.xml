@@ -46,4 +46,39 @@
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
+    <servlet>
+    <servlet-name>OrderManagementControl</servlet-name>
+    <servlet-class>control.OrderManagementControl</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>OrderManagementControl</servlet-name>
+    <url-pattern>/orders</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>OrderDetailControl</servlet-name>
+    <servlet-class>control.OrderDetailControl</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>OrderDetailControl</servlet-name>
+    <url-pattern>/order-detail</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>OrderConfirmControl</servlet-name>
+    <servlet-class>control.OrderConfirmControl</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>OrderConfirmControl</servlet-name>
+    <url-pattern>/confirm-order</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>UpdateOrderStatusControl</servlet-name>
+    <servlet-class>control.UpdateOrderStatusControl</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>UpdateOrderStatusControl</servlet-name>
+    <url-pattern>/update-order-status</url-pattern>
+</servlet-mapping>
 </web-app>
