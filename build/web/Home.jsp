@@ -2,7 +2,48 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <fmt:setLocale value="vi_VN"/>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.wishlist-form').on('submit', function(e) {
+            e.preventDefault(); // Ngăn form submit mặc định
 
+            var form = $(this);
+            var userId = form.find('input[name="userID"]').val();
+            var productId = form.find('input[name="productID"]').val();
+
+            if (userId === 'null') {
+                alert('Please login to add to wishlist');
+                window.location.href = 'Login.jsp';
+                return;
+            }
+
+            $.ajax({
+                url: 'wishlist',
+                type: 'POST',
+                data: {
+                    action: 'add',
+                    userID: userId,
+                    productID: productId
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if (data.message.includes("successfully")) {
+                        alert('Added to wishlist successfully!');
+                        // Cập nhật số lượng wishlist trên giao diện
+                        var wishlistCount = data.wishlistCount;
+                        $('.wishlist-block .qty').text(wishlistCount);
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('adding success ' + error);
+                }
+            });
+        });
+    });
+</script>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
@@ -406,7 +447,19 @@
                                                         <div class="slide-down-box">
                                                         <p class="message">"Tinh dầu cao cấp, thuần khiết & an toàn."</p>
                                                         <div class="buttons">
-                                                            <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
+
+                                                     
+<!-- Nút Add to Wishlist -->
+<div class="wishlist-action">
+    <form action="wishlist" method="post" class="wishlist-form" style="display: inline;">
+        <input type="hidden" name="action" value="add">
+        <input type="hidden" name="userID" value="<%= session.getAttribute("userID") %>">
+        <input type="hidden" name="productID" value="${o.id}">
+        <button type="submit" class="btn wishlist-btn">
+            <i class="fa fa-heart" aria-hidden="true"></i>
+        </button>
+    </form>
+</div>
                                                             <a  onclick="addToCart(${o.id})" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
                                                             <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                             

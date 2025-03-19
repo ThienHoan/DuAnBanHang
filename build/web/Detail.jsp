@@ -439,41 +439,54 @@
                     </div>
                 </div>
 
-                    <!-- related products -->
-                    <div class="product-related-box single-layout">
-                        <div class="biolife-title-box lg-margin-bottom-26px-im">
-                            <span class="biolife-icon icon-organic"></span>
-                            <span class="subtitle">All the best item for You</span>
-                            <h3 class="main-title">Related Products</h3>
+                   <!-- related products -->
+<div class="product-related-box single-layout">
+    <div class="biolife-title-box lg-margin-bottom-26px-im">
+        <span class="biolife-icon icon-organic"></span>
+        <span class="subtitle">All the best item for You</span>
+        <h3 class="main-title">Related Products</h3>
+    </div>
+    <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":0,"slidesToShow":5, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin":20 }},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":10}}]}'>
+        <c:forEach var="p" items="${listPP}">
+        <li class="product-item">
+            <div class="contain-product layout-default">
+                <div class="product-thumb">
+                    <a href="detail?pid=${p.id}" class="link-to-product">
+                        <img src="${p.img}" alt="dd" width="270" height="270" class="product-thumnail">
+                    </a>
+                </div>
+                <div class="info">
+                    <b class="categories">${categoryName}</b>
+                    <h4 class="product-title"><a href="detail?pid=${p.id}" class="pr-name">${p.name}</a></h4>
+                    <div class="price">
+                        <ins><span class="price-amount"><span class="currencySymbol"></span><fmt:formatNumber value="${p.price}" type="currency"/></span></ins>
+                    </div>
+                    <div class="slide-down-box">
+                        <p class="message">"Tinh dầu cao cấp, thuần khiết & an toàn."</p>
+                        <div class="buttons">
+               <!-- Nút Add to Wishlist -->
+
+    <form action="wishlist" method="post" style="display: inline;">
+        <input type="hidden" name="action" value="add">
+        <input type="hidden" name="userID" value="<%= session.getAttribute("userID") %>">
+        <input type="hidden" name="productID" value="${o.id}">
+        <input type="hidden" name="returnUrl" value="detail?pid=${param.pid}">
+        <button type="submit" class="btn wishlist-btn">
+            <i class="fa fa-heart" aria-hidden="true"></i>
+        </button>
+    </form>
+
+                            <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
+                            <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                         </div>
-                        <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":0,"slidesToShow":5, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin":20 }},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":10}}]}'>
-                            <c:forEach var="p" items="${listPP}">
-                                <li class="product-item">
-                                    <div class="contain-product layout-default">
-                                        <div class="product-thumb">
-                                            <a href="#" class="link-to-product">
-                                                <img src="${p.img}" alt="dd" width="270" height="270" class="product-thumnail">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <b class="categories">${categoryName}</b>
-                                            <h4 class="product-title"><a href="detail?pid=${p.id}" class="pr-name">${p.name}</a></h4>
-                                            <div class="price">
-                                                <ins><span class="price-amount"><span class="currencySymbol"></span><fmt:formatNumber value="${p.price}" type="currency"/></span></ins>
-                                                <!--<del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>-->
-                                            </div>
-                                            <div class="slide-down-box">
-                                                <p class="message">"Tinh dầu cao cấp, thuần khiết & an toàn."</p>
-                                                <div class="buttons">
-                                                    <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                                    <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </c:forEach>
+                    </div>
+                </div>
+            </div>
+        </li>
+        </c:forEach>
+    </ul>
+</div>
+
                             <!--                        <li class="product-item">
                                                         <div class="contain-product layout-default">
                                                             <div class="product-thumb">

@@ -112,15 +112,18 @@
                             </div>
                         </div>
                         
-                        <!-- Wishlist -->
-                        <div class="wishlist-block hidden-sm hidden-xs">
-                            <a href="#" class="link-to">
-                                <span class="icon-qty-combine">
-                                    <i class="icon-heart-bold biolife-icon"></i>
-                                    
-                                </span>
-                            </a>
-                        </div>
+<!-- Wishlist -->
+<div class="wishlist-block hidden-sm hidden-xs">
+    <a href="wishlist?userID=<%= session.getAttribute("userID") %>" class="link-to">
+        <span class="icon-qty-combine">
+            <i class="icon-heart-bold biolife-icon"></i>
+            <span class="qty">
+                <%= session.getAttribute("wishlistCount") != null ? session.getAttribute("wishlistCount") : "0" %>
+            </span>
+        </span>
+    </a>
+</div>
+
                         
                         <!-- User account -->
                         <div class="minicart-block">
