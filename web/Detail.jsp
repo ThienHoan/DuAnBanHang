@@ -27,6 +27,25 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/main-color.css">
     <link rel="stylesheet" href="assets/css/main-color03-green.css">
+    <script>
+            function addToCart(productId) {
+                fetch("cart?action=add&id=" + productId, {
+                    method: "POST",
+                    credentials: 'same-origin'
+                })
+                        .then(response => {
+                            if (response.redirected) {
+                                alert("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!");
+                                window.location.href = 'Login.jsp';
+                                return;
+                            }
+                            alert("Đã thêm sản phẩm vào giỏ hàng!");
+                        })
+                        .catch(error => {
+                            console.error("Lỗi:", error);
+                        });
+            }
+        </script>
 </head>
 <body class="biolife-body">
 
@@ -881,12 +900,11 @@
                             <p class="price">£199.99</p>
                         </div>
                         <div class="buttons">
-                            <a href="#" class="btn add-to-cart-btn">add to cart</a>
-                            <p class="pull-row">
-                                <a href="#" class="btn wishlist-btn">wishlist</a>
-                                <a href="#" class="btn compare-btn">compare</a>
-                            </p>
-                        </div>
+                                <a onclick="addToCart(${detail.id}, document.getElementById('quantity').value)" class="btn add-to-cart-btn">
+                                    <i class="fa fa-cart-plus"></i> Add to cart
+                                </a>
+                            </div>
+
                         <div class="location-shipping-to">
                             <span class="title">Ship to:</span>
                             <select name="shipping_to" class="country">

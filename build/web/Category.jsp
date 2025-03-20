@@ -825,7 +825,7 @@
 
                     <div class="block-item recently-products-cat md-margin-bottom-39">
                         <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":0,"slidesToShow":5, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 3}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin": 10}},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":10 }}]}' >
-                            <c:forEach var="p" items="${listPP}">
+                            <c:forEach var="p" items="${listP}">
                             <li class="product-item">
                                 <div class="contain-product layout-02">
                                     <div class="product-thumb">

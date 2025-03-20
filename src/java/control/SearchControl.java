@@ -25,8 +25,10 @@ public class SearchControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String txtSearch = request.getParameter("txt"); //giay chạy bộ
         DAO dao = new DAO();
+        List<Product> listAll = dao.getAllProductUser();
+        request.setAttribute("listP", listAll);
         List<Product> list = dao.searchByName(txtSearch);
-        request.setAttribute("listP", list);
+        request.setAttribute("listPP", list);
         request.getRequestDispatcher("Category.jsp").forward(request, response);
         
     } 

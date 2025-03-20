@@ -218,7 +218,7 @@ public class DAO {
 
     public List<Product> searchByName(String txtSearch) {
         List<Product> list = new ArrayList<>();
-        String query = "select * from Product where name like ?";
+        String query = "SELECT * FROM Product WHERE name LIKE ? AND status = 1;";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

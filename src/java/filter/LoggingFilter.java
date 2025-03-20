@@ -32,6 +32,7 @@ public class LoggingFilter implements Filter {
             servletPath.equals("/home") ||
             servletPath.equals("/changePassword") ||  // Add this line to allow access
             requestURI.contains("assets/") || 
+            requestURI.contains("/search") || 
             requestURI.endsWith("Login.jsp") || 
             requestURI.endsWith("Register.jsp")) {
             // Cho phép truy cập mà không cần đăng nhập
