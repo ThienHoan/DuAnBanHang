@@ -1,0 +1,547 @@
+-- Sử dụng cơ sở dữ liệu vừa tạo
+USE wiish;
+GO
+
+-- Tạo bảng Role để lưu thông tin vai trò người dùng
+CREATE TABLE Role (
+    roleID INT PRIMARY KEY IDENTITY(1,1),  -- Mã vai trò tự tăng
+    roleName NVARCHAR(50) NOT NULL         -- Tên của vai trò (vd: seller, user, admin)
+);
+GO
+
+-- Tạo bảng Category để lưu danh mục sản phẩm
+CREATE TABLE Category (
+    categoryID INT PRIMARY KEY IDENTITY(1,1),  -- Mã danh mục tự tăng
+    categoryName NVARCHAR(100) NOT NULL        -- Tên danh mục
+);
+GO
+
+-- Tạo bảng Account để lưu thông tin người dùng
+CREATE TABLE Account (
+    userID INT PRIMARY KEY IDENTITY(1,1),  -- Mã người dùng tự tăng
+    userName NVARCHAR(100) NOT NULL,       -- Tên người dùng
+    password NVARCHAR(100) NOT NULL,       -- Mật khẩu của người dùng
+    email NVARCHAR(100) NOT NULL,          -- Email của người dùng
+    address NVARCHAR(50),                  -- Địa chỉ của người dùng
+    phoneNumber NVARCHAR(20),              -- Số điện thoại của người dùng
+    roleID INT DEFAULT 1,                  -- Mặc định là 1 (người dùng bình thường)
+    status INT DEFAULT 1,                  -- Trạng thái tài khoản (1: Hoạt động, 0: Bị khóa)
+    FOREIGN KEY (roleID) REFERENCES Role(roleID)
+);
+GO
+
+
+-- Tạo bảng Product để lưu thông tin sản phẩm
+CREATE TABLE Product (
+    pid INT PRIMARY KEY IDENTITY(1,1),      -- Mã sản phẩm tự tăng
+    name NVARCHAR(100) NOT NULL,           -- Tên sản phẩm
+    price DECIMAL(10, 2) NOT NULL,         -- Giá sản phẩm
+    description NVARCHAR(MAX),             -- Mô tả sản phẩm
+    stock INT NOT NULL,                    -- Số lượng sản phẩm trong kho
+    import_date DATE DEFAULT GETDATE(),    -- Ngày nhập hàng mặc định là ngày hiện tại
+    status INT DEFAULT 1,                  -- Trạng thái sản phẩm (1: Còn hàng, 0: Hết hàng)
+    sell_id INT,                           -- ID của người bán
+    cateID INT,                            -- ID danh mục sản phẩm
+    img VARCHAR(MAX),                      -- Đường dẫn ảnh sản phẩm
+    FOREIGN KEY (cateID) REFERENCES Category(categoryID)  -- Khóa ngoại đến bảng Category
+);
+GO
+
+
+-- Tạo bảng Orders để lưu thông tin đơn hàng
+CREATE TABLE Orders (
+    id INT PRIMARY KEY IDENTITY(1,1),      -- Mã đơn hàng tự tăng
+    userID INT,                            -- Mã người dùng đặt hàng (liên kết với bảng Account)
+    orderDate DATE DEFAULT GETDATE(),               -- Ngày đặt hàng
+    total_price DECIMAL(10, 2) NOT NULL,   -- Tổng giá trị đơn hàng
+    status NVARCHAR(50),                   -- Trạng thái đơn hàng (vd: pending, shipped)
+    FOREIGN KEY (userID) REFERENCES Account(userID)
+);
+GO
+
+-- Tạo bảng OrderDetail để lưu chi tiết đơn hàng
+CREATE TABLE OrderDetail (
+    id INT PRIMARY KEY IDENTITY(1,1),      -- Mã chi tiết đơn hàng tự tăng
+    order_id INT,                          -- Mã đơn hàng (liên kết với bảng Orders)
+    product_id INT,                        -- Mã sản phẩm (liên kết với bảng Product)
+    quantity INT NOT NULL,                 -- Số lượng sản phẩm trong đơn hàng
+    price DECIMAL(10, 2) NOT NULL,         -- Giá của sản phẩm tại thời điểm đặt hàng
+    subtotall DECIMAL(10, 2) NOT NULL,     -- Sửa lỗi chính tả thành subtotal
+    FOREIGN KEY (order_id) REFERENCES Orders(id),
+    FOREIGN KEY (product_id) REFERENCES Product(pid) -- Sửa lỗi tên cột (pid thay vì id)
+);
+GO
+
+-- Tạo bảng ProductClick để lưu số lượt click vào sản phẩm
+CREATE TABLE ProductClick (
+    pid INT NOT NULL PRIMARY KEY, -- ID sản phẩm, liên kết với bảng Product
+    clickCount INT DEFAULT 0, -- Số lượt click vào sản phẩm, mặc định là 0
+    FOREIGN KEY (pid) REFERENCES Product(pid) -- Khóa ngoại liên kết với bảng Product
+);
+GO
+
+UPDATE Product SET status = 1 WHERE pid IN (SELECT pid FROM ProductClick)
+GO
+
+SELECT COUNT(*) FROM Product WHERE status = 1
+
+  UPDATE Product SET status = 1 WHERE pid IN (SELECT pid FROM ProductClick)
+
+GO
+
+
+-- Thêm dữ liệu vào bảng Role với 3 vai trò là seller, user và admin
+INSERT INTO Role (roleName)
+VALUES
+('User'),
+('Seller'),
+('Admin');
+GO
+
+INSERT INTO Category (categoryName)
+VALUES
+(N'Tinh dầu xông phòng'),
+(N'Tinh dầu xe hơi'),
+(N'Tinh dầu massage'),
+(N'Tinh dầu dạng xịt');
+GO
+INSERT INTO Account (userName, password, email, address, phoneNumber, roleID, status) VALUES
+(N'User1', N'password1', N'user1@email.com', N'123 Đường Lê Lợi, Quận 1, TP.HCM', N'0123456789', 1, 1),
+(N'User2', N'password2', N'user2@email.com', N'456 Đường Nguyễn Trãi, Quận 5, TP.HCM', N'0123456788', 1, 1),
+(N'User3', N'password3', N'user3@email.com', N'789 Đường Hai Bà Trưng, Quận 3, TP.HCM', N'0123456787', 1, 1),
+(N'User4', N'password4', N'user4@email.com', N'159 Đường Cách Mạng Tháng 8, Quận 10, TP.HCM', N'0123456786', 1, 1),
+(N'User5', N'password5', N'user5@email.com', N'753 Đường Phan Xích Long, Quận Phú Nhuận, TP.HCM', N'0123456785', 1, 1),
+
+(N'Seller1', N'password6', N'seller1@email.com', N'100 Đường Võ Văn Kiệt, Quận 1, TP.HCM', N'0123456784', 2, 1),
+(N'Seller2', N'password7', N'seller2@email.com', N'250 Đường Điện Biên Phủ, Quận Bình Thạnh, TP.HCM', N'0123456783', 2, 1),
+(N'Seller3', N'password8', N'seller3@email.com', N'360 Đường Nguyễn Văn Cừ, Quận 5, TP.HCM', N'0123456782', 2, 1),
+(N'Seller4', N'password9', N'seller4@email.com', N'420 Đường Hoàng Văn Thụ, Quận Tân Bình, TP.HCM', N'0123456781', 2, 1),
+(N'Seller5', N'password10', N'seller5@email.com', N'555 Đường Trường Chinh, Quận 12, TP.HCM', N'0123456780', 2, 1),
+
+(N'Admin1', N'password11', N'admin1@email.com', N'01 Đường Nguyễn Huệ, Quận 1, TP.HCM', N'0123456779', 3, 1),
+(N'Admin2', N'password12', N'admin2@email.com', N'150 Đường Lý Thường Kiệt, Quận 10, TP.HCM', N'0123456778', 3, 1),
+(N'Admin3', N'password13', N'admin3@email.com', N'200 Đường Nguyễn Thị Minh Khai, Quận 3, TP.HCM', N'0123456777', 3, 1);
+
+
+INSERT INTO Product (name, price, description, stock, import_date, status, sell_id, cateID, img)
+VALUES
+-- Seller 1
+(N'Tinh dầu bạc hà', 150000, N'Tinh dầu tạo cảm giác mát lạnh', 10, '2024-03-10', 1, 6, 1, 'hinh anh/SanPham/Cac_Loai_TinhDau/BacHa_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-bac-ha-nguyen-chat-tinhdau-gia-truyen-hong-duc-4.jpg'),
+(N'Tinh dầu bưởi', 120000, N'Tinh dầu giúp thư giãn', 15, '2024-03-10', 1, 6, 2, 'hinh anh/SanPham/Cac_Loai_TinhDau/Buoi_15ml/Tinh-dau-buoi-10ml-4.jpg'),
+(N'Tinh dầu Cafe', 100000, N'Tinh dầu có cafe dễ chịu', 20, '2024-03-10', 1,6, 3, 'hinh anh/SanPham/Cac_Loai_TinhDau/Cafe_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-cafe-nguyen-chat-tinh-dau-cfe-hong-duc-4.jpg'),
+(N'Tinh dầu cam', 90000, N'Tinh dầu cam thư giãn', 25, '2024-03-10', 1, 6, 2, 'hinh anh/SanPham/Cac_Loai_TinhDau/Cam_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-cam-nguyen-chat-tinh-dau-cam-hong-duc-3.jpg'),
+(N'Tinh dầu dừa', 130000, N'Tinh dầu giúp tỉnh táo', 12, '2024-03-10', 1, 6, 1, 'hinh anh/SanPham/Cac_Loai_TinhDau/Dua_25ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-dua-nguyen-chat-tinh-dau-dua-hong-duc-3.jpg'),
+
+-- Seller 2
+(N'Tinh dầu gấc', 140000, N'Hỗ trợ tuần hoàn máu', 10, '2024-03-10', 1,7, 2, 'hinh anh/SanPham/Cac_Loai_TinhDau/Gac_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-gac-nguyen-chat-tinh-dau-gac-hong-duc-3.jpg'),
+(N'Tinh hoa hồng', 110000, N'Giữ ấm cơ thể', 15, '2024-03-10', 1, 7, 3, 'hinh anh/SanPham/Cac_Loai_TinhDau/HoaHong_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-hoa-hong-nguyen-chat-tinh-dau-hoa-hong-hong-duc-5.jpg'),
+(N'Tinh dầu hoa lài', 95000, N'Làm ấm không khí', 20, '2024-03-10', 1, 7, 1, 'hinh anh/SanPham/Cac_Loai_TinhDau/HoaLai_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-hoa-lai-nguyen-chat-tinh-dau-hoa-lai-hong-duc-4.jpg'),
+(N'Tinh dầu hoa su', 160000, N'Tinh dầu có hương hoa su dịu nhẹ', 18, '2024-03-10', 1, 7, 1, 'hinh anh/SanPham/Cac_Loai_TinhDau/HoaSu_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-hong-lai-nguyen-chat-tinh-dau-hoa-lai-hong-duc-4.jpg'),
+(N'Tinh dầu ngoc lan tay', 170000, N'Giúp thư giãn và tạo mùi hương dễ chịu', 14, '2024-03-10', 1, 7, 2, 'hinh anh/SanPham/Cac_Loai_TinhDau/NgocLanTay_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-ngoc-lan-tay-nguyen-chat-tinh-dau-ngoc-lan-tay-hong-duc-6.jpg'),
+
+-- Seller 3
+(N'Tinh dầu oải hương pháp', 125000, N'Tinh dầu chống côn trùng', 10, '2024-03-10', 1, 8, 3, 'hinh anh/SanPham/Cac_Loai_TinhDau/OaiHuongPhap_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-oai-huong-nguyen-chat-tinh-dau-oai-huong-phap-tinh-dau-hong-duc-3.jpg'),
+(N'Tinh dầu oải hương', 135000, N'Giúp tăng cường trí nhớ', 15, '2024-03-10', 1, 8, 2, 'hinh anh/SanPham/Cac_Loai_TinhDau/OaiHuong_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-oai-huong-nguyen-chat-tinh-dau-oai-huong-hong-duc-5.jpg'),
+(N'Tinh dầu quế', 145000, N'Giúp giảm nghẹt mũi', 20, '2024-03-10', 1, 8, 1, 'hinh anh/SanPham/Cac_Loai_TinhDau/Que_HongDuc_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-que-nguyen-chat-tinh-dau-que-hong-duc-tinh-dau-que-thien-nhien-6.jpg'),
+(N'Tinh dầu sả chanh', 155000, N'Tinh dầu giúp thanh lọc không khí', 12, '2024-03-10', 1, 8, 2, 'hinh anh/SanPham/Cac_Loai_TinhDau/SaChanh_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-sa-chanh-nguyen-chat-tinh-dau-san-chanh-hong-duc-3.jpg'),
+(N'Tinh dầu trầm', 165000, N'Tinh dầu giúp cân bằng tâm trạng', 14, '2024-03-10', 1, 8, 3, 'hinh anh/SanPham/Cac_Loai_TinhDau/Tram_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-tram-nguyen-chat-tinh-dau-tram-hong-duc-4.jpg'),
+
+-- Seller 4
+(N'Tinh dầu tràm huế', 130000, N'Tinh dầu giúp thư giãn', 10, '2024-03-10', 1, 9, 1, 'hinh anh/SanPham/Cac_Loai_TinhDauTram/Hue_Loai1/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-tram-dau-tram-hong-duc-dau-tram-hue-tinh-dau-tram-hue-loai-1-5.jpg'),
+(N'Tinh dầu bưởi', 120000, N'Giúp mọc tóc', 15, '2024-03-10', 1, 9, 4, 'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/Buoi_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-buoi-tinh-dau-xit-buoi-hong-duc-nguyen-chat-5.jpg'),
+(N'Tinh dầu cafe', 100000, N'Tinh dầu thiên nhiên', 20, '2024-03-10', 1, 9, 4, 'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/Cafe_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-tinh-dau-cafe-xit-hong-duc-nguyen-chat-3.jpg'),
+(N'Tinh dầu hoa hồng', 110000, N'Tinh dầu giúp thư giãn', 18, '2024-03-10', 1, 9, 4, 'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/HoaHong_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-hoa-hong-hong-duc-tinh-dau-hoa-hong-dang-xit-6.jpg'),
+(N'Tinh dầu hoa lài', 95000, N'Tinh dầu giúp tỉnh táo', 14, '2024-03-10', 1, 9, 4, 'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/HoaLai_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-hoa-lai-hong-duc-tinh-dau-xit-hoa-lai-4.jpg'),
+
+-- Seller 5
+(N'Tinh dầu quế', 145000, N'Tinh dầu giúp giảm stress', 10, '2024-03-10', 1, 10, 4, 'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/Que_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-phong-huong-que-tinh-dau-xit-phong-hong-duc-tinh-dau-que-3.jpg'),
+(N'Tinh dầu sả chanh', 155000, N'Tinh dầu giúp giữ ấm', 15, '2024-03-10', 1, 10, 4, 'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/SaChanh_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-phong-sa-chanh-tinh-dau-xit-phong-hong-duc-sa-chanh-3.jpg');
+
+--INSERT INTO Product (name, price, description, stock, import_date, status, sell_id, cateID)
+--VALUES
+-- Seller 1
+--(N'Tinh dầu oải hương', 150000, N'Tinh dầu giúp thư giãn', 10, '2024-03-10', 1, 1, 1),
+--(N'Tinh dầu bạc hà', 120000, N'Tinh dầu tạo cảm giác mát lạnh', 15, '2024-03-10', 1, 1, 2),
+--(N'Tinh dầu cam ngọt', 100000, N'Tinh dầu có hương cam dễ chịu', 20, '2024-03-10', 1, 1, 3),
+--(N'Tinh dầu sả chanh', 90000, N'Tinh dầu đuổi muỗi tự nhiên', 25, '2024-03-10', 1, 1, 4),
+--(N'Tinh dầu tràm', 130000, N'Tinh dầu giúp kháng khuẩn', 12, '2024-03-10', 1, 1, 1),
+
+-- Seller 2
+--(N'Tinh dầu hương nhu', 140000, N'Hỗ trợ tuần hoàn máu', 10, '2024-03-10', 1, 2, 2),
+--(N'Tinh dầu gừng', 110000, N'Giữ ấm cơ thể', 15, '2024-03-10', 1, 2, 3),
+--(N'Tinh dầu quế', 95000, N'Làm ấm không khí', 20, '2024-03-10', 1, 2, 4),
+--(N'Tinh dầu hoa nhài', 160000, N'Tinh dầu có hương hoa nhài dịu nhẹ', 18, '2024-03-10', 1, 2, 1),
+--(N'Tinh dầu hoa hồng', 170000, N'Giúp thư giãn và tạo mùi hương dễ chịu', 14, '2024-03-10', 1, 2, 2),
+
+-- Seller 3
+--(N'Tinh dầu sả', 125000, N'Tinh dầu chống côn trùng', 10, '2024-03-10', 1, 3, 3),
+--(N'Tinh dầu hương thảo', 135000, N'Giúp tăng cường trí nhớ', 15, '2024-03-10', 1, 3, 4),
+--(N'Tinh dầu khuynh diệp', 145000, N'Giúp giảm nghẹt mũi', 20, '2024-03-10', 1, 3, 1),
+--(N'Tinh dầu trà xanh', 155000, N'Tinh dầu giúp thanh lọc không khí', 12, '2024-03-10', 1, 3, 2),
+--(N'Tinh dầu phong lữ', 165000, N'Tinh dầu giúp cân bằng tâm trạng', 14, '2024-03-10', 1, 3, 3),
+
+-- Seller 4
+--(N'Tinh dầu bưởi', 130000, N'Tinh dầu giúp mọc tóc', 10, '2024-03-10', 1, 4, 4),
+--(N'Tinh dầu chanh', 110000, N'Giúp sát khuẩn và làm sạch không khí', 15, '2024-03-10', 1, 4, 1),
+--(N'Tinh dầu sả chanh', 95000, N'Tinh dầu thiên nhiên', 20, '2024-03-10', 1, 4, 2),
+--(N'Tinh dầu gỗ đàn hương', 170000, N'Tinh dầu giúp thư giãn', 18, '2024-03-10', 1, 4, 3),
+--(N'Tinh dầu bạc hà', 120000, N'Tinh dầu giúp tỉnh táo', 14, '2024-03-10', 1, 4, 4),
+
+-- Seller 5
+--(N'Tinh dầu hoa cam', 140000, N'Tinh dầu giúp giảm stress', 10, '2024-03-10', 1, 5, 1),
+--(N'Tinh dầu vỏ quế', 110000, N'Tinh dầu giúp giữ ấm', 15, '2024-03-10', 1, 5, 2),
+--(N'Tinh dầu bạch đàn', 95000, N'Tinh dầu giúp thanh lọc không khí', 20, '2024-03-10', 1, 5, 3),
+--(N'Tinh dầu cam bergamot', 160000, N'Tinh dầu có hương thơm cam chanh', 18, '2024-03-10', 1, 5, 4),
+--(N'Tinh dầu tuyết tùng', 170000, N'Tinh dầu giúp giảm căng thẳng', 14, '2024-03-10', 1, 5, 1);
+--GO
+
+
+INSERT INTO Orders (userID, orderDate, total_price, status)
+VALUES
+(1, '2024-03-05', 420000, N'pending'),    -- 300,000 (Product 1) + 120,000 (Product 2)
+(2, '2024-03-06', 480000, N'shipped'),    -- 300,000 (Product 3) + 180,000 (Product 4)
+(3, '2024-03-07', 130000, N'pending'),    -- 130,000 (Product 5)
+(4, '2024-03-08', 560000, N'pending'),    -- 560,000 (Product 6)
+(5, '2024-03-09', 330000, N'shipped');    -- 330,000 (Product 7)
+GO
+
+INSERT INTO OrderDetail (order_id, product_id, quantity, price, subtotall)
+VALUES
+-- Đơn hàng 1 (total_price: 420,000)
+(1, 1, 2, 150000, 300000),  -- 2 * 150,000 = 300,000
+(1, 2, 1, 120000, 120000),  -- 1 * 120,000 = 120,000 (sửa từ 50,000)
+
+-- Đơn hàng 2 (total_price: 480,000)
+(2, 3, 3, 100000, 300000),  -- 3 * 100,000 = 300,000
+(2, 4, 2, 90000, 180000),   -- 2 * 90,000 = 180,000 (sửa từ 100,000)
+
+-- Đơn hàng 3 (total_price: 130,000)
+(3, 5, 1, 130000, 130000),  -- 1 * 130,000 = 130,000 (sửa từ 250,000)
+
+-- Đơn hàng 4 (total_price: 560,000)
+(4, 6, 4, 140000, 560000),  -- 4 * 140,000 = 560,000 (sửa từ 150,000)
+
+-- Đơn hàng 5 (total_price: 330,000)
+(5, 7, 3, 110000, 330000);  -- 3 * 110,000 = 330,000 (sửa từ 150,000)
+GO
+
+
+/****** Object:  Table [dbo].[ProductReview]    Script Date: 3/17/2025 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProductReview](
+    [reviewID] [int] IDENTITY(1,1) NOT NULL,
+    [productID] [int] NOT NULL,
+    [userID] [int] NOT NULL,
+    [rating] [int] NOT NULL,
+    [reviewText] [nvarchar](max) NULL,
+    [reviewDate] [datetime] NOT NULL DEFAULT GETDATE(),
+PRIMARY KEY CLUSTERED 
+(
+    [reviewID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD FOREIGN KEY([productID])
+REFERENCES [dbo].[Product] ([pid])
+GO
+
+ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD FOREIGN KEY([userID])
+REFERENCES [dbo].[Account] ([userID])
+GO
+
+-- Add constraint to ensure rating is between 1 and 5
+ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD  CONSTRAINT [CK_Rating_Range] CHECK  (([rating]>=(1) AND [rating]<=(5)))
+GO
+
+
+
+
+lib
+@Đông Vănnnnnnnnnnnnn thieeus nayf
+@Đông Vănnnnnnnnnnnnn
+@Thiện Hoàn thiếu gì
+thiếu cái ảnh
+cái ảnh để bỏ mấy cái nớ vô dự án chơ mô
+@Đông Vănnnnnnnnnnnnn
+@Thiện Hoàn ảnh gì m
+Entity
+Này là dao t thêm 1 hàm nữa vô thôi copy nguyên file :v
+Dao cũ đấy
+m kh hiểu á
+ý t là
+cần ảnh cấu trúc
+để thêm vô trong file
+@Đông Vănnnnnnnnnnnnn m gửi ri thì ai biết file logingmail này kia để ở mô
+@Đông Vănnnnnnnnnnnnn đi chơi ít thôi gần nộp ASM rồi, trả lời lẹ lên t coi
+@Thiện Hoàn controll kìa
+/-strong
+@All nhớ thêm cái bảng này vào database nha
+@All khoan pull code master về nghe
+t fixx đã
+oke rồi nghe
+ae code mới nhất trên master là code gộp của vũ hoàng với giỏ hàng của kha(kha đang update giỏ hàng tiếp)
+tv chạy gmail
+là saod đây
+my bad k sao cả
+USE [wiish]
+GO
+
+/****** Object:  Table [dbo].[ProductReview]    Script Date: 3/17/2025 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProductReview](
+    [reviewID] [int] IDENTITY(1,1) NOT NULL,
+    [productID] [int] NOT NULL,
+    [userID] [int] NOT NULL,
+    [rating] [int] NOT NULL,
+    [reviewText] [nvarchar](max) NULL,
+    [reviewDate] [datetime] NOT NULL DEFAULT GETDATE(),
+PRIMARY KEY CLUSTERED 
+(
+    [reviewID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD FOREIGN KEY([productID])
+REFERENCES [dbo].[Product] ([pid])
+GO
+
+ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD FOREIGN KEY([userID])
+REFERENCES [dbo].[Account] ([userID])
+GO
+
+-- Add constraint to ensure rating is between 1 and 5
+ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD  CONSTRAINT [CK_Rating_Range] CHECK  (([rating]>=(1) AND [rating]<=(5)))
+GO
+Đm k thấy à @Thiện Hoàn
+oke
+@Đông Vănnnnnnnnnnnnn hàm mô rk
+chừ code t code mới
+kh cop lại dao cũ đc
+@Thiện Hoàn hàm loginbygmail ấy
+Đowik rí
+vãi l
+đâu mất hết code r
+may copy vô word
+:)))))))
+căc chìu đưa máy t  code cho
+public Account loginByEmail(String email) {
+        String sql = "SELECT * FROM Account WHERE email = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                // Tạo đối tượng Account từ dữ liệu trong database
+                Account account = new Account();
+                account.setId(rs.getInt("id"));
+                account.setUsername(rs.getString("username"));
+                account.setPassword(rs.getString("password"));
+                account.setEmail(rs.getString("email"));
+                // Thêm các trường khác nếu có (ví dụ: role, fullName, v.v.)
+                return account;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // In lỗi để debug
+        }
+        return null; // Trả về null nếu không tìm thấy tài khoản
+    }
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+    String code = request.getParameter("code"); // Lấy mã code từ Google
+    if (code == null || code.isEmpty()) {
+        request.getRequestDispatcher("Login.jsp").forward(request, response);
+        return;
+    }
+
+    try {
+        // Bước 1: Lấy access token từ Google
+        LoginGmail gg = new LoginGmail();
+        String accessToken = gg.getToken(code);
+        if (accessToken == null) {
+            throw new IOException("Failed to get access token");
+        }
+
+        // Bước 2: Lấy thông tin user từ Google
+        GoogleAccount acc = gg.getUserInfo(accessToken);
+        if (acc == null || acc.getEmail() == null) {
+            throw new IOException("Failed to get Google account info");
+        }
+
+        // Bước 3: Kiểm tra user trong database
+        DAO dao = new DAO();
+        Account a = dao.loginByEmail(acc.getEmail());
+
+        // Kiểm tra nếu không tìm thấy tài khoản trong database
+        if (a == null) {
+            request.setAttribute("error", "Email not found. Please register or try again.");
+            request.getRequestDispatcher("Login.jsp").forward(request, response);
+        } else {
+            // Nếu tìm thấy tài khoản, thiết lập session và chuyển hướng về trang chủ
+            HttpSession session = request.getSession();
+            session.setAttribute("account", a);
+            session.setAttribute("acc", a);
+            session.setAttribute("userID", a.getId());
+            session.setMaxInactiveInterval(600); // Đồng bộ với doPost
+            response.sendRedirect("home");
+        }
+    } catch (Exception e) {
+        request.setAttribute("error", "Error during Google login: " + e.getMessage());
+        request.getRequestDispatcher("Login.jsp").forward(request, response);
+    }
+}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package entity;
+
+/**
+ *
+ * @author ASUS
+ */
+public class GoogleAccount {
+    private String  id, email, name, first_name, given_name, family_name, picture;
+
+private boolean verified_email;
+
+    public GoogleAccount() {
+    }
+
+    public GoogleAccount(String id, String email, String name, String first_name, String given_name, String family_name, String picture, boolean verified_email) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.first_name = first_name;
+        this.given_name = given_name;
+        this.family_name = family_name;
+        this.picture = picture;
+        this.verified_email = verified_email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getGiven_name() {
+        return given_name;
+    }
+
+    public void setGiven_name(String given_name) {
+        this.given_name = given_name;
+    }
+
+    public String getFamily_name() {
+        return family_name;
+    }
+
+    public void setFamily_name(String family_name) {
+        this.family_name = family_name;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public boolean isVerified_email() {
+        return verified_email;
+    }
+
+    public void setVerified_email(boolean verified_email) {
+        this.verified_email = verified_email;
+    }
+
+    @Override
+    public String toString() {
+        return "GoogleAccount{" + "id=" + id + ", email=" + email + ", name=" + name + ", first_name=" + first_name + ", given_name=" + given_name + ", family_name=" + family_name + ", picture=" + picture + ", verified_email=" + verified_email + '}';
+    }
+    
+}
+public Account loginByEmail(String email) {
+        String sql = "SELECT * FROM Account WHERE email = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email); // Gán email từ Google vào truy vấn
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                // Tạo đối tượng Account từ dữ liệu trong database
+                Account account = new Account();
+                account.setId(rs.getInt("id"));
+                account.setUsername(rs.getString("username"));
+                account.setPassword(rs.getString("password"));
+                account.setEmail(rs.getString("email"));
+                // Nếu có thêm các trường khác trong bảng Account (ví dụ: role, fullName),
+                // hãy thêm vào đây, ví dụ:
+                // account.setRole(rs.getString("role"));
+                return account;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // In lỗi để debug
+        }
+        return null; // Trả về null nếu không tìm thấy tài khoản với email này
+    }
+USE wiish;
+GO
+
+-- Tạo bảng Wishlist để lưu danh sách yêu thích của người dùng
+CREATE TABLE Wishlist (
+    wishlistID INT PRIMARY KEY IDENTITY(1,1),    -- Mã wishlist tự tăng
+    userID INT NOT NULL,                         -- Mã người dùng
+    productID INT NOT NULL,                      -- Mã sản phẩm
+    addedDate DATETIME DEFAULT GETDATE(),        -- Ngày thêm vào danh sách yêu thích
+    FOREIGN KEY (userID) REFERENCES Account(userID),   -- Khóa ngoại tới bảng Account
+    FOREIGN KEY (productID) REFERENCES Product(pid),   -- Khóa ngoại tới bảng Product
+    CONSTRAINT UC_Wishlist UNIQUE (userID, productID)  -- Đảm bảo không trùng lặp sản phẩm trong wishlist của một user
+);
+GO
+
+-- Thêm dữ liệu mẫu vào bảng Wishlist
+INSERT INTO Wishlist (userID, productID, addedDate)
+VALUES
+(1, 1, '2025-03-18 10:00:00'),  -- User1 thích Tinh dầu bạc hà
+(1, 3, '2025-03-18 10:05:00'),  -- User1 thích Tinh dầu Cafe
+(2, 2, '2025-03-18 11:00:00'),  -- User2 thích Tinh dầu bưởi
+(3, 5, '2025-03-18 12:00:00');  -- User3 thích Tinh dầu dừa
+GO
