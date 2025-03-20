@@ -887,52 +887,58 @@
                         </div>
                     </div>
                     <div class="action-form">
-                        <div class="quantity-box">
-                            <span class="title">Quantity:</span>
-                            <div class="qty-input">
-                                <input type="text" name="qty12554" value="1" data-max_value="20" data-min_value="1" data-step="1">
-                                <a href="#" class="qty-btn btn-up"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
-                                <a href="#" class="qty-btn btn-down"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                            <div class="quantity-box">
+                                <span class="title">Quantity:</span>
+                                <div class="qty-input">
+                                    <input type="text" id="quantity" name="qty12554" value="1" data-max_value="20" data-min_value="1" data-step="1">
+                                    <a href="#" class="qty-btn btn-up"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+                                    <a href="#" class="qty-btn btn-down"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="total-price-contain">
-                            <span class="title">Total Price:</span>
-                            <p class="price">£199.99</p>
-                        </div>
-                        <div class="buttons">
+
+                            <div class="buttons">
                                 <a onclick="addToCart(${detail.id}, document.getElementById('quantity').value)" class="btn add-to-cart-btn">
                                     <i class="fa fa-cart-plus"></i> Add to cart
                                 </a>
                             </div>
 
-                        <div class="location-shipping-to">
-                            <span class="title">Ship to:</span>
-                            <select name="shipping_to" class="country">
-                                <option value="-1">Select Country</option>
-                                <option value="america">America</option>
-                                <option value="france">France</option>
-                                <option value="germany">Germany</option>
-                                <option value="japan">Japan</option>
-                            </select>
+                            <!--                            <input type="hidden" name="action" value="add">
+                                                        <input type="hidden" name="id" value="${item.product.id}">
+                                                        <input type="number" min="1" name="quantity" value="${item.quantity}" min="1" 
+                                                               style="width:80px; height:35px; padding:0 10px; border:1px solid #e6e6e6;">
+                                                        <button type="submit" class="btn btn-info" style="padding:5px 10px; margin-left:10px;">
+                                                            <i class="fa fa-refresh"></i> add to cart
+                                                        </button>-->
+
+
+                            <div class="location-shipping-to">
+                                <span class="title">Ship to:</span>
+                                <select name="shipping_to" class="country">
+                                    <option value="-1">Select Country</option>
+                                    <option value="america">America</option>
+                                    <option value="france">France</option>
+                                    <option value="germany">Germany</option>
+                                    <option value="japan">Japan</option>
+                                </select>
+                            </div>
+                            <div class="social-media">
+                                <ul class="social-list">
+                                    <li><a href="#" class="social-link"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                    <li><a href="#" class="social-link"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="#" class="social-link"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                    <li><a href="#" class="social-link"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
+                                    <li><a href="#" class="social-link"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="acepted-payment-methods">
+                                <ul class="payment-methods">
+                                    <li><img src="assets/images/card1.jpg" alt="" width="51" height="36"></li>
+                                    <li><img src="assets/images/card2.jpg" alt="" width="51" height="36"></li>
+                                    <li><img src="assets/images/card3.jpg" alt="" width="51" height="36"></li>
+                                    <li><img src="assets/images/card4.jpg" alt="" width="51" height="36"></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="social-media">
-                            <ul class="social-list">
-                                <li><a href="#" class="social-link"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#" class="social-link"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#" class="social-link"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                <li><a href="#" class="social-link"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                                <li><a href="#" class="social-link"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="acepted-payment-methods">
-                            <ul class="payment-methods">
-                                <li><img src="assets/images/card1.jpg" alt="" width="51" height="36"></li>
-                                <li><img src="assets/images/card2.jpg" alt="" width="51" height="36"></li>
-                                <li><img src="assets/images/card3.jpg" alt="" width="51" height="36"></li>
-                                <li><img src="assets/images/card4.jpg" alt="" width="51" height="36"></li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Tab info -->
