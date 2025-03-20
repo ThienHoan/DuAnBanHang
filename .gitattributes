@@ -1,0 +1,7 @@
+build-impl.xml merge=ours
+build-impl.xml~ merge=ours
+genfiles.properties merge=ours
+project.properties merge=ours
+project.xml merge=ours
+ant-deploy.xml merge=ours
+config/* merge=ours
