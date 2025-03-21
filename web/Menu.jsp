@@ -83,6 +83,9 @@
                             <c:if test="${sessionScope.account.roleID == 2 or sessionScope.account.roleID == 3}">
                                 <li class="menu-item"><a href="manager">Manager Product</a></li>
                             </c:if>
+                                <li class="nav-item">
+    <a class="nav-link" href="orders">Đơn hàng</a>
+</li>
                         </ul>
                     </div>
                 </div>
@@ -112,7 +115,18 @@
                             </div>
                         </div>
                         
-                        
+<!-- Wishlist -->
+<div class="wishlist-block hidden-sm hidden-xs">
+    <a href="wishlist?userID=<%= session.getAttribute("userID") %>" class="link-to">
+        <span class="icon-qty-combine">
+            <i class="icon-heart-bold biolife-icon"></i>
+            <span class="qty">
+                <%= session.getAttribute("wishlistCount") != null ? session.getAttribute("wishlistCount") : "0" %>
+            </span>
+        </span>
+    </a>
+</div>
+
                         
                         <!-- User account -->
                         <div class="minicart-block">
@@ -122,22 +136,11 @@
                                         <i class="biolife-icon icon-login"></i>Hello ${sessionScope.account.userName}
                                     </a>-->
                                 </c:if>
-                                <c:if test="${sessionScope.account == null}">
-                                    <a href="Login.jsp" class="login-link">
-                                        <i class="biolife-icon icon-login"></i>Login/Register
-                                    </a>
-                                </c:if>
+                                
                             </div>
                         </div>
                         <!-- Wishlist -->
-                        <div class="wishlist-block hidden-sm hidden-xs">
-                            <a href="#" class="link-to">
-                                <span class="icon-qty-combine">
-                                    <i class="icon-heart-bold biolife-icon"></i>
-                                    
-                                </span>
-                            </a>
-                        </div>
+                
                         
                         <!-- Shopping cart -->
                         <div class="minicart-block">

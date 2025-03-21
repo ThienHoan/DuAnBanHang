@@ -39,32 +39,49 @@ public class ManagerControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         System.out.println("Request URL: " + request.getRequestURL());
         System.out.println("Query String: " + request.getQueryString());
-
+        
+        // Get the action parameter early
+        String action = request.getParameter("action");
+        System.out.println("Action parameter: " + action);
+        
+        // Check for productAccessData action first
+        if ("productAccessData".equals(action)) {
+            // You may need to retrieve data for the page
+            DAO dao = new DAO();
+            request.setAttribute("mostClickedProducts", dao.getMostClickedProducts(50));
+            
+            // Forward to the JSP
+            request.getRequestDispatcher("productAccessData.jsp").forward(request, response);
+            return;
+        }
+        
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("account");
         if (a == null) {
             System.out.println("Account is null!");
-        } else {
-            int id = a.getUserID();
-            int role=a.getRoleID();
-            DAO dao = new DAO();
-            List<Product> list;
-            if(role==2){
-             list = dao.getProductBySellID(id);
-            }else{
-             list =dao.getAllProduct();
-            }
-            List<Category> listC = dao.getAllCategory();
-            request.setAttribute("listS", list);
-            request.setAttribute("listCC", listC);
-            System.out.println("List size: " + list.size());
-            for (Product p : list) {
-                System.out.println("Product: " + p.getId() + " - " + p.getName());
-            }
-
-            request.getRequestDispatcher("ManagerProduct.jsp").forward(request, response);
+            // Redirect to login page
+            response.sendRedirect("login");
+            return;
         }
-
+        
+        // Regular manager functionality
+        int id = a.getUserID();
+        int role = a.getRoleID();
+        DAO dao = new DAO();
+        List<Product> list;
+        
+        if(role == 2) {
+            list = dao.getProductBySellID(id);
+        } else {
+            list = dao.getAllProduct();
+        }
+        
+        List<Category> listC = dao.getAllCategory();
+        request.setAttribute("listS", list);
+        request.setAttribute("listCC", listC);
+        
+        // No need to check action again here since we already did it at the beginning
+        request.getRequestDispatcher("ManagerProduct.jsp").forward(request, response);
     }
     
     @Override

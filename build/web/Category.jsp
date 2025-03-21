@@ -35,6 +35,37 @@
                         .catch(error => console.error("Lỗi:", error));
             }
         </script>
+        <!-- filepath: d:\KI4\PRJ301\DuanNho\DuAnBanHang\DuAnBanHang\web\Category.jsp -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Danh sách tên danh mục
+        var categoryMap = {
+            1: "Tinh dầu xông phòng",
+            2: "Tinh dầu xe hơi",
+            3: "Tinh dầu massage",
+            4: "Tinh dầu dạng xịt"
+        };
+        
+        // Cập nhật tất cả các phần tử có class "categories"
+        var categoryElements = document.querySelectorAll(".categories");
+        categoryElements.forEach(function(element) {
+            // Lấy cateId từ data attribute của phần tử
+            var cateid = element.getAttribute('data-category-id');
+            if (cateid) {
+                element.textContent = categoryMap[cateid] || "Danh mục sản phẩm";
+            }
+        });
+        
+        // Cập nhật tiêu đề danh mục trong breadcrumb nếu có
+        var breadcrumbCategory = document.querySelector(".permal-link + li span");
+        if (breadcrumbCategory) {
+            var cateid = breadcrumbCategory.getAttribute('data-category-id');
+            if (cateid) {
+                breadcrumbCategory.textContent = categoryMap[cateid] || "Danh mục sản phẩm";
+            }
+        }
+    });
+</script>
     </head>
     <body class="biolife-body">
 
@@ -834,7 +865,7 @@
                                                 </a>
                                             </div>
                                             <div class="info">
-                                                <b class="categories">${categoryName}</b>
+                                                <b class="categories" data-category-id="${p.cateID}"></b>
                                                 <h4 class="product-title"><a href="detail?pid=${p.id}" class="pr-name">${p.name}</a></h4>
                                                 <div class="price">
                                                     <ins><span class="price-amount"><span class="currencySymbol"></span><fmt:formatNumber value="${p.price}" type="currency"/></span></ins>
@@ -968,7 +999,8 @@
                                                     </a>
                                                 </div>
                                                 <div class="info">
-                                                    <b class="categories">${categoryName}</b>
+                                                    
+                                                    
                                                     <h4 class="product-title"><a href="detail?pid=${p.id}" class="pr-name">${p.name}</a></h4>
                                                     <p class="excerpt">${p.description}</p>
                                                     <div class="price">

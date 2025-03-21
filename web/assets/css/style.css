@@ -44835,7 +44835,7 @@ body{
     display: inline-block;
 }
 .header-area .header-bottom{
-    padding-bottom: 10px;
+    padding-bottom: 15px;
 }
 body.open-mobile-search .header-area.layout-02{
     z-index: 150;
@@ -45648,7 +45648,7 @@ body.open-mobile-search .header-area.layout-02{
     z-index: 30;
 }
 .vertical-category-block>.wrap-menu>.menu{
-    padding: 9px 0 18px;
+    padding: 9px 0 0px;
     font-size: 0;
     line-height: 0;
     position: relative;
@@ -48690,7 +48690,7 @@ body.open-overlay #overlay{
 }
 .biolife-title-box .subtitle{
     display: block;
-    margin: 6px 0 0;
+    margin: -124px 0 0;
     font-size: 15px;
     color: #666666;
     line-height: 1;
@@ -50958,7 +50958,7 @@ li.slick-current .slider-opt04__layout01 .buttons .btn{
     clear: both;
     font-size: 0;
     line-height: 0;
-    padding-top: 86px;
+    padding-top: 56px;
 }
 .biolife-banner__special .media{
     display: inline-block;

@@ -53,9 +53,9 @@ public class ProductDao {
 
     //------------------------------------------
 
-    public List<Product> getProductsByCategoryAndPriceRangeAndOrder(String cateID, String priceRange, String orderBy) {
+ public List<Product> getProductsByNameAndPriceRangeAndOrder(String cateID, String priceRange, String orderBy) {
         List<Product> products = new ArrayList<>();
-        String sql = "SELECT * FROM Product WHERE CATEID = ?";
+        String sql = "SELECT * FROM Product WHERE name LIKE ? AND status = 1";
         boolean hasPriceFilter = false;
 
         switch (priceRange) {
@@ -91,8 +91,91 @@ public class ProductDao {
         }
 
         try (Connection conn = DBContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, cateID);
+           
+            stmt.setString(1, "%" + cateID + "%");
+            if (hasPriceFilter) {
+                switch (priceRange) {
+                    case "0-100":
+                        stmt.setInt(2, 0);
+                        stmt.setInt(3, 100000);
+                        break;
+                    case "100-150":
+                        stmt.setInt(2, 100000);
+                        stmt.setInt(3, 150000);
+                        break;
+                    case "150-max":
+                        stmt.setInt(2, 150000);
+                        break;
+                }
+            }
 
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    products.add(new Product(
+                            rs.getInt("pid"),
+                            rs.getString("name"),
+                            rs.getDouble("price"),
+                            rs.getString("description"),
+                            rs.getInt("stock"),
+                            rs.getString("import_date"),
+                            rs.getInt("status"),
+                            rs.getInt("sell_id"),
+                            rs.getInt("cateID"),
+                            rs.getString("img")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+
+
+
+
+
+
+    public List<Product> getProductsByCategoryAndPriceRangeAndOrder(String cateID, String priceRange, String orderBy) {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM Product WHERE cateID = ? AND status = 1";
+        boolean hasPriceFilter = false;
+
+        switch (priceRange) {
+            case "0-100":
+                sql += " AND price BETWEEN ? AND ?";
+                hasPriceFilter = true;
+                break;
+            case "100-150":
+                sql += " AND price BETWEEN ? AND ?";
+                hasPriceFilter = true;
+                break;
+            case "150-max":
+                sql += " AND price >= ?";
+                hasPriceFilter = true;
+                break;
+            default:
+                break;
+        }
+
+        switch (orderBy) {
+            case "date":
+                sql += " ORDER BY import_date DESC";
+                break;
+            case "price":
+                sql += " ORDER BY price ASC";
+                break;
+            case "price-desc":
+                sql += " ORDER BY price DESC";
+                break;
+            default:
+                sql += " ORDER BY pid"; // Default sorting
+                break;
+        }
+
+        try (Connection conn = DBContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+             stmt.setString(1, cateID);
             if (hasPriceFilter) {
                 switch (priceRange) {
                     case "0-100":

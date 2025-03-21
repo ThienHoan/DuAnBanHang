@@ -189,6 +189,6 @@ public class Account {
     }
 
     public String getUsername() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return userName;  // Return userName instead of throwing an exception
     }
 }

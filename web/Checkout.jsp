@@ -172,26 +172,243 @@
             .checkout-buttons .checkout-btn:hover {
                 background-color: #218838;
             }
+            
+            .loading-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            }
+
+            .loading-spinner {
+                background-color: white;
+                padding: 30px;
+                border-radius: 10px;
+                text-align: center;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                color: #333; /* Đổi màu chữ thành đen để nhìn thấy rõ */
+            }
+
+            .loading-spinner p {
+                margin-top: 15px;
+                font-size: 16px;
+                color: #333; /* Đảm bảo chữ màu đen */
+                font-weight: bold;
+            }
+
+            .spinner {
+                width: 50px;
+                height: 50px;
+                border: 5px solid #f3f3f3;
+                border-top: 5px solid #4CAF50;
+                border-radius: 50%;
+                margin: 0 auto 15px;
+                animation: spin 1s linear infinite;
+                display: block; /* Đảm bảo hiển thị */
+            }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+
+            .notification-popup {
+                position: fixed;
+                top: 30px;
+                right: 30px;
+                width: 350px;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                z-index: 9999;
+                animation: slideIn 0.5s forwards;
+            }
+
+            .notification-popup.hiding {
+                animation: slideOut 0.5s forwards;
+            }
+
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+
+            .notification-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 15px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .notification-header h3 {
+                margin: 0;
+                font-size: 18px;
+            }
+
+            .notification-body {
+                padding: 15px;
+                color: #333;
+            }
+
+            .notification-body p {
+                margin: 0;
+                font-size: 16px;
+            }
+
+            .close-btn {
+                background: none;
+                border: none;
+                font-size: 24px;
+                cursor: pointer;
+                color: #888;
+            }
+
+            .close-btn:hover {
+                color: #333;
+            }
+
+            /* Kiểu dáng cho các loại thông báo */
+            .notification-popup.success {
+                border-left: 5px solid #4CAF50;
+            }
+
+            .notification-popup.success .notification-header {
+                background-color: rgba(76, 175, 80, 0.1);
+                color: #4CAF50;
+            }
+
+            .notification-popup.error {
+                border-left: 5px solid #f44336;
+            }
+
+            .notification-popup.error .notification-header {
+                background-color: rgba(244, 67, 54, 0.1);
+                color: #f44336;
+            }
         </style>
 
         <script>
             function confirmPayment() {
+                // Hiển thị biểu tượng loading
+                showLoadingOverlay();
+                
+                // Thêm log để kiểm tra
+                console.log("Đang gửi request thanh toán...");
+                
                 fetch("<%= request.getContextPath() %>/checkout", {
                     method: "POST",
                     headers: {"Content-Type": "application/json"}
                 })
-                        .then(response => response.json())
-                        .then(data => {
-
-                            alert("⚠:️ " + data.message);
-
-                        })
-                        .catch(error => {
-                            console.error("Lỗi thanh toán:", error);
-                            alert("❌ Đã xảy ra lỗi trong quá trình thanh toán.");
-                        });
+                .then(response => {
+                    console.log("Nhận được response:", response);
+                    return response.json();
+                })
+                .then(data => {
+                    // Ẩn loading
+                    hideLoadingOverlay();
+                    console.log("Dữ liệu trả về:", data);
+                    
+                    if(data.status === "success") {
+                        const notification = showNotification('success', '✅ ĐẶT HÀNG THÀNH CÔNG', data.message || 'Đơn hàng của bạn đã được đặt thành công!');
+                        
+                        // Đảm bảo thông báo hiển thị ít nhất 1 giây trước khi chuyển trang
+                        setTimeout(() => {
+                            // Lưu thông báo thành công vào localStorage để hiển thị ở trang home
+                            localStorage.setItem('orderSuccess', 'true');
+                            localStorage.setItem('orderMessage', data.message || 'Đơn hàng của bạn đã được đặt thành công!');
+                            
+                            // Chuyển hướng về trang home
+                            window.location.href = 'home';
+                        }, 4000);
+                    } else {
+                        showNotification('error', '❌ LỖI ĐẶT HÀNG', data.message || 'Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại!');
+                    }
+                })
+                .catch(error => {
+                    // Ẩn loading
+                    hideLoadingOverlay();
+                    console.error("Lỗi thanh toán:", error);
+                    showNotification('error', '❌ LỖI HỆ THỐNG', 'Đã xảy ra lỗi trong quá trình thanh toán. Vui lòng thử lại sau.');
+                });
             }
+
+            function showLoadingOverlay() {
+    const overlay = document.createElement('div');
+    overlay.className = 'loading-overlay';
+    overlay.innerHTML = `
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Đang xử lý đơn hàng...</p>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+}
+
+            function hideLoadingOverlay() {
+                const overlay = document.querySelector('.loading-overlay');
+                if (overlay) {
+                    overlay.remove();
+                }
+            }
+
+            function showNotification(type, title, message) {
+    // Xóa thông báo cũ nếu có
+    const oldNotification = document.querySelector('.notification-popup');
+    if (oldNotification) {
+        oldNotification.remove();
+    }
+    
+    // Tạo thông báo mới
+    const notification = document.createElement('div');
+    notification.className = `notification-popup ${type}`;
+    notification.style.display = 'block'; // Đảm bảo hiển thị
+    notification.style.opacity = '1';     // Đảm bảo hiển thị
+    
+    // Dùng trực tiếp style và tránh sử dụng biểu thức Ternary trong JavaScript template literal
+    let headerBgColor = type == 'success' ? 'rgba(76, 175, 80, 0.1)' : 'rgba(244, 67, 54, 0.1)';
+    let headerTextColor = type == 'success' ? '#4CAF50' : '#f44336';
+    
+    notification.innerHTML = 
+        '<div class="notification-header" style="background-color: ' + headerBgColor + ';">' +
+            '<h3 style="color: ' + headerTextColor + '; font-weight: bold;">' + title + '</h3>' +
+            '<button class="close-btn" onclick="this.parentElement.parentElement.remove()">×</button>' +
+        '</div>' +
+        '<div class="notification-body">' +
+            '<p style="color: #333; font-size: 16px;">' + message + '</p>' +
+        '</div>';
+    
+    document.body.appendChild(notification);
+    
+    // Hiển thị log để debugging
+    console.log("Notification created:", {type, title, message, element: notification});
+    
+    // Thêm log để xác nhận thông báo đã được thêm vào DOM
+    console.log("Notification added to DOM:", document.body.contains(notification));
+    
+    // Tự động ẩn sau 5 giây
+    setTimeout(() => {
+        notification.classList.add('hiding');
+        setTimeout(() => {
+            notification.remove();
+        }, 500);
+    }, 5000);
+    
+    return notification;
+}
         </script>
+        
     </head>
     <body class="biolife-body">
 

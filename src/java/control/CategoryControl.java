@@ -36,7 +36,7 @@ public class CategoryControl extends HttpServlet {
         String cateID = request.getParameter("cid");
         request.setAttribute("cid", cateID);
 
-        List<Product> list = dao.getAllProduct();
+        List<Product> list = dao.getAllProductUser();
         request.setAttribute("listP", list);
 
         List<Product> listP = dao.getProductByCID(cateID);

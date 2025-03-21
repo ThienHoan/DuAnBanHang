@@ -21,6 +21,9 @@ public class Product {
     //Định dạng tiền VND
     private String priceFormatted;
 
+    // Add click count field
+    private int clickCount;
+
     // Constructor mặc định
     public Product() {
     }
@@ -143,6 +146,18 @@ public class Product {
     }
 
     public int getSellID() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return sell_id;
+    }
+
+    public void setCategoryID(int categoryID) {
+        this.cateID = categoryID;
+    }
+
+    public int getClickCount() {
+        return clickCount;
+    }
+
+    public void setClickCount(int clickCount) {
+        this.clickCount = clickCount;
     }
 }
