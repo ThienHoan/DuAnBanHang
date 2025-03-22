@@ -24,6 +24,8 @@
         <link rel="stylesheet" href="assets/css/slick.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/main-color03-green.css">
+       
+        
         <script>
             function addToCart(productId) {
                 fetch("cart?action=add&id=" + productId, {method: "POST"})

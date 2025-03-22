@@ -1,11 +1,33 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <header id="header" class="header-area style-01 layout-03">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <!-- Thêm script trình phát nhạc -->
+        <script src="assets/js/music-player.js"></script>
+        <style>
+            /* Kiểu dáng cho nút bật/tắt nhạc */
+            .music-toggle-btn {
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 8px 12px;
+                color: #4CAF50;
+                font-size: 18px;
+            }
+            .music-toggle-btn:focus {
+                outline: none;
+            }
+        </style>
     <div class="header-top bg-main hidden-xs">
         <div class="container">
             <div class="top-bar left">
                 <ul class="horizontal-menu">
-                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>hoan64735@gmail.com</a></li>
+                    <li>
+                        <a href="mailto:hoan64735@gmail.com?subject=Phản Hồi Về Chất Lượng Sản phẩm email&body=Nội dung email">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>hoan64735@gmail.com
+                        </a>
+                    </li>
+                    
                     <li><a href="https://www.facebook.com/Dautronghoa" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i>Công Ty Gia Truyền Hồng Đức</a></li>
                 </ul>
             </div>
@@ -34,6 +56,11 @@
                 <div class="col-lg-6 col-md-7 hidden-sm hidden-xs">
                     <div class="primary-menu">
                         <ul class="menu biolife-menu clone-main-menu clone-primary-menu" id="primary-menu" data-menuname="main menu">
+                            <li class="menu-item">
+                                <button id="musicToggleBtn" class="music-toggle-btn" onclick="toggleMusic()" title="Tắt nhạc">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </li>
                             <li class="menu-item"><a href="home">Home</a></li>
                             <li class="menu-item menu-item-has-children has-child">
                                 <a href="#" class="menu-name" data-title="Product">Product</a>
@@ -226,4 +253,5 @@
             </div>
         </div>
     </div>
+    
 </header>

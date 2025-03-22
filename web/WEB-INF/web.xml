@@ -87,5 +87,8 @@
         <servlet-name>UpdateOrderStatusControl</servlet-name>
         <url-pattern>/update-order-status</url-pattern>
     </servlet-mapping>
+    <listener>
+    <listener-class>listener.SessionListener</listener-class>
+</listener>
 
 </web-app>

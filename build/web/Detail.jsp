@@ -25,6 +25,54 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/main-color.css">
     <link rel="stylesheet" href="assets/css/main-color03-green.css">
+    <style>
+        /* Làm đẹp cho phần đánh giá sao */
+        .comment-form-rating .stars {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .comment-form-rating .stars a.btn-rating {
+            display: inline-block;
+            margin-right: 5px;
+            font-size: 24px;
+            color: #ccc;
+            text-decoration: none;
+        }
+        
+        .comment-form-rating .stars a.btn-rating .fa-star {
+            color: #f9ba48; /* Màu của sao đầy đủ */
+        }
+        
+        .comment-form-rating .stars a.btn-rating .fa-star-o {
+            color: #ccc; /* Màu của sao rỗng */
+        }
+        
+        .comment-form-rating .stars a.btn-rating:hover {
+            transform: scale(1.2);
+        }
+        
+        /* Hiệu ứng khi hover */
+        .comment-form-rating .stars a.btn-rating:hover ~ a.btn-rating .fa {
+            color: #ccc;
+        }
+        
+        /* Cải thiện nút gửi đánh giá */
+        .review-form-wrapper button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .review-form-wrapper button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
     <script>
             function addToCart(productId) {
                 fetch("cart?action=add&id=" + productId, {
@@ -1677,9 +1725,82 @@
             }
         }
     });
+    $(document).ready(function() {
+    const ratingBtns = document.querySelectorAll('.btn-rating');
+    const ratingInput = document.getElementById('selected-rating');
+    
+    // Hiển thị mặc định 5 sao khi trang được tải
+    function initRating() {
+        const defaultRating = ratingInput.value || 5;
+        updateStarsDisplay(defaultRating);
+    }
+    
+    // Cập nhật hiển thị sao dựa trên giá trị đánh giá
+    function updateStarsDisplay(rating) {
+        ratingBtns.forEach((btn, i) => {
+            const star = btn.querySelector('i');
+            if (i < rating) {
+                star.className = 'fa fa-star'; // Sao đầy đủ
+            } else {
+                star.className = 'fa fa-star-o'; // Sao rỗng
+            }
+        });
+    }
+    
+    // Sự kiện click cho các nút sao
+    ratingBtns.forEach((btn, index) => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Set the rating value (index + 1 because stars are 1-based)
+            const ratingValue = index + 1;
+            ratingInput.value = ratingValue;
+            
+            // Update the visual appearance
+            updateStarsDisplay(ratingValue);
+        });
+        
+        // Thêm hiệu ứng hover
+        btn.addEventListener('mouseenter', function() {
+            // Hiển thị sao khi hover
+            ratingBtns.forEach((b, i) => {
+                const star = b.querySelector('i');
+                if (i <= index) {
+                    star.className = 'fa fa-star';
+                } else {
+                    star.className = 'fa fa-star-o';
+                }
+            });
+        });
+    });
+    
+    // Xử lý sự kiện khi chuột rời khỏi vùng sao
+    const starsContainer = document.querySelector('.stars');
+    if (starsContainer) {
+        starsContainer.addEventListener('mouseleave', function() {
+            // Khôi phục trạng thái sao dựa trên giá trị đã chọn
+            const currentRating = parseInt(ratingInput.value) || 5;
+            updateStarsDisplay(currentRating);
+        });
+    }
+    
+    // Khởi tạo sao khi trang tải
+    initRating();
+    
+    // Check if hash contains tab=reviews to activate the reviews tab
+    if (window.location.hash === '#tab_4th' || window.location.search.includes('tab=reviews')) {
+        // Find the review tab link and trigger a click
+        const reviewTabLink = document.querySelector('a[href="#tab_4th"]');
+        if (reviewTabLink) {
+            setTimeout(() => {
+                reviewTabLink.click();
+            }, 100);
+        }
+    }
+});
     </script>
-
-</html>       
+    
+     
 </body>
 
 </html>
