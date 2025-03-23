@@ -73,7 +73,7 @@
      @Override
      protected void doGet(HttpServletRequest request, HttpServletResponse response)
      throws ServletException, IOException {
-         processRequest(request, response);
+         doPost(request, response);
      } 
  
      /** 
@@ -99,8 +99,8 @@
              response.getWriter().write("{\"status\": \"error3\", \"message\": \"Giỏ hàng của bạn đang trống!\"}");
              return;
          }
-         
- 
+   
+    
          CartService cartService = new CartService();
          double totalPrice = cartService.calculateTotalWithDiscount(cart);
          
@@ -142,12 +142,32 @@
          EmailService.sendEmail(userEmail, subject, content);
          cart.clear();
        session.removeAttribute("cart");
+       
+         //từ vnpay qua-----------------------------------------------------------------
+         String wasPaid = (String) session.getAttribute("wasPaid");
+    if (wasPaid != null && wasPaid.equals("true")) {
+        cart.clear();
+        session.removeAttribute("wasPaid");
+        
+        // Thêm script để hiển thị thông báo
+        String script = "<script>"
+                + "window.onload = function() {"
+                + "    showNotification('success', 'Thanh toán thành công', 'Đơn hàng của bạn đã được xác nhận thành công!');"
+                + "}"
+                + "</script>";
+        
+        request.setAttribute("notificationScript", script);
+        request.getRequestDispatcher("Checkout.jsp").forward(request, response);
+        return;
+    }
+    //------------------------------------------------------------------
  
          response.getWriter().write("{\"status\": \"success\", \"message\": \"Đã gửi xác nhận đơn hàng tới email của bạn!\"}");
          
          }else {
      // Thong bao loi neu tao don hang that bai
      response.getWriter().write("{\"status\": \"error\", \"message\": \"Tạo đơn hàng thất bại. Vui lòng thử lại sau!\"}");
+     
  }
          
      }

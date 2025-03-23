@@ -409,6 +409,8 @@
 }
         </script>
         
+        ${notificationScript}
+        
     </head>
     <body class="biolife-body">
 
@@ -476,6 +478,9 @@
                         <button class="checkout-button" onclick="confirmPayment()">
                             Đặt hàng
                         </button>
+                        <form action="vnpay_payment" method="post">
+    <button type="submit" class="checkout-button"  style="margin-top: 10px;">thanh toán bằng vnpay</button>
+</form>
                     </div>
                 </div>
             </div>
