@@ -936,7 +936,9 @@
                                                             <li><img src="assets/images/details-product/detail_07.jpg" alt="" width="500" height="500"></li>-->
                             </ul>
                             <ul class="biolife-carousel slider-nav" data-slick='{"arrows":false,"dots":false,"centerMode":false,"focusOnSelect":true,"slidesMargin":10,"slidesToShow":4,"slidesToScroll":1,"asNavFor":".slider-for"}'>
-                                <li><img src="${img}" alt="" style="
+                                <li>
+                                   
+                                    <img src="${img}" alt="" style="
                 width: 88px;
                 height: 88px;
                 object-fit: contain;
@@ -947,7 +949,9 @@
                 cursor: pointer;
              "
              onmouseover="this.style.borderColor='#4CAF50'" 
-             onmouseout="this.style.borderColor='transparent'"></li>
+             onmouseout="this.style.borderColor='transparent'">
+                                    
+                                    </li>
                                 <!--                            <li><img src="assets/images/details-product/thumb_02.jpg" alt="" width="88" height="88"></li>
                                                             <li><img src="assets/images/details-product/thumb_03.jpg" alt="" width="88" height="88"></li>
                                                             <li><img src="assets/images/details-product/thumb_04.jpg" alt="" width="88" height="88"></li>

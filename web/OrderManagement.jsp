@@ -1,45 +1,47 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Quản lý đơn hàng</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="css/style.css" rel="stylesheet" type="text/css"/>
-    <style>
-        .order-status-pending {
-            background-color: #ffecb3;
-        }
-        .order-status-shipping {
-            background-color: #bbdefb;
-        }
-        .order-status-delivered {
-            background-color: #c8e6c9;
-        }
-    </style>
-</head>
-<body>
-    <c:if test="${empty orders}">
-    <tr><td colspan="5">Không có đơn hàng nào!</td></tr>
-</c:if>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Quản lý đơn hàng</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+        <style>
+            .order-status-pending {
+                background-color: #ffecb3;
+            }
+            .order-status-shipping {
+                background-color: #bbdefb;
+            }
+            .order-status-delivered {
+                background-color: #c8e6c9;
+            }
+        </style>
+    </head>
+    <body>
+        <c:if test="${empty orders}">
+        <tr><td colspan="5">Không có đơn hàng nào!</td></tr>
+    </c:if>
 
-   
-    
+
+
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-12">
                 <h2>Quản lý đơn hàng</h2>
-                
+
                 <c:if test="${not empty message}">
                     <div class="alert alert-success">${message}</div>
                 </c:if>
                 <c:if test="${not empty error}">
                     <div class="alert alert-danger">${error}</div>
                 </c:if>
-                
+
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table mr-1"></i>
@@ -58,16 +60,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                                                        <c:forEach items="${orders}" var="o">
+                                    <c:forEach items="${orders}" var="o">
                                         <tr class="order-status-${o.status}">
                                             <td>${o.id}</td>
                                             <td>${o.orderDate}</td>
-                                            <td>${o.totalPrice} đ</td>
+                                            <td><fmt:formatNumber value="${o.totalPrice}" type="currency"/> </td>
                                             <td>
-                                                <span class="badge 
-                                                    ${o.status == 'pending' ? 'badge-warning' : ''}
-                                                    ${o.status == 'shipping' ? 'badge-info' : ''}
-                                                    ${o.status == 'delivered' ? 'badge-success' : ''}">
+                                                <span class="badge
+                                                      ${o.status == 'pending' ? 'badge-warning' : ''}
+                                                      ${o.status == 'shipping' ? 'badge-info' : ''}
+                                                      ${o.status == 'delivered' ? 'badge-success' : ''}">
                                                     ${o.status == 'pending' ? 'Chờ xử lý' : ''}
                                                     ${o.status == 'shipping' ? 'Đang giao hàng' : ''}
                                                     ${o.status == 'delivered' ? 'Đã giao hàng' : ''}
@@ -75,7 +77,7 @@
                                             </td>
                                             <td>
                                                 <a href="order-detail?id=${o.id}" class="btn btn-sm btn-info">Chi tiết</a>
-                                                
+
                                                 <!-- Nút chỉ hiển thị cho người mua và trạng thái phải là 'shipping' -->
                                                 <c:if test="${!isAdmin && !isSeller && o.status == 'shipping'}">
                                                     <form action="confirm-order" method="post" style="display: inline">
@@ -85,14 +87,14 @@
                                                         </button>
                                                     </form>
                                                 </c:if>
-                                                
+
                                                 <!-- Phần cập nhật trạng thái chỉ dành cho Admin và Seller -->
                                                 <c:if test="${isAdmin || isSeller}">
                                                     <button type="button" class="btn btn-sm btn-primary" 
                                                             data-toggle="modal" data-target="#updateStatusModal${o.id}">
                                                         Cập nhật trạng thái
                                                     </button>
-                                                    
+
                                                     <!-- Modal cập nhật trạng thái -->
                                                     <div class="modal fade" id="updateStatusModal${o.id}" tabindex="-1" role="dialog" 
                                                          aria-labelledby="updateStatusModalLabel${o.id}" aria-hidden="true">
@@ -139,13 +141,16 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+        <div class="d-flex justify-content-center mb-4">
+            <a href="home" class="btn btn-primary">Home</a>
         </div>
     </div>
-    
-   
+
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+
 </body>
 </html>
-                

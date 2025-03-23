@@ -1,10 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Product Access Statistics</title>
+    <title>Công Ty Gia Truyền Hồng Đức</title>
+    <link rel="shortcut icon" type="image/x-icon" href="hinh anh/Logo/cropped-Favicon-1-32x32.png" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -232,7 +235,7 @@
                                     <img src="${p.img}" alt="${p.name}" class="product-img">
                                 </td>
                                 <td>${p.name}</td>
-                                <td>$${p.price}</td>
+                                <td><fmt:formatNumber value="${p.price}" type="currency"/></td>
                                 <td>
                                     <span class="badge badge-info">${p.clickCount}</span>
                                 </td>
