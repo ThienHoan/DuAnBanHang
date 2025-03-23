@@ -1,7 +1,9 @@
 package control;
 
+import dao.DAO;
 import dao.OrderDAO;
 import entity.Account;
+import entity.Category;
 import entity.Order;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,7 +23,7 @@ public class OrderManagementControl extends HttpServlet {
         
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-        
+        DAO dao = new DAO();
         if (account == null) {
             response.sendRedirect("login");
             return;
@@ -29,12 +31,16 @@ public class OrderManagementControl extends HttpServlet {
         
         OrderDAO orderDAO = new OrderDAO();
         List<Order> orders;
-        
+        List<Category> listC = dao.getAllCategory();
+        request.setAttribute("listCC", listC);
         int role=account.getRoleID();
-        
+
+
+
+
         // Phân quyền xem đơn hàng theo vai trò
         if (role==3) {
-            orders = orderDAO.getAllOrders();
+            orders = orderDAO.getAllOrders(); 
             request.setAttribute("isAdmin", true);
         } else if (role==2) {
             orders = orderDAO.getOrdersBySellerId(account.getUserID());
@@ -65,6 +71,19 @@ public class OrderManagementControl extends HttpServlet {
             orderDAO.updateOrderStatus(orderId, newStatus);
             
             // Redirect để tránh resubmit form khi refresh
+            response.sendRedirect("orders");
+        } else if ("cancelOrder".equals(action)) {
+            // Xử lý hủy đơn hàng
+            boolean success = orderDAO.cancelOrder(orderId);
+            
+            HttpSession session = request.getSession();
+            if (success) {
+                session.setAttribute("message", "Đơn hàng #" + orderId + " đã được hủy thành công");
+            } else {
+                session.setAttribute("error", "Không thể hủy đơn hàng #" + orderId + 
+                                    ". Đơn hàng chỉ có thể hủy khi ở trạng thái chờ xử lý.");
+            }
+            
             response.sendRedirect("orders");
         } else {
             processRequest(request, response);

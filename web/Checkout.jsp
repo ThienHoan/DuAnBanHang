@@ -476,6 +476,10 @@
                         <button class="checkout-button" onclick="confirmPayment()">
                             Đặt hàng
                         </button>
+                        <button class="checkout-button" style="background-color: red; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;" onclick="confirmPayment()">
+                            Thanh toán bằng VNPAY
+                        </button>
+                        
                     </div>
                 </div>
             </div>

@@ -9,6 +9,18 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Cairo:400,600,700&amp;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:600&amp;display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400i,700i" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu&amp;display=swap" rel="stylesheet">
+        <link rel="shortcut icon" type="image/x-icon" href="hinh anh/Logo/cropped-Favicon-1-32x32.png" />
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/animate.min.css">
+        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="assets/css/nice-select.css">
+        <link rel="stylesheet" href="assets/css/slick.min.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/main-color03-green.css">
     <style>
         .order-status-pending {
             background-color: #ffecb3;
@@ -19,9 +31,13 @@
         .order-status-delivered {
             background-color: #c8e6c9;
         }
+        .order-status-cancelled {
+            background-color: #ffcdd2;
+        }
     </style>
 </head>
 <body>
+    <jsp:include page="Menu.jsp"></jsp:include>
     <c:if test="${empty orders}">
     <tr><td colspan="5">Không có đơn hàng nào!</td></tr>
 </c:if>
@@ -51,6 +67,7 @@
                                 <thead>
                                     <tr>
                                         <th>Mã đơn hàng</th>
+                                        <th>UserID</th>
                                         <th>Ngày đặt</th>
                                         <th>Tổng tiền</th>
                                         <th>Trạng thái</th>
@@ -61,16 +78,19 @@
                                                                         <c:forEach items="${orders}" var="o">
                                         <tr class="order-status-${o.status}">
                                             <td>${o.id}</td>
+                                            <td>${o.userId}</td>
                                             <td>${o.orderDate}</td>
                                             <td>${o.totalPrice} đ</td>
                                             <td>
                                                 <span class="badge 
                                                     ${o.status == 'pending' ? 'badge-warning' : ''}
                                                     ${o.status == 'shipping' ? 'badge-info' : ''}
-                                                    ${o.status == 'delivered' ? 'badge-success' : ''}">
+                                                    ${o.status == 'delivered' ? 'badge-success' : ''}
+                                                    ${o.status == 'cancelled' ? 'badge-danger' : ''}">
                                                     ${o.status == 'pending' ? 'Chờ xử lý' : ''}
                                                     ${o.status == 'shipping' ? 'Đang giao hàng' : ''}
                                                     ${o.status == 'delivered' ? 'Đã giao hàng' : ''}
+                                                    ${o.status == 'cancelled' ? 'Đã hủy' : ''}
                                                 </span>
                                             </td>
                                             <td>
@@ -82,6 +102,17 @@
                                                         <input type="hidden" name="orderId" value="${o.id}" />
                                                         <button type="submit" class="btn btn-sm btn-success">
                                                             Xác nhận đã nhận hàng
+                                                        </button>
+                                                    </form>
+                                                </c:if>
+                                                <!-- Nút hủy đơn hàng chỉ hiển thị cho người mua và trạng thái phải là 'pending' -->
+                                                <c:if test="${!isAdmin && !isSeller && o.status == 'pending'}">
+                                                    <form action="orders" method="post" style="display: inline">
+                                                        <input type="hidden" name="action" value="cancelOrder" />
+                                                        <input type="hidden" name="orderId" value="${o.id}" />
+                                                        <button type="submit" class="btn btn-sm btn-danger" 
+                                                                onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?');">
+                                                            Hủy đơn hàng
                                                         </button>
                                                     </form>
                                                 </c:if>
@@ -145,7 +176,15 @@
    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <jsp:include page="Footer.jsp"></jsp:include>
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
+                            <script src="assets/js/bootstrap.min.js"></script>
+                            <script src="assets/js/jquery.countdown.min.js"></script>
+                            <script src="assets/js/jquery.nice-select.min.js"></script>
+                            <script src="assets/js/jquery.nicescroll.min.js"></script>
+                            <script src="assets/js/slick.min.js"></script>
+                            <script src="assets/js/biolife.framework.js"></script>
+                            <script src="assets/js/functions.js"></script>
 </body>
 </html>
                 

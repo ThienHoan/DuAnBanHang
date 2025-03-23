@@ -2,7 +2,11 @@ package control;
 
 import dao.DAO;
 import entity.Account;
+import entity.Category;
+
 import java.io.IOException;
+import java.util.List;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -26,6 +30,8 @@ public class UserProfileController extends HttpServlet {
             
             // Refresh account data from database to ensure we have the latest info
             DAO dao = new DAO();
+            List<Category> listC = dao.getAllCategory();
+        request.setAttribute("listCC", listC);
             Account refreshedAccount = dao.getAccountById(account.getId());
             if (refreshedAccount != null) {
                 session.setAttribute("acc", refreshedAccount);

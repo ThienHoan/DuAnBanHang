@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import context.DBContext;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class OrderDAO {
     private Connection conn = null;
@@ -111,6 +113,93 @@ public class OrderDAO {
         }
         return null;
     }
+    public boolean cancelOrder(int orderId) {
+        String query = "UPDATE Orders SET status = 'cancelled' WHERE id = ? AND status = 'pending'";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, orderId);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+        
+        // Lấy doanh thu theo tháng
+    public Map<String, Double> getRevenueByMonth() {
+    Map<String, Double> revenueByMonth = new LinkedHashMap<>();
+    String query = "SELECT FORMAT(o.order_date, 'yyyy-MM') AS month, SUM(od.subtotall) AS revenue " +
+                   "FROM OrderDetail od " +
+                   "JOIN Orders o ON od.order_id = o.id " +
+                   "GROUP BY FORMAT(o.order_date, 'yyyy-MM') " +
+                   "ORDER BY month";
+
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            revenueByMonth.put(rs.getString("month"), rs.getDouble("revenue"));
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return revenueByMonth;
+}
+
+
+    // Lấy doanh thu theo năm
+    public Map<String, Double> getRevenueByYear() {
+    Map<String, Double> revenueByYear = new LinkedHashMap<>();
+    String query = "SELECT YEAR(o.order_date) AS year, SUM(od.subtotall) AS revenue " +
+                   "FROM OrderDetail od " +
+                   "JOIN Orders o ON od.order_id = o.id " +
+                   "GROUP BY YEAR(o.order_date) " +
+                   "ORDER BY year";
+
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            revenueByYear.put(rs.getString("year"), rs.getDouble("revenue"));
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return revenueByYear;
+}
+
+
+
+    // Lấy sản phẩm bán chạy nhất
+    public List<Map<String, Object>> getTopSellingProducts() {
+    List<Map<String, Object>> products = new ArrayList<>();
+    String query = "SELECT TOP 5 p.product_name, SUM(od.quantity) AS total_sold, SUM(od.subtotall) AS total_revenue " +
+                   "FROM OrderDetail od " +
+                   "JOIN Product p ON od.product_id = p.product_id " +
+                   "GROUP BY p.product_name " +
+                   "ORDER BY total_sold DESC";
+
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(query);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            Map<String, Object> product = new LinkedHashMap<>();
+            product.put("name", rs.getString("product_name"));
+            product.put("sold", rs.getInt("total_sold"));
+            product.put("revenue", rs.getDouble("total_revenue"));
+            products.add(product);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return products;
+}
+
+
+    
+    
     public static void main(String[] args) {
         OrderDAO dao = new OrderDAO();
         int userId = 1; // Thay bằng userID bạn muốn test
@@ -124,5 +213,28 @@ public class OrderDAO {
                 System.out.println(order);
             }
         }
+        
+        // Test doanh thu theo tháng
+    System.out.println("=== Doanh thu theo tháng ===");
+    Map<String, Double> revenueByMonth = dao.getRevenueByMonth();
+    for (Map.Entry<String, Double> entry : revenueByMonth.entrySet()) {
+        System.out.println("Tháng: " + entry.getKey() + " - Doanh thu: $" + entry.getValue());
+    }
+
+    // Test doanh thu theo năm
+    System.out.println("\n=== Doanh thu theo năm ===");
+    Map<String, Double> revenueByYear = dao.getRevenueByYear();
+    for (Map.Entry<String, Double> entry : revenueByYear.entrySet()) {
+        System.out.println("Năm: " + entry.getKey() + " - Doanh thu: $" + entry.getValue());
+    }
+
+    // Test sản phẩm bán chạy nhất
+    System.out.println("\n=== Sản phẩm bán chạy nhất ===");
+    List<Map<String, Object>> topSellingProducts = dao.getTopSellingProducts();
+    for (Map<String, Object> product : topSellingProducts) {
+        System.out.println("Tên sản phẩm: " + product.get("name") +
+                " | Số lượng bán: " + product.get("sold") +
+                " | Doanh thu: $" + product.get("revenue"));
+    }
     }
 }

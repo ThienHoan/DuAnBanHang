@@ -36,7 +36,7 @@
         .comment-form-rating .stars a.btn-rating {
             display: inline-block;
             margin-right: 5px;
-            font-size: 24px;
+            font-size: 16px;
             color: #ccc;
             text-decoration: none;
         }

@@ -2,7 +2,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <header id="header" class="header-area style-01 layout-03">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <!-- Thêm script trình phát nhạc -->
+    
+    
+    <!-- Thêm script trình phát nhạc -->
         <script src="assets/js/music-player.js"></script>
         <style>
             /* Kiểu dáng cho nút bật/tắt nhạc */
