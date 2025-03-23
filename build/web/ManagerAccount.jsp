@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%
     // Add redirect check - if accessed directly without data, redirect to the servlet
     if (request.getAttribute("listAccounts") == null) {
@@ -18,7 +19,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Account Management</title>
+<title>Công Ty Gia Truyền Hồng Đức</title>
+<link rel="shortcut icon" type="image/x-icon" href="hinh anh/Logo/cropped-Favicon-1-32x32.png" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -355,21 +357,21 @@ $(document).ready(function(){
 	<div class="table-responsive">
 		<div class="table-wrapper">
 			<div class="table-title">
-				<div class="row">
+				<div class="row align-items-center">
 					<div class="col-sm-6">
 						<h2>Manage <b>Accounts</b></h2>
 					</div>
 					<div class="col-sm-6 d-flex flex-column align-items-center">
 						<!-- Hộp hiển thị số người đang truy cập -->
-						<div class="d-flex align-items-center bg-primary text-white px-4 py-2 rounded mb-2 w-100 justify-content-center">
+						<div class="bg-primary text-white px-4 py-2 rounded mb-3 text-center w-75">
 							<span>${applicationScope.activeSessions} người đang truy cập</span>
 						</div>
 						<!-- Nhóm nút bấm -->
-						<div class="d-flex justify-content-center w-100">
-							<a href="#deleteAccountModal" class="btn btn-danger me-2" data-toggle="modal">
+						<div class="d-flex flex-wrap justify-content-center gap-2 w-100">
+							<a href="#deleteAccountModal" class="btn btn-danger" data-toggle="modal">
 								<i class="material-icons">&#xE15C;</i> <span>Delete</span>
 							</a>
-							<a href="#addAccountModal" class="btn btn-success me-2" data-toggle="modal">
+							<a href="#addAccountModal" class="btn btn-success" data-toggle="modal">
 								<i class="material-icons">&#xE147;</i> <span>Add New Account</span>
 							</a>
 							<a href="home" class="btn btn-primary">

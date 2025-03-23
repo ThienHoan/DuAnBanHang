@@ -443,7 +443,24 @@
                                                                                 <ins><span class="price-amount"><span class="currencySymbol"></span> <fmt:formatNumber value="${o.price}" type="currency"/></span></ins>
                                                                             </div>
                                                                             <div class="slide-down-box">
-                                                                                <p class="message">"Tinh dầu cao cấp, thuần khiết & an toàn."</p>
+                                                                                <p class="message" >"Tinh dầu cao cấp, thuần khiết & an toàn."</p>
+                                                                                <style>
+                                                                                    .slide-down-box {
+                                                                                        display: flex;
+                                                                                        flex-direction: column;
+                                                                                        align-items: center;
+                                                                                        justify-content: center;
+                                                                                        text-align: center;
+                                                                                    }
+
+                                                                                    .slide-down-box .message {
+                                                                                        font-size: 14px;
+                                                                                        color: #666666;
+                                                                                        line-height: 17px;
+                                                                                        text-align: center;
+                                                                                        padding: 0 15px;
+                                                                                    }
+                                                                                </style>
                                                                                 <div class="buttons">
                                                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                                                     <a  onclick="addToCart(${o.id})" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
@@ -1672,8 +1689,8 @@
                             <!-- Scroll Top Button -->
                             <a class="btn-scroll-top" 
                                style="position: fixed;
-                                       left: 50px !important; /* Ghi đè lên CSS gốc nếu có */
-                                       ">
+                               left: 50px !important; /* Ghi đè lên CSS gốc nếu có */
+                               ">
                                 <i class="biolife-icon icon-left-arrow"></i>
                             </a>
 

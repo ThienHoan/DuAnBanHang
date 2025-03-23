@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package control;
 
 import dao.DAO;
@@ -18,29 +17,31 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import productDao.ProductDao;
 
-@WebServlet(name="SearchControl", urlPatterns={"/search"})
+@WebServlet(name = "SearchControl", urlPatterns = {"/search"})
 public class SearchControl extends HttpServlet {
-   
-    
+
+    DAO dao = new DAO();
+    ProductDao pdao = new ProductDao();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String namep = request.getParameter("txt"); //giay chạy bộ
-        DAO dao = new DAO();
-        ProductDao pdao = new ProductDao();
+        if (namep == null || namep.isEmpty()) {
+            namep = ""; // Nếu không có từ khóa, lấy tất cả sản phẩm
+        }
+
         List<Product> listAll = dao.getAllProductUser();
         request.setAttribute("listPP", listAll);
         List<Product> list = dao.searchByName(namep);
-        
+
         List<Category> listC = dao.getAllCategory();
         request.setAttribute("listCC", listC);
         List<Product> list5 = dao.getTop5NewestProducts();
         request.setAttribute("list5", list5);
         request.setAttribute("productList", list);
-        
-        
-        
-         // Lấy tiêu chí lọc theo giá
+
+        // Lấy tiêu chí lọc theo giá
         String priceRange = request.getParameter("price");
         // Nếu không có giá trị, mặc định là "all"
         if (priceRange == null || priceRange.isEmpty()) {
@@ -59,18 +60,21 @@ public class SearchControl extends HttpServlet {
         request.setAttribute("selectedPrice", priceRange);
         request.setAttribute("selectedPrice", priceRange);
         request.getRequestDispatcher("Category.jsp").forward(request, response);
-        
-    } 
+
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    } 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";

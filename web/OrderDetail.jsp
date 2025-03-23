@@ -1,10 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="vi_VN"/>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Chi tiết đơn hàng</title>
+    <title>Công Ty Gia Truyền Hồng Đức</title>
+    <link rel="shortcut icon" type="image/x-icon" href="hinh anh/Logo/cropped-Favicon-1-32x32.png" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -46,7 +50,7 @@
                                 </p>
                             </div>
                             <div class="col-md-6">
-                                <p><strong>Tổng tiền:</strong> ${order.totalPrice} đ</p>
+                                <p><strong>Tổng tiền: </strong><fmt:formatNumber value="${order.totalPrice}" type="currency"/></p>
                                 <!-- Thông tin thanh toán nếu có -->
                             </div>
                         </div>
@@ -65,16 +69,16 @@
                                     <c:forEach items="${orderDetails}" var="od">
                                         <tr>
                                             <td>${od.productName}</td>
-                                            <td>${od.price} đ</td>
+                                            <td><fmt:formatNumber value="${od.price}" type="currency"/></td>
                                             <td>${od.quantity}</td>
-                                            <td>${od.subtotall} đ</td>
+                                            <td><fmt:formatNumber value="${od.subtotall}" type="currency"/></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th colspan="3" class="text-right">Tổng cộng:</th>
-                                        <th>${order.totalPrice} đ</th>
+                                        <th><fmt:formatNumber value="${order.totalPrice}" type="currency"/></th>
                                     </tr>
                                 </tfoot>
                             </table>

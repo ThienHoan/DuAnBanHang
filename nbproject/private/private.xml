@@ -3,18 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/nbproject/build-impl.xml</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/web/Category.jsp</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/dao/DAO.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/web/WEB-INF/web.xml</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/entity/Product.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/web/Detail.jsp</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/control/CategoryControl.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/control/HomeControl.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/control/SearchControl.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/control/ChangePasswordServlet.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/control/RegisterControl.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/productDao/ProductDao.java</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/web/Login.jsp</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/control/SearchControl.java</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/web/Menu.jsp</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/productDao/ProductDao.java</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/control/LoginControl.java</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/control/DetailControl.java</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/control/LoginGmail.java</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/web/Category.jsp</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/control/CategoryControl.java</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/web/Detail.jsp</file>
         </group>
     </open-files>
 </project-private>
