@@ -284,6 +284,10 @@ def get_products_by_category(category_name: str) -> str:
         category_keywords = {
             "xong phong": 1,      # Tinh dầu xông phòng
             "xe hoi": 2,          # Tinh dầu xe hơi  
+            "treo xe": 2,         # Thêm từ khóa phụ cho xe hơi
+            "o to": 2,            # Thêm từ khóa phụ cho xe hơi 
+            "oto": 2,             # Thêm từ khóa phụ cho xe hơi
+            "xe": 2,              # Thêm từ khóa phụ cho xe hơi
             "massage": 3,         # Tinh dầu massage
             "xit": 4,             # Tinh dầu dạng xịt
             "dang xit": 4,        # Thêm từ khóa phụ
@@ -294,8 +298,11 @@ def get_products_by_category(category_name: str) -> str:
         print(f"Đang tìm category với query: {normalized_category}")  # Debug
         
         # Kiểm tra xem có phải đang tìm tinh dầu dạng xịt không
-        if "xit" in normalized_category or "dang xit" in normalized_category or  "spray" in normalized_category:
+        if "xit" in normalized_category or "dang xit" in normalized_category or "spray" in normalized_category:
             category_id = 4
+        # Kiểm tra từ khóa treo xe hoặc liên quan đến xe
+        elif "treo xe" in normalized_category or "xe hoi" in normalized_category or "o to" in normalized_category or "xe" in normalized_category:
+            category_id = 2
         else:
             # Kiểm tra các từ khóa khác
             category_id = None
