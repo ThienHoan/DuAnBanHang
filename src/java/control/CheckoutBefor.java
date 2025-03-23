@@ -6,8 +6,13 @@
 package control;
 
 import entity.Cart;
+import entity.Category;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+
+import dao.DAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -57,6 +62,9 @@ public class CheckoutBefor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        DAO dao = new DAO();
+        List<Category> listC = dao.getAllCategory();
+        request.setAttribute("listCC", listC);
         HttpSession session = request.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
         if (cart == null) {

@@ -17,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class OrderDao implements IOrderDao {
+
     private Connection connection;
 
     public OrderDao() {
@@ -33,41 +34,57 @@ public class OrderDao implements IOrderDao {
             preparedStatement.executeUpdate();
         }
     }
+    @Override
+    public int getnewOrderId() throws SQLException {
+        String sql = "SELECT TOP 1 id FROM Orders ORDER BY id DESC";
+        int newId = 1;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                newId = rs.getInt("id") + 1;
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Lỗi khi lấy ID đơn hàng mới nhất: " + e.getMessage());
+        }
+
+        return newId;
+    }
 
     @Override
     public Order getOrderById(int id) {
-        
+
         return null;
-        
+
     }
 
     @Override
     public List<Order> selectAllOrders() {
         List<Order> orders = new ArrayList<>();
-        
+
         return orders;
     }
 
     @Override
     public boolean deleteOrder(int id) throws SQLException {
-        
+
         return false;
-        
+
     }
 
     @Override
     public boolean updateOrder(Order orderObj) throws SQLException {
-        
+
         return false;
-        
+
     }
-    
+
     public int createOrder(Order order) throws SQLException {
         String sql = "INSERT INTO Orders (userID, total_price, status) VALUES (?, ?, ?)"; // Bỏ orderDate
         int orderId = -1;
 
-        try (Connection conn = new DBContext().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             stmt.setInt(1, order.getUserId());
             stmt.setDouble(2, order.getTotalPrice());
@@ -98,8 +115,7 @@ public class OrderDao implements IOrderDao {
 
         double subtotal = quantity * price;
 
-        try (Connection conn = new DBContext().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, orderId);
             stmt.setInt(2, productId);
@@ -116,7 +132,4 @@ public class OrderDao implements IOrderDao {
         }
     }
 
-    
-    
 }
-

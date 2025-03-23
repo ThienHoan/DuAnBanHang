@@ -14,6 +14,7 @@ import entity.Order;
 
 public interface IOrderDao { 
     public void insertOrder (Order orderObj) throws SQLException; 
+    public int getnewOrderId() throws SQLException ;
     public Order getOrderById(int id); 
     public List<Order> selectAllOrders(); 
     public boolean deleteOrder (int id) throws SQLException; 

@@ -13,16 +13,21 @@
  import jakarta.servlet.http.HttpServletRequest;
  import jakarta.servlet.http.HttpServletResponse;
  import jakarta.servlet.http.HttpSession;
- import java.util.Map;
+
+import java.util.List;
+import java.util.Map;
  import entity.Cart;
  import entity.CartItem;
- import entity.Order;
+import entity.Category;
+import entity.Order;
  import entity.Product;
  import entity.Account;
  import java.sql.SQLException;
  import java.util.logging.Level;
  import java.util.logging.Logger;
- import orderDao.OrderDao;
+
+import dao.DAO;
+import orderDao.OrderDao;
  import productDao.ProductDao;
  import service.CartService;
  import service.EmailService;
@@ -73,7 +78,7 @@
      @Override
      protected void doGet(HttpServletRequest request, HttpServletResponse response)
      throws ServletException, IOException {
-         processRequest(request, response);
+         doPost(request, response);
      } 
  
      /** 
@@ -90,7 +95,9 @@
          response.setCharacterEncoding("UTF-8");
  
          HttpSession session = request.getSession();
-         
+         DAO dao = new DAO();
+         List<Category> listC = dao.getAllCategory();
+        request.setAttribute("listCC", listC);
          
          
          Account user = (Account) session.getAttribute("account");       
@@ -99,8 +106,8 @@
              response.getWriter().write("{\"status\": \"error3\", \"message\": \"Giỏ hàng của bạn đang trống!\"}");
              return;
          }
-         
- 
+   
+    
          CartService cartService = new CartService();
          double totalPrice = cartService.calculateTotalWithDiscount(cart);
          
@@ -142,12 +149,32 @@
          EmailService.sendEmail(userEmail, subject, content);
          cart.clear();
        session.removeAttribute("cart");
+       
+         //từ vnpay qua-----------------------------------------------------------------
+         String wasPaid = (String) session.getAttribute("wasPaid");
+    if (wasPaid != null && wasPaid.equals("true")) {
+        cart.clear();
+        session.removeAttribute("wasPaid");
+        
+        // Thêm script để hiển thị thông báo
+        String script = "<script>"
+                + "window.onload = function() {"
+                + "    showNotification('success', 'Thanh toán thành công', 'Đơn hàng của bạn đã được xác nhận thành công!');"
+                + "}"
+                + "</script>";
+        
+        request.setAttribute("notificationScript", script);
+        request.getRequestDispatcher("Checkout.jsp").forward(request, response);
+        return;
+    }
+    //------------------------------------------------------------------
  
          response.getWriter().write("{\"status\": \"success\", \"message\": \"Đã gửi xác nhận đơn hàng tới email của bạn!\"}");
          
          }else {
      // Thong bao loi neu tao don hang that bai
      response.getWriter().write("{\"status\": \"error\", \"message\": \"Tạo đơn hàng thất bại. Vui lòng thử lại sau!\"}");
+     
  }
          
      }

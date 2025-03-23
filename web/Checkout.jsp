@@ -409,6 +409,8 @@
 }
         </script>
         
+        ${notificationScript}
+        
     </head>
     <body class="biolife-body">
 
@@ -476,10 +478,9 @@
                         <button class="checkout-button" onclick="confirmPayment()">
                             Đặt hàng
                         </button>
-                        <button class="checkout-button" style="background-color: red; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;" onclick="confirmPayment()">
-                            Thanh toán bằng VNPAY
-                        </button>
-                        
+                        <form action="vnpay_payment" method="post">
+    <button type="submit" class="checkout-button"  style="margin-top: 10px;">thanh toán bằng vnpay</button>
+</form>
                     </div>
                 </div>
             </div>
@@ -695,6 +696,7 @@
     <script src="assets/js/slick.min.js"></script>
     <script src="assets/js/biolife.framework.js"></script>
     <script src="assets/js/functions.js"></script>
+    
 </body>
 
 </html>
