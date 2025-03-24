@@ -6,13 +6,16 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="vi_VN"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Bootstrap CRUD Data Table for Database with Modal Form</title>
+        <title>Công Ty Gia Truyền Hồng Đức</title>
+        <link rel="shortcut icon" type="image/x-icon" href="hinh anh/Logo/cropped-Favicon-1-32x32.png" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -318,24 +321,26 @@
                 <div class="table-wrapper">
                     <form id="deleteForm" action="delete" method="post">
                         <div class="table-title">
-                            <div class="row">
+                            <div class="row align-items-center">
                                 <div class="col-sm-6">
                                     <h2>Manage <b>Product</b></h2>
                                 </div>
-                                <div class="col-sm-6">
-                                        <!-- Add this new button for product access data -->
-                                     <a href="manager?action=productAccessData" class="btn btn-primary btn-block">
-                                            <i class="fa fa-bar-chart"></i> Product Access Statistics
-                                        </a>
+                                <div class="col-md-6 d-flex justify-content-end gap-2">
                                     <a href="home" class="btn btn-primary">
-                                        <i class="material-icons">&#xe88a;</i> <span>Home</span>
+                                        <i class="material-icons">&#xe88a;</i> Home
                                     </a>
+                                    
+                                    <!-- Add this new button for product access data -->
+                                    <a href="manager?action=productAccessData" class="btn btn-warning">
+                                        <i class="fa fa-bar-chart"></i> Product Access Statistics
+                                    </a>
+                                    
                                     <a href="#addProductModal" class="btn btn-success" data-toggle="modal">
-                                        <i class="material-icons">&#xE147;</i> <span>Add New Product</span>
+                                        <i class="material-icons">&#xE147;</i> Add New Product
                                     </a>
                                     <!-- Nút mở Modal Xác nhận xóa -->
                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">
-                                        <i class="material-icons">&#xE15C;</i> <span>Delete</span>
+                                        <i class="material-icons">&#xE15C;</i> Delete
                                     </button>
                                 </div>
                             </div>
@@ -378,7 +383,7 @@
                                             <td>${o.id}</td>
                                             <td>${o.name}</td>
                                             <td><img src="${o.img}" alt="alt"/></td>
-                                            <td>${o.price} vnđ</td>
+                                            <td><fmt:formatNumber value="${o.price}" type="currency"/></span></td>
                                             <td>
                                                 <c:if test="${o.stock == 0}">
                                                     <span class="badge badge-warning">Hết hàng</span>

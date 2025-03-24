@@ -32,57 +32,25 @@ public class CategoryControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Lấy category ID
-        String cateID = request.getParameter("cid");
-        request.setAttribute("cid", cateID);
+        String action = request.getParameter("action");
+        String txt = request.getParameter("txt");
+        request.setAttribute("txt", txt);
 
-        List<Product> list = dao.getAllProductUser();
-        request.setAttribute("listP", list);
-
-        List<Product> listP = dao.getProductByCID(cateID);
-        request.setAttribute("listPP", listP);
-
-        List<Category> listC = dao.getAllCategory();
-        request.setAttribute("listCC", listC);
-
-        // Tìm categoryName từ listC thay vì truyền qua URL
-        String categoryName = "Tất cả sản phẩm";
-        if (cateID != null && !cateID.isEmpty()) {
-            for (Category c : listC) {
-                if (String.valueOf(c.getCid()).equals(cateID)) {
-                    categoryName = c.getCname();
-                    break;
-                }
-            }
+        if (action == null || action.isEmpty()) {
+            action = "category"; // Mặc định là xử lý theo danh mục
         }
 
-        // Truyền tên category của sản phẩm đến JSP
-        request.setAttribute("categoryName", categoryName);
-
-        // Lấy tiêu chí lọc theo giá
-        String priceRange = request.getParameter("price");
-        // Nếu không có giá trị, mặc định là "all"
-        if (priceRange == null || priceRange.isEmpty()) {
-            priceRange = "all";
+        switch (action) {
+            case "category":
+                handleCategory(request, response);
+                break;
+            case "search":
+                handleSearch(request, response);
+                break;
+            default:
+                handleCategory(request, response); // Mặc định là xử lý theo danh mục
+                break;
         }
-
-        String orderBy = request.getParameter("orderby");
-        if (orderBy == null || orderBy.isEmpty()) {
-            orderBy = "menu_order";
-        }
-
-        // Lấy danh sách sản phẩm theo khoảng giá
-        List<Product> productsByPrice = pdao.getProductsByCategoryAndPriceRangeAndOrder(cateID, priceRange, orderBy);
-        request.setAttribute("productList", productsByPrice);
-
-        request.setAttribute("selectedPrice", priceRange);
-        request.setAttribute("selectedPrice", priceRange);
-
-        List<Product> list5 = dao.getTop5NewestProducts();
-        request.setAttribute("list5", list5);
-
-        request.getRequestDispatcher("Category.jsp").forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -123,5 +91,86 @@ public class CategoryControl extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void handleCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Lấy category ID từ tham số yêu cầu
+        String cateID = request.getParameter("cid");
+        request.setAttribute("cid", cateID);
+
+        List<Category> listC = dao.getAllCategory();
+        request.setAttribute("listCC", listC);
+
+        // Tìm tên danh mục từ danh sách danh mục
+        String categoryName = "Tất cả sản phẩm";
+        if (cateID != null && !cateID.isEmpty()) {
+            for (Category c : listC) {
+                if (String.valueOf(c.getCid()).equals(cateID)) {
+                    categoryName = c.getCname();
+                    break;
+                }
+            }
+        }
+        request.setAttribute("categoryName", categoryName);
+
+        // Lấy tiêu chí lọc theo giá từ yêu cầu
+        String priceRange = request.getParameter("price");
+        if (priceRange == null || priceRange.isEmpty()) {
+            priceRange = "all";
+        }
+
+        // Lấy tiêu chí sắp xếp từ yêu cầu
+        String orderBy = request.getParameter("orderby");
+        if (orderBy == null || orderBy.isEmpty()) {
+            orderBy = "menu_order";
+        }
+
+        // Lấy danh sách sản phẩm theo danh mục, khoảng giá và sắp xếp
+        List<Product> productsByPrice = pdao.getProductsByCategoryAndPriceRangeAndOrder(cateID, priceRange, orderBy);
+        request.setAttribute("productList", productsByPrice);
+
+        request.setAttribute("selectedPrice", priceRange);
+
+        // Lấy danh sách top 5 sản phẩm mới nhất
+        List<Product> list5 = dao.getTop5NewestProducts();
+        request.setAttribute("list5", list5);
+
+        // Chuyển hướng đến trang Category.jsp
+        request.getRequestDispatcher("Category.jsp").forward(request, response);
+    }
+
+    private void handleSearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String namep = request.getParameter("txt");
+        if (namep == null) {
+            namep = ""; // Nếu không có từ khóa tìm kiếm, lấy tất cả sản phẩm
+        }
+
+        List<Category> listC = dao.getAllCategory();
+        request.setAttribute("listCC", listC);
+
+        // Lấy tiêu chí lọc theo giá từ yêu cầu
+        String priceRange = request.getParameter("price");
+        if (priceRange == null || priceRange.isEmpty()) {
+            priceRange = "all";
+        }
+
+        // Lấy tiêu chí sắp xếp từ yêu cầu
+        String orderBy = request.getParameter("orderby");
+        if (orderBy == null || orderBy.isEmpty()) {
+            orderBy = "menu_order";
+        }
+
+        // Lấy danh sách sản phẩm theo tên, khoảng giá và sắp xếp
+        List<Product> productsByPrice = pdao.getProductsByNameAndPriceRangeAndOrder(namep, priceRange, orderBy);
+        request.setAttribute("productList", productsByPrice);
+
+        request.setAttribute("selectedPrice", priceRange);
+
+        // Lấy danh sách top 5 sản phẩm mới nhất
+        List<Product> list5 = dao.getTop5NewestProducts();
+        request.setAttribute("list5", list5);
+
+        // Chuyển hướng đến trang Category.jsp
+        request.getRequestDispatcher("Category.jsp").forward(request, response);
+    }
 
 }

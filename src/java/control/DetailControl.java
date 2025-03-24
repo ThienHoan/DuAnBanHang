@@ -81,6 +81,9 @@ public class DetailControl extends HttpServlet {
         
         // Truyền tên category của sản phẩm đến JSP
         request.setAttribute("categoryName", categoryName);
+        
+        List<Product> list5 = dao.getTop5NewestProducts();
+        request.setAttribute("list5", list5);
 
         request.getRequestDispatcher("Detail.jsp").forward(request, response);
     }

@@ -128,74 +128,68 @@ public class OrderDAO {
     }
         
         // Lấy doanh thu theo tháng
-    public Map<String, Double> getRevenueByMonth() {
-    Map<String, Double> revenueByMonth = new LinkedHashMap<>();
-    String query = "SELECT FORMAT(o.order_date, 'yyyy-MM') AS month, SUM(od.subtotall) AS revenue " +
-                   "FROM OrderDetail od " +
-                   "JOIN Orders o ON od.order_id = o.id " +
-                   "GROUP BY FORMAT(o.order_date, 'yyyy-MM') " +
-                   "ORDER BY month";
-
-    try (Connection conn = new DBContext().getConnection();
-         PreparedStatement ps = conn.prepareStatement(query);
-         ResultSet rs = ps.executeQuery()) {
-        while (rs.next()) {
-            revenueByMonth.put(rs.getString("month"), rs.getDouble("revenue"));
+        public Map<String, Double> getRevenueByMonth() {
+            Map<String, Double> revenueByMonth = new LinkedHashMap<>();
+            String query = "SELECT FORMAT(o.orderDate, 'yyyy-MM') AS month, SUM(od.subtotall) AS revenue "
+                    + "FROM OrderDetail od "
+                    + "JOIN Orders o ON od.order_id = o.id "
+                    + "GROUP BY FORMAT(o.orderDate, 'yyyy-MM') "
+                    + "ORDER BY month";
+    
+            try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    revenueByMonth.put(rs.getString("month"), rs.getDouble("revenue"));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return revenueByMonth;
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    return revenueByMonth;
-}
 
 
     // Lấy doanh thu theo năm
     public Map<String, Double> getRevenueByYear() {
-    Map<String, Double> revenueByYear = new LinkedHashMap<>();
-    String query = "SELECT YEAR(o.order_date) AS year, SUM(od.subtotall) AS revenue " +
-                   "FROM OrderDetail od " +
-                   "JOIN Orders o ON od.order_id = o.id " +
-                   "GROUP BY YEAR(o.order_date) " +
-                   "ORDER BY year";
+        Map<String, Double> revenueByYear = new LinkedHashMap<>();
+        String query = "SELECT YEAR(o.orderDate) AS year, SUM(od.subtotall) AS revenue "
+                + "FROM OrderDetail od "
+                + "JOIN Orders o ON od.order_id = o.id "
+                + "GROUP BY YEAR(o.orderDate) "
+                + "ORDER BY year";
 
-    try (Connection conn = new DBContext().getConnection();
-         PreparedStatement ps = conn.prepareStatement(query);
-         ResultSet rs = ps.executeQuery()) {
-        while (rs.next()) {
-            revenueByYear.put(rs.getString("year"), rs.getDouble("revenue"));
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                revenueByYear.put(rs.getString("year"), rs.getDouble("revenue"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return revenueByYear;
     }
-    return revenueByYear;
-}
 
 
 
     // Lấy sản phẩm bán chạy nhất
     public List<Map<String, Object>> getTopSellingProducts() {
-    List<Map<String, Object>> products = new ArrayList<>();
-    String query = "SELECT TOP 5 p.product_name, SUM(od.quantity) AS total_sold, SUM(od.subtotall) AS total_revenue " +
-                   "FROM OrderDetail od " +
-                   "JOIN Product p ON od.product_id = p.product_id " +
-                   "GROUP BY p.product_name " +
-                   "ORDER BY total_sold DESC";
+        List<Map<String, Object>> products = new ArrayList<>();
+        String query = "SELECT TOP 3 p.name, SUM(od.quantity) AS total_sold, SUM(od.subtotall) AS total_revenue "
+                + "FROM OrderDetail od "
+                + "JOIN Product p ON od.product_id = p.pid "
+                + "GROUP BY p.name "
+                + "ORDER BY total_sold DESC";
 
-    try (Connection conn = new DBContext().getConnection();
-         PreparedStatement ps = conn.prepareStatement(query);
-         ResultSet rs = ps.executeQuery()) {
-        while (rs.next()) {
-            Map<String, Object> product = new LinkedHashMap<>();
-            product.put("name", rs.getString("product_name"));
-            product.put("sold", rs.getInt("total_sold"));
-            product.put("revenue", rs.getDouble("total_revenue"));
-            products.add(product);
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Map<String, Object> product = new LinkedHashMap<>();
+                product.put("name", rs.getString("name"));
+                product.put("sold", rs.getInt("total_sold"));
+                product.put("revenue", rs.getDouble("total_revenue"));
+                products.add(product);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return products;
     }
-    return products;
-}
 
 
     

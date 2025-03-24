@@ -119,10 +119,10 @@
                                                 
                                                 <!-- Phần cập nhật trạng thái chỉ dành cho Admin và Seller -->
                                                 <c:if test="${isAdmin || isSeller}">
-                                                    <button type="button" class="btn btn-sm btn-primary" 
+                                                    <!-- <button type="button" class="btn btn-sm btn-primary" 
                                                             data-toggle="modal" data-target="#updateStatusModal${o.id}">
                                                         Cập nhật trạng thái
-                                                    </button>
+                                                    </button> -->
                                                     
                                                     <!-- Modal cập nhật trạng thái -->
                                                     <div class="modal fade" id="updateStatusModal${o.id}" tabindex="-1" role="dialog" 
