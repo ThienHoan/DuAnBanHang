@@ -15,8 +15,8 @@ public class VNPayConfig {
 
     public static final String VNP_PAY_URL = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     public static final String VNP_RETURN_URL = "http://localhost:8080/DuAnBanHang/vnpay-return";
-    public static final String VNP_TMN_CODE = ""; // Kiểm tra lại
-    public static final String VNP_SECRET_KEY = ""; // Kiểm tra lạis
+    public static final String VNP_TMN_CODE = "K35XAVKM"; // Kiểm tra lại
+    public static final String VNP_SECRET_KEY = "06SKZL94E2CM751T0V1RAOYNDXXWUSEH"; // Kiểm tra lạis
     public static final String VNP_API_URL = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
     public static final String VNP_VERSION = "2.1.0";
     public static final String VNP_COMMAND = "pay";

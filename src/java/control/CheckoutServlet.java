@@ -42,6 +42,7 @@ import orderDao.OrderDao;
  public class CheckoutServlet extends HttpServlet {
      private OrderDao orderDAO = new OrderDao();
      private ProductDao productDao = new ProductDao();
+     private DAO dao=new DAO();
   //   private UserDAO userDao = new UserDAO();
      /** 
       * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -147,8 +148,20 @@ import orderDao.OrderDao;
                  + "Trân trọng,\nHồng Đức Team";
  
          EmailService.sendEmail(userEmail, subject, content);
-         cart.clear();
-       session.removeAttribute("cart");
+         //cập nhập stock---------------------------------------------------------------
+         
+         for (CartItem item : cart.getItems()) {
+            int productId = item.getProduct().getId(); // Lấy ID sản phẩm
+            int currentStock = item.getProduct().getStock(); // Số lượng hiện tại trong kho
+            int quantityInCart = item.getQuantity(); // Số lượng trong giỏ hàng
+            int newStock = currentStock - quantityInCart; // Tính số lượng mới
+
+            // Gọi hàm updateStock từ ProductDAO
+            dao.updateStock(productId, newStock);
+            
+        } 
+         //------------------------------------------------------------------------------
+         
        
          //từ vnpay qua-----------------------------------------------------------------
          String wasPaid = (String) session.getAttribute("wasPaid");
@@ -168,7 +181,8 @@ import orderDao.OrderDao;
         return;
     }
     //------------------------------------------------------------------
- 
+        cart.clear();
+       session.removeAttribute("cart");
          response.getWriter().write("{\"status\": \"success\", \"message\": \"Đã gửi xác nhận đơn hàng tới email của bạn!\"}");
          
          }else {

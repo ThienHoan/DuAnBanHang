@@ -35,7 +35,7 @@ public class VNPayServlet extends HttpServlet {
         }
 
         // Chuyển hướng đến trang checkout mặc định
-        request.getRequestDispatcher("checkout.jsp").forward(request, response);
+        request.getRequestDispatcher("Checkout.jsp").forward(request, response);
     }
 
     @Override
@@ -66,11 +66,11 @@ public class VNPayServlet extends HttpServlet {
             } catch (IllegalStateException e) {
                 LOGGER.severe("Checkout error: " + e.getMessage());
                 request.setAttribute("errorMessage", e.getMessage());
-                request.getRequestDispatcher("checkout.jsp").forward(request, response);
+                request.getRequestDispatcher("Checkout.jsp").forward(request, response);
             } catch (Exception e) {
                 LOGGER.severe("Unexpected error during VNPay checkout: " + e.getMessage());
                 request.setAttribute("errorMessage", "Đã xảy ra lỗi khi xử lý thanh toán VNPay.");
-                request.getRequestDispatcher("checkout.jsp").forward(request, response);
+                request.getRequestDispatcher("Checkout.jsp").forward(request, response);
             }
 
     }

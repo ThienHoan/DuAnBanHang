@@ -3,18 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/nbproject/build-impl.xml</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/web/Category.jsp</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/dao/DAO.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/web/WEB-INF/web.xml</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/entity/Product.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/web/Detail.jsp</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/control/CategoryControl.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/control/HomeControl.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/control/SearchControl.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/control/ChangePasswordServlet.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/control/RegisterControl.java</file>
-            <file>file:/D:/KI4/PRJ301/DuanNho/DuAnBanHang/DuAnBanHang/src/java/productDao/ProductDao.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/CheckoutServlet.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/dao/DAO.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/VNPayServlet.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/VNPayReturnServlet.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/service/ICartService.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/Cart.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/CartControll.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/Product.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/ShoppingCart.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/dao/OrderDAO.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/CartItem.java</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Detail.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Checkout.jsp</file>
+            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/VNPay/VNPayConfig.java</file>
         </group>
     </open-files>
 </project-private>

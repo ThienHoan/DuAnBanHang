@@ -130,6 +130,31 @@ public class DAO {
     }
 }
     
+    public boolean updateStock(int productId, int newStock) {
+    Connection conn = null;
+    PreparedStatement ps = null;
+    String sql = "UPDATE Product SET stock = ?, status = ? WHERE pid = ?";
+    try {
+        conn = new DBContext().getConnection(); // Tạo kết nối mới
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, newStock);
+        if(newStock==0){
+            ps.setInt(2,0);
+        }else{
+            ps.setInt(2,1);
+        }
+        ps.setInt(3, productId);
+        
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected > 0;
+    } catch (Exception e) {
+        LOGGER.log(Level.SEVERE, "Error updating stock for product ID: " + productId, e);
+        return false;
+    } finally {
+        closeResources(conn, ps, null);
+    }
+}
+    
     public List<Product> getAllProductUser() {
         List<Product> list = new ArrayList<>();
         String query = "SELECT * FROM Product WHERE status=1";
@@ -955,6 +980,7 @@ public class DAO {
 
     public void updateProduct(int id, String name, String image, double price, String description, int stock, int status, int category) {
     String sql = "UPDATE [dbo].[Product] SET name=?, img=?, price=?, description=?, cateID=?, stock=?, status=? WHERE pid=?";
+    if(stock==0) status=0;
     try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
         ps.setString(1, name);
         ps.setString(2, image);
