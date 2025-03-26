@@ -103,6 +103,33 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <c:choose>
+        <%-- Kiểm tra nếu giỏ hàng trống --%>
+        <c:when test="${empty sessionScope.cart.items}">
+            <tr>
+                <td colspan="4" class="text-center">
+                    <div class="empty-cart-container" style="padding: 30px; text-align: center;">
+
+                        
+                        <%-- Thông báo giỏ hàng trống --%>
+                        <h3 style="color: #666; margin-bottom: 15px;">
+                            Giỏ hàng của bạn đang trống
+                        </h3>
+                        
+                        <%-- Gợi ý cho người dùng --%>
+                        <p style="color: #999; margin-bottom: 20px;">
+                            Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm
+                        </p>
+                        
+                        <%-- Nút quay lại trang chủ để mua hàng --%>
+                        <a href="home" class="btn btn-primary">
+                            Tiếp tục mua sắm
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </c:when>
+            <c:otherwise>
                                             <c:forEach items="${sessionScope.cart.items}" var="item">
                                                 <tr class="cart_item">
                                                     <td class="product-thumbnail" data-title="Product Name">
@@ -156,7 +183,9 @@
                                                     </td>
                                                 </tr>
                                             </c:forEach>
-                                        <p style="font-size: 24px; color: #D93516; font-weight: bold;">total: <fmt:formatNumber value="${sessionScope.cart.totalAmount}" type="currency"/></p>
+                                                </c:otherwise>
+    </c:choose>
+                                        <p style="font-size: 24px; color: #7FAF51; font-weight: bold;">Total: <fmt:formatNumber value="${sessionScope.cart.totalAmount}" type="currency"/></p>
                                         <tr class="cart_item wrap-buttons">
                                             <td class="wrap-btn-control" colspan="4">
                                                 <a href="home" class="btn back-to-shop">Back to Shop</a>
@@ -175,320 +204,9 @@
                     </div>
                 </div>
 
-                <!--Related Product-->
-                <!--                    <div class="product-related-box single-layout">
-                                        <div class="biolife-title-box lg-margin-bottom-26px-im">
-                                            <span class="biolife-icon icon-organic"></span>
-                                            <span class="subtitle">All the best item for You</span>
-                                            <h3 class="main-title">Related Products</h3>
-                                        </div>
-                                        <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":0,"slidesToShow":5, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin":20}},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":10}}]}'>
-                                            <li class="product-item">
-                                                <div class="contain-product layout-default">
-                                                    <div class="product-thumb">
-                                                        <a href="#" class="link-to-product">
-                                                            <img src="assets/images/products/p-13.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                                        </a>
-                                                    </div>
-                                                    <div class="info">
-                                                        <b class="categories">Fresh Fruit</b>
-                                                        <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                                        <div class="price ">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                        </div>
-                                                        <div class="slide-down-box">
-                                                            <p class="message">All products are carefully selected to ensure food safety.</p>
-                                                            <div class="buttons">
-                                                                <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                                                <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                                <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="product-item">
-                                                <div class="contain-product layout-default">
-                                                    <div class="product-thumb">
-                                                        <a href="#" class="link-to-product">
-                                                            <img src="assets/images/products/p-14.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                                        </a>
-                                                    </div>
-                                                    <div class="info">
-                                                        <b class="categories">Fresh Fruit</b>
-                                                        <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                                        <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                        </div>
-                                                        <div class="slide-down-box">
-                                                            <p class="message">All products are carefully selected to ensure food safety.</p>
-                                                            <div class="buttons">
-                                                                <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                                                <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                                <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="product-item">
-                                                <div class="contain-product layout-default">
-                                                    <div class="product-thumb">
-                                                        <a href="#" class="link-to-product">
-                                                            <img src="assets/images/products/p-15.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                                        </a>
-                                                    </div>
-                                                    <div class="info">
-                                                        <b class="categories">Fresh Fruit</b>
-                                                        <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                                        <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                        </div>
-                                                        <div class="slide-down-box">
-                                                            <p class="message">All products are carefully selected to ensure food safety.</p>
-                                                            <div class="buttons">
-                                                                <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                                                <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                                <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="product-item">
-                                                <div class="contain-product layout-default">
-                                                    <div class="product-thumb">
-                                                        <a href="#" class="link-to-product">
-                                                            <img src="assets/images/products/p-10.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                                        </a>
-                                                    </div>
-                                                    <div class="info">
-                                                        <b class="categories">Fresh Fruit</b>
-                                                        <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                                        <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                        </div>
-                                                        <div class="slide-down-box">
-                                                            <p class="message">All products are carefully selected to ensure food safety.</p>
-                                                            <div class="buttons">
-                                                                <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                                                <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                                <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="product-item">
-                                                <div class="contain-product layout-default">
-                                                    <div class="product-thumb">
-                                                        <a href="#" class="link-to-product">
-                                                            <img src="assets/images/products/p-08.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                                        </a>
-                                                    </div>
-                                                    <div class="info">
-                                                        <b class="categories">Fresh Fruit</b>
-                                                        <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                                        <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                        </div>
-                                                        <div class="slide-down-box">
-                                                            <p class="message">All products are carefully selected to ensure food safety.</p>
-                                                            <div class="buttons">
-                                                                <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                                                <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                                <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="product-item">
-                                                <div class="contain-product layout-default">
-                                                    <div class="product-thumb">
-                                                        <a href="#" class="link-to-product">
-                                                            <img src="assets/images/products/p-21.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                                        </a>
-                                                    </div>
-                                                    <div class="info">
-                                                        <b class="categories">Fresh Fruit</b>
-                                                        <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                                        <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                        </div>
-                                                        <div class="slide-down-box">
-                                                            <p class="message">All products are carefully selected to ensure food safety.</p>
-                                                            <div class="buttons">
-                                                                <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                                                <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                                <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="product-item">
-                                                <div class="contain-product layout-default">
-                                                    <div class="product-thumb">
-                                                        <a href="#" class="link-to-product">
-                                                            <img src="assets/images/products/p-18.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                                        </a>
-                                                    </div>
-                                                    <div class="info">
-                                                        <b class="categories">Fresh Fruit</b>
-                                                        <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                                        <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                                        </div>
-                                                        <div class="slide-down-box">
-                                                            <p class="message">All products are carefully selected to ensure food safety.</p>
-                                                            <div class="buttons">
-                                                                <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                                                <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                                <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                
-                                </div>
-                            </div>
-                        </div>-->
-
-                <!-- FOOTER -->
                 <jsp:include page="Footer.jsp"></jsp:include>
 
-                <!--                    <footer id="footer" class="footer layout-03">
-                                        <div class="footer-content background-footer-03">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <div class="col-lg-4 col-md-4 col-sm-9">
-                                                        <section class="footer-item">
-                                                            <a href="#" class="logo footer-logo"><img src="assets/images/organic-3.png" alt="biolife logo" width="135" height="34"></a>
-                                                            <div class="footer-phone-info">
-                                                                <i class="biolife-icon icon-head-phone"></i>
-                                                                <p class="r-info">
-                                                                    <span>Got Questions ?</span>
-                                                                    <span>(700)  9001-1909  (900) 689 -66</span>
-                                                                </p>
-                                                            </div>
-                                                            <div class="newsletter-block layout-01">
-                                                                <h4 class="title">Newsletter Signup</h4>
-                                                                <div class="form-content">
-                                                                    <form action="#" name="new-letter-foter">
-                                                                        <input type="email" class="input-text email" value="" placeholder="Your email here...">
-                                                                        <button type="submit" class="bnt-submit" name="ok">Sign up</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </section>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-4 col-sm-6 md-margin-top-5px sm-margin-top-50px xs-margin-top-40px">
-                                                        <section class="footer-item">
-                                                            <h3 class="section-title">Useful Links</h3>
-                                                            <div class="row">
-                                                                <div class="col-lg-6 col-sm-6 col-xs-6">
-                                                                    <div class="wrap-custom-menu vertical-menu-2">
-                                                                        <ul class="menu">
-                                                                            <li><a href="#">About Us</a></li>
-                                                                            <li><a href="#">About Our Shop</a></li>
-                                                                            <li><a href="#">Secure Shopping</a></li>
-                                                                            <li><a href="#">Delivery infomation</a></li>
-                                                                            <li><a href="#">Privacy Policy</a></li>
-                                                                            <li><a href="#">Our Sitemap</a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6 col-sm-6 col-xs-6">
-                                                                    <div class="wrap-custom-menu vertical-menu-2">
-                                                                        <ul class="menu">
-                                                                            <li><a href="#">Who We Are</a></li>
-                                                                            <li><a href="#">Our Services</a></li>
-                                                                            <li><a href="#">Projects</a></li>
-                                                                            <li><a href="#">Contacts Us</a></li>
-                                                                            <li><a href="#">Innovation</a></li>
-                                                                            <li><a href="#">Testimonials</a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </section>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-4 col-sm-6 md-margin-top-5px sm-margin-top-50px xs-margin-top-40px">
-                                                        <section class="footer-item">
-                                                            <h3 class="section-title">Transport Offices</h3>
-                                                            <div class="contact-info-block footer-layout xs-padding-top-10px">
-                                                                <ul class="contact-lines">
-                                                                    <li>
-                                                                        <p class="info-item">
-                                                                            <i class="biolife-icon icon-location"></i>
-                                                                            <b class="desc">7563 St. Vicent Place, Glasgow, Greater Newyork NH7689, UK </b>
-                                                                        </p>
-                                                                    </li>
-                                                                    <li>
-                                                                        <p class="info-item">
-                                                                            <i class="biolife-icon icon-phone"></i>
-                                                                            <b class="desc">Phone: (+067) 234 789  (+068) 222 888</b>
-                                                                        </p>
-                                                                    </li>
-                                                                    <li>
-                                                                        <p class="info-item">
-                                                                            <i class="biolife-icon icon-letter"></i>
-                                                                            <b class="desc">Email:  contact@company.com</b>
-                                                                        </p>
-                                                                    </li>
-                                                                    <li>
-                                                                        <p class="info-item">
-                                                                            <i class="biolife-icon icon-clock"></i>
-                                                                            <b class="desc">Hours: 7 Days a week from 10:00 am</b>
-                                                                        </p>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="biolife-social inline">
-                                                                <ul class="socials">
-                                                                    <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                                                    <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                                                    <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                                                    <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-                                                                    <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </section>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-xs-12">
-                                                        <div class="separator sm-margin-top-70px xs-margin-top-40px"></div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-sm-6 col-xs-12">
-                                                        <div class="copy-right-text"><p><a href="templateshub.net">Templates Hub</a></p></div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-sm-6 col-xs-12">
-                                                        <div class="payment-methods">
-                                                            <ul>
-                                                                <li><a href="#" class="payment-link"><img src="assets/images/card1.jpg" width="51" height="36" alt=""></a></li>
-                                                                <li><a href="#" class="payment-link"><img src="assets/images/card2.jpg" width="51" height="36" alt=""></a></li>
-                                                                <li><a href="#" class="payment-link"><img src="assets/images/card3.jpg" width="51" height="36" alt=""></a></li>
-                                                                <li><a href="#" class="payment-link"><img src="assets/images/card4.jpg" width="51" height="36" alt=""></a></li>
-                                                                <li><a href="#" class="payment-link"><img src="assets/images/card5.jpg" width="51" height="36" alt=""></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </footer>-->
+                
 
                 <!--Footer For Mobile-->
                 <div class="mobile-footer">

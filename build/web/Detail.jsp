@@ -1336,7 +1336,9 @@
                                                 <p class="message">"Tinh dầu cao cấp, thuần khiết & an toàn."</p>
                                                 <div class="buttons">
                                                     <!--                                            <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>-->
-                                                    <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
+                                                    <a onclick="addToCart(${p.id},1)" class="btn add-to-cart-btn">
+                                    <i class="fa fa-cart-plus"></i> Add to cart
+                              </a>
                                                     <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>

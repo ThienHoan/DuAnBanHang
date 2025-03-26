@@ -29,15 +29,24 @@
        
         
         <script>
-            function addToCart(productId) {
-                fetch("cart?action=add&id=" + productId, {method: "POST"})
-                        .then(response => response.text())
-                        .then(data => {
-                            alert("Đã thêm sản phẩm vào giỏ hàng!");
-                        })
-                        .catch(error => console.error("Lỗi:", error));
+    function addToCart(productId, quantity) {
+        fetch("cart?action=add&id=" + productId + "&quantity=" + quantity, {
+            method: "POST",
+            credentials: 'same-origin'
+        })
+        .then(response => {
+            if (response.redirected) {
+                alert("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!");
+                window.location.href = 'Login.jsp';
+                return;
             }
-        </script>
+            alert("Đã thêm sản phẩm vào giỏ hàng!");
+        })
+        .catch(error => {
+            console.error("Lỗi:", error);
+        });
+    }
+</script>
     </head>
     <body class="biolife-body">
 
@@ -252,7 +261,7 @@
                                                                 <ins><span class="price-amount"><span class="currencySymbol"></span><fmt:formatNumber value="${p.price}" type="currency"/></span></ins>
                                                             </div>
                                                             <div class="buttons">
-                                                                <a onclick="addToCart(${p.id})" class="btn add-to-cart-btn">add to cart</a>
+                                                                <a onclick="addToCart(${p.id},1)" class="btn add-to-cart-btn">add to cart</a>
 
                                                             </div>
                                                         </div>

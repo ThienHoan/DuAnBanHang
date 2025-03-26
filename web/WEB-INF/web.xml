@@ -7,10 +7,8 @@
     </filter>
     <filter-mapping>
         <filter-name>LoggingFilter</filter-name>
-        <url-pattern>/servlet/*</url-pattern>
-        <url-pattern>/Category.jsp</url-pattern>
-        <url-pattern>/ManagerProduct.jsp</url-pattern>
-        <url-pattern>/ManagerAccount.jsp</url-pattern>
+        <url-pattern>/manager</url-pattern>
+        <url-pattern>/managerAccount</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -78,14 +76,7 @@
         <url-pattern>/confirm-order</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>UpdateOrderStatusControl</servlet-name>
-        <servlet-class>control.UpdateOrderStatusControl</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UpdateOrderStatusControl</servlet-name>
-        <url-pattern>/update-order-status</url-pattern>
-    </servlet-mapping>
+    
     <listener>
     <listener-class>listener.SessionListener</listener-class>
 </listener>
