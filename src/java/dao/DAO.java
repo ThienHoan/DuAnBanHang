@@ -48,6 +48,62 @@ public class DAO {
         }
     }
     
+    public int findUserIdByUsernameOrEmail(String input) {
+    String query = "SELECT userID FROM Account WHERE userName = ? OR email = ?";
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+            
+        ps.setString(1, input);
+        ps.setString(2, input);
+        
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("userID");
+        }
+            
+    } catch (Exception e) {
+        return -1; // Return -1 if error occurs
+    }
+    return 0; // Return 0 if not found
+}
+    
+    
+    public String getEmailByUserId(int userId) {
+    String query = "SELECT email FROM Account WHERE userID = ?";
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+            
+        ps.setInt(1, userId);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            return rs.getString("email");
+        }
+            
+    } catch (Exception e) {
+        LOGGER.log(Level.SEVERE, "Error getting email for user ID: " + userId, e);
+    }
+    return null; // Return null if not found or error occurs
+}
+    
+public boolean changePasswordByUserId(int userId, String newPassword) {
+    String query = "{CALL ChangePasswordByUserId(?, ?)}";
+    
+    try (Connection conn = new DBContext().getConnection();
+         CallableStatement cs = conn.prepareCall(query)) {
+            
+        cs.setInt(1, userId);
+        cs.setString(2, newPassword);  // Mật khẩu gốc, sẽ được mã hóa trong stored procedure
+        
+        return cs.executeUpdate() > 0;
+            
+    } catch (Exception e) {
+        LOGGER.log(Level.SEVERE, "Error changing password for userID: " + userId, e);
+        return false;
+    }
+}
+    
+    
     public Account loginByEmail(String email) {
         // Thay đổi câu truy vấn để thay thế mật khẩu bằng placeholder
         String query = "SELECT userID, userName, '********' AS password, email, address, phoneNumber, roleID, status " +
