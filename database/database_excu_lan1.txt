@@ -257,36 +257,6 @@ GO
 ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD  CONSTRAINT [CK_Rating_Range] CHECK  (([rating]>=(1) AND [rating]<=(5)))
 GO
 
-
-
-
-lib
-@Đông Vănnnnnnnnnnnnn thieeus nayf
-@Đông Vănnnnnnnnnnnnn
-@Thiện Hoàn thiếu gì
-thiếu cái ảnh
-cái ảnh để bỏ mấy cái nớ vô dự án chơ mô
-@Đông Vănnnnnnnnnnnnn
-@Thiện Hoàn ảnh gì m
-Entity
-Này là dao t thêm 1 hàm nữa vô thôi copy nguyên file :v
-Dao cũ đấy
-m kh hiểu á
-ý t là
-cần ảnh cấu trúc
-để thêm vô trong file
-@Đông Vănnnnnnnnnnnnn m gửi ri thì ai biết file logingmail này kia để ở mô
-@Đông Vănnnnnnnnnnnnn đi chơi ít thôi gần nộp ASM rồi, trả lời lẹ lên t coi
-@Thiện Hoàn controll kìa
-/-strong
-@All nhớ thêm cái bảng này vào database nha
-@All khoan pull code master về nghe
-t fixx đã
-oke rồi nghe
-ae code mới nhất trên master là code gộp của vũ hoàng với giỏ hàng của kha(kha đang update giỏ hàng tiếp)
-tv chạy gmail
-là saod đây
-my bad k sao cả
 USE [wiish]
 GO
 
