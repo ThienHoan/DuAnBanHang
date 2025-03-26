@@ -1,535 +1,788 @@
--- Sử dụng cơ sở dữ liệu vừa tạo
-USE wiish;
-GO
-
--- Tạo bảng Role để lưu thông tin vai trò người dùng
-CREATE TABLE Role (
-    roleID INT PRIMARY KEY IDENTITY(1,1),  -- Mã vai trò tự tăng
-    roleName NVARCHAR(50) NOT NULL         -- Tên của vai trò (vd: seller, user, admin)
-);
-GO
-
--- Tạo bảng Category để lưu danh mục sản phẩm
-CREATE TABLE Category (
-    categoryID INT PRIMARY KEY IDENTITY(1,1),  -- Mã danh mục tự tăng
-    categoryName NVARCHAR(100) NOT NULL        -- Tên danh mục
-);
-GO
-
--- Tạo bảng Account để lưu thông tin người dùng
-CREATE TABLE Account (
-    userID INT PRIMARY KEY IDENTITY(1,1),  -- Mã người dùng tự tăng
-    userName NVARCHAR(100) NOT NULL,       -- Tên người dùng
-    password NVARCHAR(100) NOT NULL,       -- Mật khẩu của người dùng
-    email NVARCHAR(100) NOT NULL,          -- Email của người dùng
-    address NVARCHAR(50),                  -- Địa chỉ của người dùng
-    phoneNumber NVARCHAR(20),              -- Số điện thoại của người dùng
-    roleID INT DEFAULT 1,                  -- Mặc định là 1 (người dùng bình thường)
-    status INT DEFAULT 1,                  -- Trạng thái tài khoản (1: Hoạt động, 0: Bị khóa)
-    FOREIGN KEY (roleID) REFERENCES Role(roleID)
-);
-GO
-
-
--- Tạo bảng Product để lưu thông tin sản phẩm
-CREATE TABLE Product (
-    pid INT PRIMARY KEY IDENTITY(1,1),      -- Mã sản phẩm tự tăng
-    name NVARCHAR(100) NOT NULL,           -- Tên sản phẩm
-    price DECIMAL(10, 2) NOT NULL,         -- Giá sản phẩm
-    description NVARCHAR(MAX),             -- Mô tả sản phẩm
-    stock INT NOT NULL,                    -- Số lượng sản phẩm trong kho
-    import_date DATE DEFAULT GETDATE(),    -- Ngày nhập hàng mặc định là ngày hiện tại
-    status INT DEFAULT 1,                  -- Trạng thái sản phẩm (1: Còn hàng, 0: Hết hàng)
-    sell_id INT,                           -- ID của người bán
-    cateID INT,                            -- ID danh mục sản phẩm
-    img VARCHAR(MAX),                      -- Đường dẫn ảnh sản phẩm
-    FOREIGN KEY (cateID) REFERENCES Category(categoryID)  -- Khóa ngoại đến bảng Category
-);
-GO
-
-
--- Tạo bảng Orders để lưu thông tin đơn hàng
-CREATE TABLE Orders (
-    id INT PRIMARY KEY IDENTITY(1,1),      -- Mã đơn hàng tự tăng
-    userID INT,                            -- Mã người dùng đặt hàng (liên kết với bảng Account)
-    orderDate DATE DEFAULT GETDATE(),               -- Ngày đặt hàng
-    total_price DECIMAL(10, 2) NOT NULL,   -- Tổng giá trị đơn hàng
-    status NVARCHAR(50),                   -- Trạng thái đơn hàng (vd: pending, shipped)
-    FOREIGN KEY (userID) REFERENCES Account(userID)
-);
-GO
-
--- Tạo bảng OrderDetail để lưu chi tiết đơn hàng
-CREATE TABLE OrderDetail (
-    id INT PRIMARY KEY IDENTITY(1,1),      -- Mã chi tiết đơn hàng tự tăng
-    order_id INT,                          -- Mã đơn hàng (liên kết với bảng Orders)
-    product_id INT,                        -- Mã sản phẩm (liên kết với bảng Product)
-    quantity INT NOT NULL,                 -- Số lượng sản phẩm trong đơn hàng
-    price DECIMAL(10, 2) NOT NULL,         -- Giá của sản phẩm tại thời điểm đặt hàng
-    subtotall DECIMAL(10, 2) NOT NULL,     -- Sửa lỗi chính tả thành subtotal
-    FOREIGN KEY (order_id) REFERENCES Orders(id),
-    FOREIGN KEY (product_id) REFERENCES Product(pid) -- Sửa lỗi tên cột (pid thay vì id)
-);
-GO
-
--- Tạo bảng ProductClick để lưu số lượt click vào sản phẩm
-CREATE TABLE ProductClick (
-    pid INT NOT NULL PRIMARY KEY, -- ID sản phẩm, liên kết với bảng Product
-    clickCount INT DEFAULT 0, -- Số lượt click vào sản phẩm, mặc định là 0
-    FOREIGN KEY (pid) REFERENCES Product(pid) -- Khóa ngoại liên kết với bảng Product
-);
-GO
-
-UPDATE Product SET status = 1 WHERE pid IN (SELECT pid FROM ProductClick)
-GO
-
-SELECT COUNT(*) FROM Product WHERE status = 1
-
-  UPDATE Product SET status = 1 WHERE pid IN (SELECT pid FROM ProductClick)
-
-GO
-
-
--- Thêm dữ liệu vào bảng Role với 3 vai trò là seller, user và admin
-INSERT INTO Role (roleName)
-VALUES
-('User'),
-('Seller'),
-('Admin');
-GO
-
-INSERT INTO Category (categoryName)
-VALUES
-(N'Tinh dầu xông phòng'),
-(N'Tinh dầu xe hơi'),
-(N'Tinh dầu massage'),
-(N'Tinh dầu dạng xịt');
-GO
-INSERT INTO Account (userName, password, email, address, phoneNumber, roleID, status) VALUES
-(N'User1', N'password1', N'user1@email.com', N'123 Đường Lê Lợi, Quận 1, TP.HCM', N'0123456789', 1, 1),
-(N'User2', N'password2', N'user2@email.com', N'456 Đường Nguyễn Trãi, Quận 5, TP.HCM', N'0123456788', 1, 1),
-(N'User3', N'password3', N'user3@email.com', N'789 Đường Hai Bà Trưng, Quận 3, TP.HCM', N'0123456787', 1, 1),
-(N'User4', N'password4', N'user4@email.com', N'159 Đường Cách Mạng Tháng 8, Quận 10, TP.HCM', N'0123456786', 1, 1),
-(N'User5', N'password5', N'user5@email.com', N'753 Đường Phan Xích Long, Quận Phú Nhuận, TP.HCM', N'0123456785', 1, 1),
-
-(N'Seller1', N'password6', N'seller1@email.com', N'100 Đường Võ Văn Kiệt, Quận 1, TP.HCM', N'0123456784', 2, 1),
-(N'Seller2', N'password7', N'seller2@email.com', N'250 Đường Điện Biên Phủ, Quận Bình Thạnh, TP.HCM', N'0123456783', 2, 1),
-(N'Seller3', N'password8', N'seller3@email.com', N'360 Đường Nguyễn Văn Cừ, Quận 5, TP.HCM', N'0123456782', 2, 1),
-(N'Seller4', N'password9', N'seller4@email.com', N'420 Đường Hoàng Văn Thụ, Quận Tân Bình, TP.HCM', N'0123456781', 2, 1),
-(N'Seller5', N'password10', N'seller5@email.com', N'555 Đường Trường Chinh, Quận 12, TP.HCM', N'0123456780', 2, 1),
-
-(N'Admin1', N'password11', N'admin1@email.com', N'01 Đường Nguyễn Huệ, Quận 1, TP.HCM', N'0123456779', 3, 1),
-(N'Admin2', N'password12', N'admin2@email.com', N'150 Đường Lý Thường Kiệt, Quận 10, TP.HCM', N'0123456778', 3, 1),
-(N'Admin3', N'password13', N'admin3@email.com', N'200 Đường Nguyễn Thị Minh Khai, Quận 3, TP.HCM', N'0123456777', 3, 1);
-
-
-INSERT INTO Product (name, price, description, stock, import_date, status, sell_id, cateID, img)
-VALUES
--- Seller 1
-(N'Tinh dầu bạc hà', 150000, N'Tinh dầu tạo cảm giác mát lạnh', 10, '2024-03-10', 1, 6, 1, 'hinh anh/SanPham/Cac_Loai_TinhDau/BacHa_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-bac-ha-nguyen-chat-tinhdau-gia-truyen-hong-duc-4.jpg'),
-(N'Tinh dầu bưởi', 120000, N'Tinh dầu giúp thư giãn', 15, '2024-03-10', 1, 6, 2, 'hinh anh/SanPham/Cac_Loai_TinhDau/Buoi_15ml/Tinh-dau-buoi-10ml-4.jpg'),
-(N'Tinh dầu Cafe', 100000, N'Tinh dầu có cafe dễ chịu', 20, '2024-03-10', 1,6, 3, 'hinh anh/SanPham/Cac_Loai_TinhDau/Cafe_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-cafe-nguyen-chat-tinh-dau-cfe-hong-duc-4.jpg'),
-(N'Tinh dầu cam', 90000, N'Tinh dầu cam thư giãn', 25, '2024-03-10', 1, 6, 2, 'hinh anh/SanPham/Cac_Loai_TinhDau/Cam_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-cam-nguyen-chat-tinh-dau-cam-hong-duc-3.jpg'),
-(N'Tinh dầu dừa', 130000, N'Tinh dầu giúp tỉnh táo', 12, '2024-03-10', 1, 6, 1, 'hinh anh/SanPham/Cac_Loai_TinhDau/Dua_25ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-dua-nguyen-chat-tinh-dau-dua-hong-duc-3.jpg'),
-
--- Seller 2
-(N'Tinh dầu gấc', 140000, N'Hỗ trợ tuần hoàn máu', 10, '2024-03-10', 1,7, 2, 'hinh anh/SanPham/Cac_Loai_TinhDau/Gac_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-gac-nguyen-chat-tinh-dau-gac-hong-duc-3.jpg'),
-(N'Tinh hoa hồng', 110000, N'Giữ ấm cơ thể', 15, '2024-03-10', 1, 7, 3, 'hinh anh/SanPham/Cac_Loai_TinhDau/HoaHong_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-hoa-hong-nguyen-chat-tinh-dau-hoa-hong-hong-duc-5.jpg'),
-(N'Tinh dầu hoa lài', 95000, N'Làm ấm không khí', 20, '2024-03-10', 1, 7, 1, 'hinh anh/SanPham/Cac_Loai_TinhDau/HoaLai_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-hoa-lai-nguyen-chat-tinh-dau-hoa-lai-hong-duc-4.jpg'),
-(N'Tinh dầu hoa su', 160000, N'Tinh dầu có hương hoa su dịu nhẹ', 18, '2024-03-10', 1, 7, 1, 'hinh anh/SanPham/Cac_Loai_TinhDau/HoaSu_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-hong-lai-nguyen-chat-tinh-dau-hoa-lai-hong-duc-4.jpg'),
-(N'Tinh dầu ngoc lan tay', 170000, N'Giúp thư giãn và tạo mùi hương dễ chịu', 14, '2024-03-10', 1, 7, 2, 'hinh anh/SanPham/Cac_Loai_TinhDau/NgocLanTay_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-ngoc-lan-tay-nguyen-chat-tinh-dau-ngoc-lan-tay-hong-duc-6.jpg'),
-
--- Seller 3
-(N'Tinh dầu oải hương pháp', 125000, N'Tinh dầu chống côn trùng', 10, '2024-03-10', 1, 8, 3, 'hinh anh/SanPham/Cac_Loai_TinhDau/OaiHuongPhap_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-oai-huong-nguyen-chat-tinh-dau-oai-huong-phap-tinh-dau-hong-duc-3.jpg'),
-(N'Tinh dầu oải hương', 135000, N'Giúp tăng cường trí nhớ', 15, '2024-03-10', 1, 8, 2, 'hinh anh/SanPham/Cac_Loai_TinhDau/OaiHuong_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-oai-huong-nguyen-chat-tinh-dau-oai-huong-hong-duc-5.jpg'),
-(N'Tinh dầu quế', 145000, N'Giúp giảm nghẹt mũi', 20, '2024-03-10', 1, 8, 1, 'hinh anh/SanPham/Cac_Loai_TinhDau/Que_HongDuc_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-que-nguyen-chat-tinh-dau-que-hong-duc-tinh-dau-que-thien-nhien-6.jpg'),
-(N'Tinh dầu sả chanh', 155000, N'Tinh dầu giúp thanh lọc không khí', 12, '2024-03-10', 1, 8, 2, 'hinh anh/SanPham/Cac_Loai_TinhDau/SaChanh_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-sa-chanh-nguyen-chat-tinh-dau-san-chanh-hong-duc-3.jpg'),
-(N'Tinh dầu trầm', 165000, N'Tinh dầu giúp cân bằng tâm trạng', 14, '2024-03-10', 1, 8, 3, 'hinh anh/SanPham/Cac_Loai_TinhDau/Tram_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-tram-nguyen-chat-tinh-dau-tram-hong-duc-4.jpg'),
-
--- Seller 4
-(N'Tinh dầu tràm huế', 130000, N'Tinh dầu giúp thư giãn', 10, '2024-03-10', 1, 9, 1, 'hinh anh/SanPham/Cac_Loai_TinhDauTram/Hue_Loai1/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-tram-dau-tram-hong-duc-dau-tram-hue-tinh-dau-tram-hue-loai-1-5.jpg'),
-(N'Tinh dầu bưởi', 120000, N'Giúp mọc tóc', 15, '2024-03-10', 1, 9, 4, 'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/Buoi_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-buoi-tinh-dau-xit-buoi-hong-duc-nguyen-chat-5.jpg'),
-(N'Tinh dầu cafe', 100000, N'Tinh dầu thiên nhiên', 20, '2024-03-10', 1, 9, 4, 'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/Cafe_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-tinh-dau-cafe-xit-hong-duc-nguyen-chat-3.jpg'),
-(N'Tinh dầu hoa hồng', 110000, N'Tinh dầu giúp thư giãn', 18, '2024-03-10', 1, 9, 4, 'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/HoaHong_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-hoa-hong-hong-duc-tinh-dau-hoa-hong-dang-xit-6.jpg'),
-(N'Tinh dầu hoa lài', 95000, N'Tinh dầu giúp tỉnh táo', 14, '2024-03-10', 1, 9, 4, 'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/HoaLai_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-hoa-lai-hong-duc-tinh-dau-xit-hoa-lai-4.jpg'),
-
--- Seller 5
-(N'Tinh dầu quế', 145000, N'Tinh dầu giúp giảm stress', 10, '2024-03-10', 1, 10, 4, 'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/Que_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-phong-huong-que-tinh-dau-xit-phong-hong-duc-tinh-dau-que-3.jpg'),
-(N'Tinh dầu sả chanh', 155000, N'Tinh dầu giúp giữ ấm', 15, '2024-03-10', 1, 10, 4, 'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/SaChanh_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-phong-sa-chanh-tinh-dau-xit-phong-hong-duc-sa-chanh-3.jpg');
-
---INSERT INTO Product (name, price, description, stock, import_date, status, sell_id, cateID)
---VALUES
--- Seller 1
---(N'Tinh dầu oải hương', 150000, N'Tinh dầu giúp thư giãn', 10, '2024-03-10', 1, 1, 1),
---(N'Tinh dầu bạc hà', 120000, N'Tinh dầu tạo cảm giác mát lạnh', 15, '2024-03-10', 1, 1, 2),
---(N'Tinh dầu cam ngọt', 100000, N'Tinh dầu có hương cam dễ chịu', 20, '2024-03-10', 1, 1, 3),
---(N'Tinh dầu sả chanh', 90000, N'Tinh dầu đuổi muỗi tự nhiên', 25, '2024-03-10', 1, 1, 4),
---(N'Tinh dầu tràm', 130000, N'Tinh dầu giúp kháng khuẩn', 12, '2024-03-10', 1, 1, 1),
-
--- Seller 2
---(N'Tinh dầu hương nhu', 140000, N'Hỗ trợ tuần hoàn máu', 10, '2024-03-10', 1, 2, 2),
---(N'Tinh dầu gừng', 110000, N'Giữ ấm cơ thể', 15, '2024-03-10', 1, 2, 3),
---(N'Tinh dầu quế', 95000, N'Làm ấm không khí', 20, '2024-03-10', 1, 2, 4),
---(N'Tinh dầu hoa nhài', 160000, N'Tinh dầu có hương hoa nhài dịu nhẹ', 18, '2024-03-10', 1, 2, 1),
---(N'Tinh dầu hoa hồng', 170000, N'Giúp thư giãn và tạo mùi hương dễ chịu', 14, '2024-03-10', 1, 2, 2),
-
--- Seller 3
---(N'Tinh dầu sả', 125000, N'Tinh dầu chống côn trùng', 10, '2024-03-10', 1, 3, 3),
---(N'Tinh dầu hương thảo', 135000, N'Giúp tăng cường trí nhớ', 15, '2024-03-10', 1, 3, 4),
---(N'Tinh dầu khuynh diệp', 145000, N'Giúp giảm nghẹt mũi', 20, '2024-03-10', 1, 3, 1),
---(N'Tinh dầu trà xanh', 155000, N'Tinh dầu giúp thanh lọc không khí', 12, '2024-03-10', 1, 3, 2),
---(N'Tinh dầu phong lữ', 165000, N'Tinh dầu giúp cân bằng tâm trạng', 14, '2024-03-10', 1, 3, 3),
-
--- Seller 4
---(N'Tinh dầu bưởi', 130000, N'Tinh dầu giúp mọc tóc', 10, '2024-03-10', 1, 4, 4),
---(N'Tinh dầu chanh', 110000, N'Giúp sát khuẩn và làm sạch không khí', 15, '2024-03-10', 1, 4, 1),
---(N'Tinh dầu sả chanh', 95000, N'Tinh dầu thiên nhiên', 20, '2024-03-10', 1, 4, 2),
---(N'Tinh dầu gỗ đàn hương', 170000, N'Tinh dầu giúp thư giãn', 18, '2024-03-10', 1, 4, 3),
---(N'Tinh dầu bạc hà', 120000, N'Tinh dầu giúp tỉnh táo', 14, '2024-03-10', 1, 4, 4),
-
--- Seller 5
---(N'Tinh dầu hoa cam', 140000, N'Tinh dầu giúp giảm stress', 10, '2024-03-10', 1, 5, 1),
---(N'Tinh dầu vỏ quế', 110000, N'Tinh dầu giúp giữ ấm', 15, '2024-03-10', 1, 5, 2),
---(N'Tinh dầu bạch đàn', 95000, N'Tinh dầu giúp thanh lọc không khí', 20, '2024-03-10', 1, 5, 3),
---(N'Tinh dầu cam bergamot', 160000, N'Tinh dầu có hương thơm cam chanh', 18, '2024-03-10', 1, 5, 4),
---(N'Tinh dầu tuyết tùng', 170000, N'Tinh dầu giúp giảm căng thẳng', 14, '2024-03-10', 1, 5, 1);
---GO
-
-
-INSERT INTO Orders (userID, orderDate, total_price, status)
-VALUES
-(1, '2024-03-05', 420000, N'pending'),    -- 300,000 (Product 1) + 120,000 (Product 2)
-(2, '2024-03-06', 480000, N'shipped'),    -- 300,000 (Product 3) + 180,000 (Product 4)
-(3, '2024-03-07', 130000, N'pending'),    -- 130,000 (Product 5)
-(4, '2024-03-08', 560000, N'pending'),    -- 560,000 (Product 6)
-(5, '2024-03-09', 330000, N'shipped');    -- 330,000 (Product 7)
-GO
-
-INSERT INTO OrderDetail (order_id, product_id, quantity, price, subtotall)
-VALUES
--- Đơn hàng 1 (total_price: 420,000)
-(1, 1, 2, 150000, 300000),  -- 2 * 150,000 = 300,000
-(1, 2, 1, 120000, 120000),  -- 1 * 120,000 = 120,000 (sửa từ 50,000)
-
--- Đơn hàng 2 (total_price: 480,000)
-(2, 3, 3, 100000, 300000),  -- 3 * 100,000 = 300,000
-(2, 4, 2, 90000, 180000),   -- 2 * 90,000 = 180,000 (sửa từ 100,000)
-
--- Đơn hàng 3 (total_price: 130,000)
-(3, 5, 1, 130000, 130000),  -- 1 * 130,000 = 130,000 (sửa từ 250,000)
-
--- Đơn hàng 4 (total_price: 560,000)
-(4, 6, 4, 140000, 560000),  -- 4 * 140,000 = 560,000 (sửa từ 150,000)
-
--- Đơn hàng 5 (total_price: 330,000)
-(5, 7, 3, 110000, 330000);  -- 3 * 110,000 = 330,000 (sửa từ 150,000)
-GO
-
-
-/****** Object:  Table [dbo].[ProductReview]    Script Date: 3/17/2025 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ProductReview](
-    [reviewID] [int] IDENTITY(1,1) NOT NULL,
-    [productID] [int] NOT NULL,
-    [userID] [int] NOT NULL,
-    [rating] [int] NOT NULL,
-    [reviewText] [nvarchar](max) NULL,
-    [reviewDate] [datetime] NOT NULL DEFAULT GETDATE(),
-PRIMARY KEY CLUSTERED 
-(
-    [reviewID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-
-ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD FOREIGN KEY([productID])
-REFERENCES [dbo].[Product] ([pid])
-GO
-
-ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD FOREIGN KEY([userID])
-REFERENCES [dbo].[Account] ([userID])
-GO
-
--- Add constraint to ensure rating is between 1 and 5
-ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD  CONSTRAINT [CK_Rating_Range] CHECK  (([rating]>=(1) AND [rating]<=(5)))
-GO
-
-
-
-
-lib
-@Đông Vănnnnnnnnnnnnn thieeus nayf
-@Đông Vănnnnnnnnnnnnn
-@Thiện Hoàn thiếu gì
-thiếu cái ảnh
-cái ảnh để bỏ mấy cái nớ vô dự án chơ mô
-@Đông Vănnnnnnnnnnnnn
-@Thiện Hoàn ảnh gì m
-Entity
-Này là dao t thêm 1 hàm nữa vô thôi copy nguyên file :v
-Dao cũ đấy
-m kh hiểu á
-ý t là
-cần ảnh cấu trúc
-để thêm vô trong file
-@Đông Vănnnnnnnnnnnnn m gửi ri thì ai biết file logingmail này kia để ở mô
-@Đông Vănnnnnnnnnnnnn đi chơi ít thôi gần nộp ASM rồi, trả lời lẹ lên t coi
-@Thiện Hoàn controll kìa
-/-strong
-@All nhớ thêm cái bảng này vào database nha
-@All khoan pull code master về nghe
-t fixx đã
-oke rồi nghe
-ae code mới nhất trên master là code gộp của vũ hoàng với giỏ hàng của kha(kha đang update giỏ hàng tiếp)
-tv chạy gmail
-là saod đây
-my bad k sao cả
 USE [wiish]
 GO
+/****** Object:  UserDefinedFunction [dbo].[HashPassword]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 
-/****** Object:  Table [dbo].[ProductReview]    Script Date: 3/17/2025 ******/
+-- Tạo hàm mã hóa mật khẩu
+CREATE FUNCTION [dbo].[HashPassword](@password NVARCHAR(100))
+RETURNS VARBINARY(64)
+AS
+BEGIN
+    RETURN HASHBYTES('SHA2_512', @password);
+END
+
+GO
+/****** Object:  Table [dbo].[Account]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Account](
+	[userID] [int] IDENTITY(1,1) NOT NULL,
+	[userName] [nvarchar](100) NOT NULL,
+	[password] [varbinary](64) NOT NULL,
+	[email] [nvarchar](100) NOT NULL,
+	[address] [nvarchar](50) NULL,
+	[phoneNumber] [nvarchar](20) NULL,
+	[roleID] [int] NULL,
+	[status] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[userID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Category]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Category](
+	[categoryID] [int] IDENTITY(1,1) NOT NULL,
+	[categoryName] [nvarchar](100) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[categoryID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[OrderDetail]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[OrderDetail](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[order_id] [int] NULL,
+	[product_id] [int] NULL,
+	[quantity] [int] NOT NULL,
+	[price] [decimal](10, 2) NOT NULL,
+	[subtotall] [decimal](10, 2) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Orders]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Orders](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[userID] [int] NULL,
+	[orderDate] [date] NULL,
+	[total_price] [decimal](10, 2) NOT NULL,
+	[status] [nvarchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Product]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Product](
+	[pid] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](100) NOT NULL,
+	[price] [decimal](10, 2) NOT NULL,
+	[description] [nvarchar](max) NULL,
+	[stock] [int] NOT NULL,
+	[import_date] [date] NULL,
+	[status] [int] NULL,
+	[sell_id] [int] NULL,
+	[cateID] [int] NULL,
+	[img] [varchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[pid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ProductClick]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProductClick](
+	[pid] [int] NOT NULL,
+	[clickCount] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[pid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ProductReview]    Script Date: 3/26/2025 6:28:55 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ProductReview](
-    [reviewID] [int] IDENTITY(1,1) NOT NULL,
-    [productID] [int] NOT NULL,
-    [userID] [int] NOT NULL,
-    [rating] [int] NOT NULL,
-    [reviewText] [nvarchar](max) NULL,
-    [reviewDate] [datetime] NOT NULL DEFAULT GETDATE(),
+	[reviewID] [int] IDENTITY(1,1) NOT NULL,
+	[productID] [int] NOT NULL,
+	[userID] [int] NOT NULL,
+	[rating] [int] NOT NULL,
+	[reviewText] [nvarchar](max) NULL,
+	[reviewDate] [datetime] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
-    [reviewID] ASC
+	[reviewID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
+/****** Object:  Table [dbo].[Role]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Role](
+	[roleID] [int] IDENTITY(1,1) NOT NULL,
+	[roleName] [nvarchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[roleID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Wishlist]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Wishlist](
+	[wishlistID] [int] IDENTITY(1,1) NOT NULL,
+	[userID] [int] NOT NULL,
+	[productID] [int] NOT NULL,
+	[addedDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[wishlistID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Account] ON 
 
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (1, N'User1', 0x48425EF9A2A534CD2103C4C9A6E45E97D24D2414BCF9615FA9DAEE58DFF7E132ACFB66D1C8AF7338B4D5886746BE3F0F53C031BBB57CFC7835379623EF6A5472, N'user1@email.com', N'123 Đường Lê Lợi, Quận 1, TP.HCM', N'0123456789', 1, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (2, N'User2', 0x39DC68D03CE60ED0BA8AB272C30CFBF51A2F2C3C58367304754B58323AA0FC0E125B1872B60448D1E50C0D2E96A256A6F489EE70A1E7695903C3FB6E4FC8E691, N'user2@email.com', N'456 Đường Nguyễn Trãi, Quận 5, TP.HCM', N'0123456788', 1, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (3, N'User3', 0xEBAFCCDA35E4742DFAA41FFD21BF78DB61D8DBFD47302BE2D2A1A8C27593A7F4EACC4ACDDB5D64AA6F66DDECEF996D43CC4E05C0A86DCE30AB3A9EE8EF71543A, N'user3@email.com', N'789 Đường Hai Bà Trưng, Quận 3, TP.HCM', N'0123456787', 1, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (4, N'User4', 0x2FB682C18B996E37D2696777C9C97CF552C48EA250F73A2BFDFE0097AA3D1DA9AF0A69EE2889239529E8562E26D164AC99BBD5E396A5322077E871A36EBE6A75, N'user4@email.com', N'159 Đường Cách Mạng Tháng 8, Quận 10, TP.HCM', N'0123456786', 1, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (5, N'User5', 0x17C6537CB365277F23DDBD96DDD74E7CD0EA43893829A8E1059EA25E5FCEE9C2CEA4A2FC07F12E920278D73D3C1EB89176BAA4CD443C4A068B0C504ADAAC713F, N'user5@email.com', N'753 Đường Phan Xích Long, Quận Phú Nhuận, TP.HCM', N'0123456785', 1, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (6, N'Seller1', 0x0C4DA3A09E7BD144302166169E72CFD19D3C3FCE9E16298B6DA69E31869B0350E00B91F121917EB5B91E283082DE6DD30120572F3061179D21BF0010FB5FB8D0, N'seller1@email.com', N'100 Đường Võ Văn Kiệt, Quận 1, TP.HCM', N'0123456784', 2, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (7, N'Seller2', 0xEE1A2C48BF3D0C9BBEF167CF2D248A5218F014F7322DBDC440AFFB862C96DD5155FB4C699E5A8AA84D708507B536C4ED0BE359F62BD8FBD84EB5A9995AF61450, N'seller2@email.com', N'250 Đường Điện Biên Phủ, Quận Bình Thạnh, TP.HCM', N'0123456783', 2, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (8, N'Seller3', 0xD0D602A498439F4E37653C06283D480E5FDAE48F61E45BEF9889669331E76E4DE57827F52C6FC9EE1095E01F28A02CA9863FA1AB65FFEFE226D3B06E07CFA431, N'seller3@email.com', N'360 Đường Nguyễn Văn Cừ, Quận 5, TP.HCM', N'0123456782', 2, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (9, N'Seller4', 0xFCE61CC1DE49ADF19B49098404CB54AA400B934095414450843FA3D82F29A59F2EBB4C9E143B6150001EE95C03CD9A4C34795D1A8A068AF009082BDABC1B1D14, N'seller4@email.com', N'420 Đường Hoàng Văn Thụ, Quận Tân Bình, TP.HCM', N'0123456781', 2, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (10, N'Seller5', 0x608ED973E8607566BFC8E1EE2B5C1BC17995AEBDFFC4A3E9AFEFD94F401013A33AA87ACE53488F5AB9D280811C24B174295C951320C2BB25C468454D2C0D98D9, N'seller5@email.com', N'555 Đường Trường Chinh, Quận 12, TP.HCM', N'0123456780', 2, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (11, N'Admin1', 0x2440E30EB0231F70F7EB83A9D0E93560E41709DF2B6116BD18072CFA1F209AAFC2F07A1E4112DF2A6AC1006F1AC91255CC67AFB9A6B0647A3308DBA0B763C768, N'admin1@email.com', N'01 Đường Nguyễn Huệ, Quận 1, TP.HCM', N'0123456779', 3, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (12, N'Admin2', 0x4610AD01A106F54684B38F7768050FEB04DB894516F00454E41FDD5C19AD5DE66E0AB246C4863762DE530477D1A640FC9C4BB291E0EF18BEEAE038B28CF1359B, N'admin2@email.com', N'150 Đường Lý Thường Kiệt, Quận 10, TP.HCM', N'0123456778', 3, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (13, N'Admin3', 0x77464E3001D8A1711F4DB06EC1DCA42736C01FFD11A2AB743B36A60F0ECE68CD58C003F1302DAFD3C5C33526B83DE3BE91E6387EC0CAC60597FFEC94C70D5CEA, N'admin3@email.com', N'200 Đường Nguyễn Thị Minh Khai, Quận 3, TP.HCM', N'0123456777', 3, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (14, N'thien1', 0x16B6CAE9CDEAA7B2221DCC552CA5C302936449D11312AB27252AF63ABDF50728DDD46ECDD80E7DE044FD6C6C8740D94D3984904E59EE6C7816EF7505DD904692, N'Hoan64735@gmail.com', N'điện ngọc - điện bàn - quảng namm', N'08527264886345543', 3, 1)
+INSERT [dbo].[Account] ([userID], [userName], [password], [email], [address], [phoneNumber], [roleID], [status]) VALUES (15, N'thien14', 0x66DFA7CCB055BCCB1C4367A2CAFB60373A200B530E12539C185AF9F2F5228D0EEDB4E64C951C279EAFE35D2E81AEFB9A0AB5309298D1B6B794C7C9C69DCF56C5, N'congtyhongduc788@gmail.com', N'điện ngọc - điện bàn - quảng nam', N'085272648863455434', 1, 1)
+SET IDENTITY_INSERT [dbo].[Account] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Category] ON 
+
+INSERT [dbo].[Category] ([categoryID], [categoryName]) VALUES (1, N'Tinh dầu xông phòng')
+INSERT [dbo].[Category] ([categoryID], [categoryName]) VALUES (2, N'Tinh dầu xe hơi')
+INSERT [dbo].[Category] ([categoryID], [categoryName]) VALUES (3, N'Tinh dầu massage')
+INSERT [dbo].[Category] ([categoryID], [categoryName]) VALUES (4, N'Tinh dầu dạng xịt')
+SET IDENTITY_INSERT [dbo].[Category] OFF
+GO
+SET IDENTITY_INSERT [dbo].[OrderDetail] ON 
+
+INSERT [dbo].[OrderDetail] ([id], [order_id], [product_id], [quantity], [price], [subtotall]) VALUES (1, 1, 1, 2, CAST(150000.00 AS Decimal(10, 2)), CAST(300000.00 AS Decimal(10, 2)))
+INSERT [dbo].[OrderDetail] ([id], [order_id], [product_id], [quantity], [price], [subtotall]) VALUES (2, 1, 2, 1, CAST(120000.00 AS Decimal(10, 2)), CAST(120000.00 AS Decimal(10, 2)))
+INSERT [dbo].[OrderDetail] ([id], [order_id], [product_id], [quantity], [price], [subtotall]) VALUES (3, 2, 3, 3, CAST(100000.00 AS Decimal(10, 2)), CAST(300000.00 AS Decimal(10, 2)))
+INSERT [dbo].[OrderDetail] ([id], [order_id], [product_id], [quantity], [price], [subtotall]) VALUES (4, 2, 4, 2, CAST(90000.00 AS Decimal(10, 2)), CAST(180000.00 AS Decimal(10, 2)))
+INSERT [dbo].[OrderDetail] ([id], [order_id], [product_id], [quantity], [price], [subtotall]) VALUES (5, 3, 5, 1, CAST(130000.00 AS Decimal(10, 2)), CAST(130000.00 AS Decimal(10, 2)))
+INSERT [dbo].[OrderDetail] ([id], [order_id], [product_id], [quantity], [price], [subtotall]) VALUES (6, 4, 6, 4, CAST(140000.00 AS Decimal(10, 2)), CAST(560000.00 AS Decimal(10, 2)))
+INSERT [dbo].[OrderDetail] ([id], [order_id], [product_id], [quantity], [price], [subtotall]) VALUES (7, 5, 7, 3, CAST(110000.00 AS Decimal(10, 2)), CAST(330000.00 AS Decimal(10, 2)))
+INSERT [dbo].[OrderDetail] ([id], [order_id], [product_id], [quantity], [price], [subtotall]) VALUES (8, 6, 3, 1, CAST(100000.00 AS Decimal(10, 2)), CAST(100000.00 AS Decimal(10, 2)))
+INSERT [dbo].[OrderDetail] ([id], [order_id], [product_id], [quantity], [price], [subtotall]) VALUES (9, 7, 1, 1, CAST(150000.00 AS Decimal(10, 2)), CAST(150000.00 AS Decimal(10, 2)))
+INSERT [dbo].[OrderDetail] ([id], [order_id], [product_id], [quantity], [price], [subtotall]) VALUES (10, 8, 22, 2, CAST(155000.00 AS Decimal(10, 2)), CAST(310000.00 AS Decimal(10, 2)))
+INSERT [dbo].[OrderDetail] ([id], [order_id], [product_id], [quantity], [price], [subtotall]) VALUES (11, 8, 3, 3, CAST(100000.00 AS Decimal(10, 2)), CAST(300000.00 AS Decimal(10, 2)))
+SET IDENTITY_INSERT [dbo].[OrderDetail] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Orders] ON 
+
+INSERT [dbo].[Orders] ([id], [userID], [orderDate], [total_price], [status]) VALUES (1, 1, CAST(N'2024-03-05' AS Date), CAST(420000.00 AS Decimal(10, 2)), N'pending')
+INSERT [dbo].[Orders] ([id], [userID], [orderDate], [total_price], [status]) VALUES (2, 2, CAST(N'2024-03-06' AS Date), CAST(480000.00 AS Decimal(10, 2)), N'shipped')
+INSERT [dbo].[Orders] ([id], [userID], [orderDate], [total_price], [status]) VALUES (3, 3, CAST(N'2024-03-07' AS Date), CAST(130000.00 AS Decimal(10, 2)), N'pending')
+INSERT [dbo].[Orders] ([id], [userID], [orderDate], [total_price], [status]) VALUES (4, 4, CAST(N'2024-03-08' AS Date), CAST(560000.00 AS Decimal(10, 2)), N'pending')
+INSERT [dbo].[Orders] ([id], [userID], [orderDate], [total_price], [status]) VALUES (5, 5, CAST(N'2024-03-09' AS Date), CAST(330000.00 AS Decimal(10, 2)), N'shipped')
+INSERT [dbo].[Orders] ([id], [userID], [orderDate], [total_price], [status]) VALUES (6, 14, CAST(N'2025-03-26' AS Date), CAST(100000.00 AS Decimal(10, 2)), N'pending')
+INSERT [dbo].[Orders] ([id], [userID], [orderDate], [total_price], [status]) VALUES (7, 14, CAST(N'2025-03-26' AS Date), CAST(150000.00 AS Decimal(10, 2)), N'pending')
+INSERT [dbo].[Orders] ([id], [userID], [orderDate], [total_price], [status]) VALUES (8, 15, CAST(N'2025-03-26' AS Date), CAST(610000.00 AS Decimal(10, 2)), N'cancelled')
+SET IDENTITY_INSERT [dbo].[Orders] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Product] ON 
+
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (1, N'Tinh dầu bạc hà', CAST(150000.00 AS Decimal(10, 2)), N'Tinh dầu tạo cảm giác mát lạnh', 9, CAST(N'2024-03-10' AS Date), 1, 6, 1, N'hinh anh/SanPham/Cac_Loai_TinhDau/BacHa_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-bac-ha-nguyen-chat-tinhdau-gia-truyen-hong-duc-4.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (2, N'Tinh dầu bưởi', CAST(120000.00 AS Decimal(10, 2)), N'Tinh dầu giúp thư giãn', 15, CAST(N'2024-03-10' AS Date), 1, 6, 2, N'hinh anh/SanPham/Cac_Loai_TinhDau/Buoi_15ml/Tinh-dau-buoi-10ml-4.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (3, N'Tinh dầu Cafe', CAST(100000.00 AS Decimal(10, 2)), N'Tinh dầu có cafe dễ chịu', 16, CAST(N'2024-03-10' AS Date), 1, 6, 3, N'hinh anh/SanPham/Cac_Loai_TinhDau/Cafe_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-cafe-nguyen-chat-tinh-dau-cfe-hong-duc-4.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (4, N'Tinh dầu cam', CAST(90000.00 AS Decimal(10, 2)), N'Tinh dầu cam thư giãn', 25, CAST(N'2024-03-10' AS Date), 1, 6, 2, N'hinh anh/SanPham/Cac_Loai_TinhDau/Cam_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-cam-nguyen-chat-tinh-dau-cam-hong-duc-3.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (5, N'Tinh dầu dừa', CAST(130000.00 AS Decimal(10, 2)), N'Tinh dầu giúp tỉnh táo', 12, CAST(N'2024-03-10' AS Date), 1, 6, 1, N'hinh anh/SanPham/Cac_Loai_TinhDau/Dua_25ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-dua-nguyen-chat-tinh-dau-dua-hong-duc-3.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (6, N'Tinh dầu gấc', CAST(140000.00 AS Decimal(10, 2)), N'Hỗ trợ tuần hoàn máu', 10, CAST(N'2024-03-10' AS Date), 1, 7, 2, N'hinh anh/SanPham/Cac_Loai_TinhDau/Gac_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-gac-nguyen-chat-tinh-dau-gac-hong-duc-3.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (7, N'Tinh hoa hồng', CAST(110000.00 AS Decimal(10, 2)), N'Giữ ấm cơ thể', 15, CAST(N'2024-03-10' AS Date), 1, 7, 3, N'hinh anh/SanPham/Cac_Loai_TinhDau/HoaHong_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-hoa-hong-nguyen-chat-tinh-dau-hoa-hong-hong-duc-5.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (8, N'Tinh dầu hoa lài', CAST(95000.00 AS Decimal(10, 2)), N'Làm ấm không khí', 20, CAST(N'2024-03-10' AS Date), 1, 7, 1, N'hinh anh/SanPham/Cac_Loai_TinhDau/HoaLai_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-hoa-lai-nguyen-chat-tinh-dau-hoa-lai-hong-duc-4.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (9, N'Tinh dầu hoa su', CAST(160000.00 AS Decimal(10, 2)), N'Tinh dầu có hương hoa su dịu nhẹ', 18, CAST(N'2024-03-10' AS Date), 1, 7, 1, N'hinh anh/SanPham/Cac_Loai_TinhDau/HoaSu_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-hong-lai-nguyen-chat-tinh-dau-hoa-lai-hong-duc-4.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (10, N'Tinh dầu ngoc lan tay', CAST(170000.00 AS Decimal(10, 2)), N'Giúp thư giãn và tạo mùi hương dễ chịu', 14, CAST(N'2024-03-10' AS Date), 1, 7, 2, N'hinh anh/SanPham/Cac_Loai_TinhDau/NgocLanTay_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-ngoc-lan-tay-nguyen-chat-tinh-dau-ngoc-lan-tay-hong-duc-6.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (11, N'Tinh dầu oải hương pháp', CAST(125000.00 AS Decimal(10, 2)), N'Tinh dầu chống côn trùng', 10, CAST(N'2024-03-10' AS Date), 1, 8, 3, N'hinh anh/SanPham/Cac_Loai_TinhDau/OaiHuongPhap_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-oai-huong-nguyen-chat-tinh-dau-oai-huong-phap-tinh-dau-hong-duc-3.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (12, N'Tinh dầu oải hương', CAST(135000.00 AS Decimal(10, 2)), N'Giúp tăng cường trí nhớ', 15, CAST(N'2024-03-10' AS Date), 1, 8, 2, N'hinh anh/SanPham/Cac_Loai_TinhDau/OaiHuong_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-oai-huong-nguyen-chat-tinh-dau-oai-huong-hong-duc-5.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (13, N'Tinh dầu quế', CAST(145000.00 AS Decimal(10, 2)), N'Giúp giảm nghẹt mũi', 20, CAST(N'2024-03-10' AS Date), 1, 8, 1, N'hinh anh/SanPham/Cac_Loai_TinhDau/Que_HongDuc_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-que-nguyen-chat-tinh-dau-que-hong-duc-tinh-dau-que-thien-nhien-6.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (14, N'Tinh dầu sả chanh', CAST(155000.00 AS Decimal(10, 2)), N'Tinh dầu giúp thanh lọc không khí', 12, CAST(N'2024-03-10' AS Date), 1, 8, 2, N'hinh anh/SanPham/Cac_Loai_TinhDau/SaChanh_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-sa-chanh-nguyen-chat-tinh-dau-san-chanh-hong-duc-3.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (15, N'Tinh dầu trầm', CAST(165000.00 AS Decimal(10, 2)), N'Tinh dầu giúp cân bằng tâm trạng', 14, CAST(N'2024-03-10' AS Date), 1, 8, 3, N'hinh anh/SanPham/Cac_Loai_TinhDau/Tram_15ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-tram-nguyen-chat-tinh-dau-tram-hong-duc-4.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (16, N'Tinh dầu tràm huế', CAST(130000.00 AS Decimal(10, 2)), N'Tinh dầu giúp thư giãn', 10, CAST(N'2024-03-10' AS Date), 1, 9, 1, N'hinh anh/SanPham/Cac_Loai_TinhDauTram/Hue_Loai1/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-tram-dau-tram-hong-duc-dau-tram-hue-tinh-dau-tram-hue-loai-1-5.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (17, N'Tinh dầu bưởi', CAST(120000.00 AS Decimal(10, 2)), N'Giúp mọc tóc', 15, CAST(N'2024-03-10' AS Date), 1, 9, 4, N'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/Buoi_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-buoi-tinh-dau-xit-buoi-hong-duc-nguyen-chat-5.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (18, N'Tinh dầu cafe', CAST(100000.00 AS Decimal(10, 2)), N'Tinh dầu thiên nhiên', 20, CAST(N'2024-03-10' AS Date), 1, 9, 4, N'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/Cafe_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-tinh-dau-cafe-xit-hong-duc-nguyen-chat-3.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (19, N'Tinh dầu hoa hồng', CAST(110000.00 AS Decimal(10, 2)), N'Tinh dầu giúp thư giãn', 18, CAST(N'2024-03-10' AS Date), 1, 9, 4, N'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/HoaHong_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-hoa-hong-hong-duc-tinh-dau-hoa-hong-dang-xit-6.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (20, N'Tinh dầu hoa lài', CAST(95000.00 AS Decimal(10, 2)), N'Tinh dầu giúp tỉnh táo', 14, CAST(N'2024-03-10' AS Date), 1, 9, 4, N'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/HoaLai_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-hoa-lai-hong-duc-tinh-dau-xit-hoa-lai-4.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (21, N'Tinh dầu quế', CAST(145000.00 AS Decimal(10, 2)), N'Tinh dầu giúp giảm stress', 10, CAST(N'2024-03-10' AS Date), 1, 10, 4, N'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/Que_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-phong-huong-que-tinh-dau-xit-phong-hong-duc-tinh-dau-que-3.jpg')
+INSERT [dbo].[Product] ([pid], [name], [price], [description], [stock], [import_date], [status], [sell_id], [cateID], [img]) VALUES (22, N'Tinh dầu sả chanh', CAST(155000.00 AS Decimal(10, 2)), N'Tinh dầu giúp giữ ấm', 13, CAST(N'2024-03-10' AS Date), 1, 10, 4, N'hinh anh/SanPham/Cac_Loai_TinhDau_DangXit/SaChanh_100ml/san-pham-gia-truyen-hong-duc-tinh-dau-hong-duc-tinh-dau-xit-phong-sa-chanh-tinh-dau-xit-phong-hong-duc-sa-chanh-3.jpg')
+SET IDENTITY_INSERT [dbo].[Product] OFF
+GO
+INSERT [dbo].[ProductClick] ([pid], [clickCount]) VALUES (2, 2)
+INSERT [dbo].[ProductClick] ([pid], [clickCount]) VALUES (3, 3)
+INSERT [dbo].[ProductClick] ([pid], [clickCount]) VALUES (7, 1)
+INSERT [dbo].[ProductClick] ([pid], [clickCount]) VALUES (10, 1)
+INSERT [dbo].[ProductClick] ([pid], [clickCount]) VALUES (11, 1)
+INSERT [dbo].[ProductClick] ([pid], [clickCount]) VALUES (12, 1)
+INSERT [dbo].[ProductClick] ([pid], [clickCount]) VALUES (19, 1)
+INSERT [dbo].[ProductClick] ([pid], [clickCount]) VALUES (20, 1)
+GO
+SET IDENTITY_INSERT [dbo].[ProductReview] ON 
+
+INSERT [dbo].[ProductReview] ([reviewID], [productID], [userID], [rating], [reviewText], [reviewDate]) VALUES (1, 3, 14, 5, N'aczxcxc', CAST(N'2025-03-26T17:17:56.143' AS DateTime))
+INSERT [dbo].[ProductReview] ([reviewID], [productID], [userID], [rating], [reviewText], [reviewDate]) VALUES (2, 19, 15, 3, N'alooo', CAST(N'2025-03-26T18:17:42.367' AS DateTime))
+INSERT [dbo].[ProductReview] ([reviewID], [productID], [userID], [rating], [reviewText], [reviewDate]) VALUES (3, 19, 15, 2, N'ádasda', CAST(N'2025-03-26T18:17:47.770' AS DateTime))
+SET IDENTITY_INSERT [dbo].[ProductReview] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Role] ON 
+
+INSERT [dbo].[Role] ([roleID], [roleName]) VALUES (1, N'User')
+INSERT [dbo].[Role] ([roleID], [roleName]) VALUES (2, N'Seller')
+INSERT [dbo].[Role] ([roleID], [roleName]) VALUES (3, N'Admin')
+SET IDENTITY_INSERT [dbo].[Role] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Wishlist] ON 
+
+INSERT [dbo].[Wishlist] ([wishlistID], [userID], [productID], [addedDate]) VALUES (1, 1, 1, CAST(N'2024-03-18T10:00:00.000' AS DateTime))
+INSERT [dbo].[Wishlist] ([wishlistID], [userID], [productID], [addedDate]) VALUES (2, 1, 3, CAST(N'2024-03-18T10:05:00.000' AS DateTime))
+INSERT [dbo].[Wishlist] ([wishlistID], [userID], [productID], [addedDate]) VALUES (3, 2, 2, CAST(N'2024-03-18T11:00:00.000' AS DateTime))
+INSERT [dbo].[Wishlist] ([wishlistID], [userID], [productID], [addedDate]) VALUES (4, 3, 5, CAST(N'2024-03-18T12:00:00.000' AS DateTime))
+INSERT [dbo].[Wishlist] ([wishlistID], [userID], [productID], [addedDate]) VALUES (5, 15, 2, CAST(N'2025-03-26T18:17:18.690' AS DateTime))
+SET IDENTITY_INSERT [dbo].[Wishlist] OFF
+GO
+/****** Object:  Index [UC_Wishlist]    Script Date: 3/26/2025 6:28:55 PM ******/
+ALTER TABLE [dbo].[Wishlist] ADD  CONSTRAINT [UC_Wishlist] UNIQUE NONCLUSTERED 
+(
+	[userID] ASC,
+	[productID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Account] ADD  DEFAULT ((1)) FOR [roleID]
+GO
+ALTER TABLE [dbo].[Account] ADD  DEFAULT ((1)) FOR [status]
+GO
+ALTER TABLE [dbo].[Orders] ADD  DEFAULT (getdate()) FOR [orderDate]
+GO
+ALTER TABLE [dbo].[Product] ADD  DEFAULT (getdate()) FOR [import_date]
+GO
+ALTER TABLE [dbo].[Product] ADD  DEFAULT ((1)) FOR [status]
+GO
+ALTER TABLE [dbo].[ProductClick] ADD  DEFAULT ((0)) FOR [clickCount]
+GO
+ALTER TABLE [dbo].[ProductReview] ADD  DEFAULT (getdate()) FOR [reviewDate]
+GO
+ALTER TABLE [dbo].[Wishlist] ADD  DEFAULT (getdate()) FOR [addedDate]
+GO
+ALTER TABLE [dbo].[Account]  WITH CHECK ADD FOREIGN KEY([roleID])
+REFERENCES [dbo].[Role] ([roleID])
+GO
+ALTER TABLE [dbo].[OrderDetail]  WITH CHECK ADD FOREIGN KEY([order_id])
+REFERENCES [dbo].[Orders] ([id])
+GO
+ALTER TABLE [dbo].[OrderDetail]  WITH CHECK ADD FOREIGN KEY([product_id])
+REFERENCES [dbo].[Product] ([pid])
+GO
+ALTER TABLE [dbo].[Orders]  WITH CHECK ADD FOREIGN KEY([userID])
+REFERENCES [dbo].[Account] ([userID])
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD FOREIGN KEY([cateID])
+REFERENCES [dbo].[Category] ([categoryID])
+GO
+ALTER TABLE [dbo].[ProductClick]  WITH CHECK ADD FOREIGN KEY([pid])
+REFERENCES [dbo].[Product] ([pid])
+GO
 ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD FOREIGN KEY([productID])
 REFERENCES [dbo].[Product] ([pid])
 GO
-
 ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD FOREIGN KEY([userID])
 REFERENCES [dbo].[Account] ([userID])
 GO
-
--- Add constraint to ensure rating is between 1 and 5
+ALTER TABLE [dbo].[Wishlist]  WITH CHECK ADD FOREIGN KEY([productID])
+REFERENCES [dbo].[Product] ([pid])
+GO
+ALTER TABLE [dbo].[Wishlist]  WITH CHECK ADD FOREIGN KEY([userID])
+REFERENCES [dbo].[Account] ([userID])
+GO
 ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD  CONSTRAINT [CK_Rating_Range] CHECK  (([rating]>=(1) AND [rating]<=(5)))
 GO
-public Account loginByEmail(String email) {
-        String sql = "SELECT * FROM Account WHERE email = ?";
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                // Tạo đối tượng Account từ dữ liệu trong database
-                Account account = new Account();
-                account.setId(rs.getInt("id"));
-                account.setUsername(rs.getString("username"));
-                account.setPassword(rs.getString("password"));
-                account.setEmail(rs.getString("email"));
-                // Thêm các trường khác nếu có (ví dụ: role, fullName, v.v.)
-                return account;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // In lỗi để debug
-        }
-        return null; // Trả về null nếu không tìm thấy tài khoản
-    }
-@Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-    String code = request.getParameter("code"); // Lấy mã code từ Google
-    if (code == null || code.isEmpty()) {
-        request.getRequestDispatcher("Login.jsp").forward(request, response);
-        return;
-    }
-
-    try {
-        // Bước 1: Lấy access token từ Google
-        LoginGmail gg = new LoginGmail();
-        String accessToken = gg.getToken(code);
-        if (accessToken == null) {
-            throw new IOException("Failed to get access token");
-        }
-
-        // Bước 2: Lấy thông tin user từ Google
-        GoogleAccount acc = gg.getUserInfo(accessToken);
-        if (acc == null || acc.getEmail() == null) {
-            throw new IOException("Failed to get Google account info");
-        }
-
-        // Bước 3: Kiểm tra user trong database
-        DAO dao = new DAO();
-        Account a = dao.loginByEmail(acc.getEmail());
-
-        // Kiểm tra nếu không tìm thấy tài khoản trong database
-        if (a == null) {
-            request.setAttribute("error", "Email not found. Please register or try again.");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
-        } else {
-            // Nếu tìm thấy tài khoản, thiết lập session và chuyển hướng về trang chủ
-            HttpSession session = request.getSession();
-            session.setAttribute("account", a);
-            session.setAttribute("acc", a);
-            session.setAttribute("userID", a.getId());
-            session.setMaxInactiveInterval(600); // Đồng bộ với doPost
-            response.sendRedirect("home");
-        }
-    } catch (Exception e) {
-        request.setAttribute("error", "Error during Google login: " + e.getMessage());
-        request.getRequestDispatcher("Login.jsp").forward(request, response);
-    }
-}
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package entity;
-
-/**
- *
- * @author ASUS
- */
-public class GoogleAccount {
-    private String  id, email, name, first_name, given_name, family_name, picture;
-
-private boolean verified_email;
-
-    public GoogleAccount() {
-    }
-
-    public GoogleAccount(String id, String email, String name, String first_name, String given_name, String family_name, String picture, boolean verified_email) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.first_name = first_name;
-        this.given_name = given_name;
-        this.family_name = family_name;
-        this.picture = picture;
-        this.verified_email = verified_email;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getGiven_name() {
-        return given_name;
-    }
-
-    public void setGiven_name(String given_name) {
-        this.given_name = given_name;
-    }
-
-    public String getFamily_name() {
-        return family_name;
-    }
-
-    public void setFamily_name(String family_name) {
-        this.family_name = family_name;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public boolean isVerified_email() {
-        return verified_email;
-    }
-
-    public void setVerified_email(boolean verified_email) {
-        this.verified_email = verified_email;
-    }
-
-    @Override
-    public String toString() {
-        return "GoogleAccount{" + "id=" + id + ", email=" + email + ", name=" + name + ", first_name=" + first_name + ", given_name=" + given_name + ", family_name=" + family_name + ", picture=" + picture + ", verified_email=" + verified_email + '}';
-    }
+ALTER TABLE [dbo].[ProductReview] CHECK CONSTRAINT [CK_Rating_Range]
+GO
+/****** Object:  StoredProcedure [dbo].[AddAccount]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[AddAccount]
+    @userName NVARCHAR(100),
+    @password NVARCHAR(100),
+    @email NVARCHAR(100),
+    @phoneNumber NVARCHAR(20),
+    @address NVARCHAR(50),
+    @roleID INT,
+    @status INT,
+    @success BIT OUTPUT,
+    @message NVARCHAR(255) OUTPUT
+AS
+BEGIN
+    SET @success = 0;
+    SET @message = '';
     
-}
-public Account loginByEmail(String email) {
-        String sql = "SELECT * FROM Account WHERE email = ?";
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, email); // Gán email từ Google vào truy vấn
-            ResultSet rs = ps.executeQuery();
+    -- Kiểm tra tên người dùng đã tồn tại chưa
+    IF EXISTS (SELECT 1 FROM Account WHERE userName = @userName)
+    BEGIN
+        SET @message = 'Username already exists';
+        RETURN;
+    END
+    
+    -- Kiểm tra email đã tồn tại chưa
+    IF EXISTS (SELECT 1 FROM Account WHERE email = @email)
+    BEGIN
+        SET @message = 'Email already exists';
+        RETURN;
+    END
+    
+    -- Chèn dữ liệu với mật khẩu được mã hóa
+    BEGIN TRY
+        INSERT INTO Account (
+            userName, password, email, phoneNumber, address, roleID, status
+        )
+        VALUES (
+            @userName, dbo.HashPassword(@password), @email, @phoneNumber, @address, @roleID, @status
+        );
+        
+        SET @success = 1;
+        SET @message = 'Account created successfully';
+    END TRY
+    BEGIN CATCH
+        SET @message = ERROR_MESSAGE();
+    END CATCH
+END
 
-            if (rs.next()) {
-                // Tạo đối tượng Account từ dữ liệu trong database
-                Account account = new Account();
-                account.setId(rs.getInt("id"));
-                account.setUsername(rs.getString("username"));
-                account.setPassword(rs.getString("password"));
-                account.setEmail(rs.getString("email"));
-                // Nếu có thêm các trường khác trong bảng Account (ví dụ: role, fullName),
-                // hãy thêm vào đây, ví dụ:
-                // account.setRole(rs.getString("role"));
-                return account;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // In lỗi để debug
-        }
-        return null; // Trả về null nếu không tìm thấy tài khoản với email này
-    }
-USE wiish;
+GO
+/****** Object:  StoredProcedure [dbo].[ChangeAccountPassword]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ChangeAccountPassword]
+    @userID INT,
+    @oldPassword NVARCHAR(100),
+    @newPassword NVARCHAR(100),
+    @success BIT OUTPUT
+AS
+BEGIN
+    SET @success = 0;
+    
+    -- Kiểm tra mật khẩu cũ
+    IF EXISTS(SELECT 1 FROM Account WHERE userID = @userID AND password = dbo.HashPassword(@oldPassword))
+    BEGIN
+        -- Cập nhật mật khẩu mới
+        UPDATE Account 
+        SET password = dbo.HashPassword(@newPassword)
+        WHERE userID = @userID;
+        
+        IF @@ROWCOUNT > 0
+            SET @success = 1;
+    END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ChangePassword]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- Tạo Procedure thay đổi mật khẩu
+CREATE PROCEDURE [dbo].[ChangePassword]
+    @userID INT,
+    @oldPassword NVARCHAR(100),
+    @newPassword NVARCHAR(100)
+AS
+BEGIN
+    -- Kiểm tra mật khẩu cũ
+    IF EXISTS (SELECT 1 FROM Account WHERE userID = @userID AND password = dbo.HashPassword(@oldPassword))
+    BEGIN
+        -- Cập nhật mật khẩu mới
+        UPDATE Account
+        SET password = dbo.HashPassword(@newPassword)
+        WHERE userID = @userID;
+        
+        SELECT N'Đổi mật khẩu thành công' AS Result;
+        RETURN 1;
+    END
+    ELSE
+    BEGIN
+        SELECT N'Mật khẩu cũ không chính xác' AS Result;
+        RETURN 0;
+    END
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[ChangePasswordByUserId]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 
--- Tạo bảng Wishlist để lưu danh sách yêu thích của người dùng
-CREATE TABLE Wishlist (
-    wishlistID INT PRIMARY KEY IDENTITY(1,1),    -- Mã wishlist tự tăng
-    userID INT NOT NULL,                         -- Mã người dùng
-    productID INT NOT NULL,                      -- Mã sản phẩm
-    addedDate DATETIME DEFAULT GETDATE(),        -- Ngày thêm vào danh sách yêu thích
-    FOREIGN KEY (userID) REFERENCES Account(userID),   -- Khóa ngoại tới bảng Account
-    FOREIGN KEY (productID) REFERENCES Product(pid),   -- Khóa ngoại tới bảng Product
-    CONSTRAINT UC_Wishlist UNIQUE (userID, productID)  -- Đảm bảo không trùng lặp sản phẩm trong wishlist của một user
-);
+-- Tạo stored procedure để thay đổi mật khẩu theo userID
+CREATE PROCEDURE [dbo].[ChangePasswordByUserId]
+    @userId INT,
+    @newPassword NVARCHAR(100)
+AS
+BEGIN
+    -- Cập nhật mật khẩu với mã hóa
+    UPDATE Account 
+    SET password = dbo.HashPassword(@newPassword)
+    WHERE userID = @userId;
+    
+    -- Trả về số lượng hàng bị ảnh hưởng
+    RETURN @@ROWCOUNT;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[DebugPasswordCheck]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 
--- Thêm dữ liệu mẫu vào bảng Wishlist
-INSERT INTO Wishlist (userID, productID, addedDate)
-VALUES
-(1, 1, '2025-03-18 10:00:00'),  -- User1 thích Tinh dầu bạc hà
-(1, 3, '2025-03-18 10:05:00'),  -- User1 thích Tinh dầu Cafe
-(2, 2, '2025-03-18 11:00:00'),  -- User2 thích Tinh dầu bưởi
-(3, 5, '2025-03-18 12:00:00');  -- User3 thích Tinh dầu dừa
+-- Tạo stored procedure để kiểm tra mật khẩu với thông tin debug
+CREATE PROCEDURE [dbo].[DebugPasswordCheck]
+    @userID INT,
+    @providedPassword NVARCHAR(100)
+AS
+BEGIN
+    DECLARE @storedPassword VARBINARY(64);
+    DECLARE @hashedProvidedPassword VARBINARY(64);
+    DECLARE @userName NVARCHAR(100);
+    DECLARE @passwordStatus NVARCHAR(100);
+    DECLARE @isMatch BIT = 0;
+    
+    -- Lấy thông tin người dùng và mật khẩu đã lưu
+    SELECT 
+        @userName = userName,
+        @storedPassword = password
+    FROM Account 
+    WHERE userID = @userID;
+    
+    -- Băm mật khẩu được cung cấp để so sánh
+    SET @hashedProvidedPassword = dbo.HashPassword(@providedPassword);
+    
+    -- Kiểm tra xem mật khẩu có khớp không
+    IF @storedPassword = @hashedProvidedPassword
+        SET @isMatch = 1;
+    
+    -- Chuẩn bị thông tin để hiển thị (không hiển thị mật khẩu thực tế)
+    SET @passwordStatus = 'Stored as hashed value (VARBINARY)';
+    
+    -- Trả về kết quả cho debug
+    SELECT 
+        @userID AS userID,
+        @userName AS userName,
+        @passwordStatus AS passwordStatus,
+        @isMatch AS isMatch;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetAccountByID]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Tạo stored procedure để lấy thông tin tài khoản
+CREATE PROCEDURE [dbo].[GetAccountByID]
+    @accountID INT
+AS
+BEGIN
+    SELECT 
+        userID, 
+        userName, 
+        '********' AS password,  -- Thay thế mật khẩu bằng placeholder
+        email, 
+        address, 
+        phoneNumber, 
+        roleID, 
+        status
+    FROM Account 
+    WHERE userID = @accountID;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[LoginAccount]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Tạo lại stored procedure với định nghĩa mới
+CREATE PROCEDURE [dbo].[LoginAccount]
+    @userNameOrEmail NVARCHAR(100),
+    @password NVARCHAR(100)
+AS
+BEGIN
+    SELECT 
+        userID, 
+        userName, 
+        CONVERT(NVARCHAR(128), password, 2) AS password, -- Chuyển đổi sang chuỗi HEX
+        email,
+        address,
+        phoneNumber,
+        roleID,
+        status 
+    FROM Account 
+    WHERE (userName = @userNameOrEmail OR email = @userNameOrEmail)
+    AND password = dbo.HashPassword(@password)
+    AND status = 1;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[LoginByEmail]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Tạo stored procedure cho đăng nhập bằng email (Google login)
+CREATE PROCEDURE [dbo].[LoginByEmail]
+    @email NVARCHAR(100)
+AS
+BEGIN
+    SELECT * FROM Account WHERE email = @email AND status = 1;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[RegisterAccount]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Tạo stored procedure mới
+CREATE PROCEDURE [dbo].[RegisterAccount]
+    @userName NVARCHAR(100),
+    @password NVARCHAR(100),
+    @email NVARCHAR(100),
+    @address NVARCHAR(50) = NULL,
+    @phoneNumber NVARCHAR(20) = NULL,
+    @roleID INT = 1,
+    @status INT = 1
+AS
+BEGIN
+    -- Chèn dữ liệu với mật khẩu đã mã hóa
+    INSERT INTO Account (userName, password, email, address, phoneNumber, roleID, status)
+    VALUES (@userName, dbo.HashPassword(@password), @email, @address, @phoneNumber, @roleID, @status);
+    
+    -- Trả về giá trị để biết thao tác có thành công hay không
+    IF @@ROWCOUNT > 0
+        RETURN 1;
+    ELSE
+        RETURN 0;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ResetPassword]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- Tạo Procedure để đặt lại mật khẩu (sử dụng cho quên mật khẩu)
+CREATE PROCEDURE [dbo].[ResetPassword]
+    @email NVARCHAR(100),
+    @newPassword NVARCHAR(100)
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM Account WHERE email = @email)
+    BEGIN
+        UPDATE Account
+        SET password = dbo.HashPassword(@newPassword)
+        WHERE email = @email;
+        
+        SELECT N'Đặt lại mật khẩu thành công' AS Result;
+        RETURN 1;
+    END
+    ELSE
+    BEGIN
+        SELECT N'Email không tồn tại trong hệ thống' AS Result;
+        RETURN 0;
+    END
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateAccountFull]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Tạo stored procedure để cập nhật tất cả thông tin tài khoản, bao gồm mật khẩu mã hóa
+CREATE PROCEDURE [dbo].[UpdateAccountFull]
+    @accountID INT,
+    @username NVARCHAR(100),
+    @password NVARCHAR(100),
+    @email NVARCHAR(100),
+    @phoneNumber NVARCHAR(20),
+    @address NVARCHAR(50),
+    @roleID INT,
+    @status INT
+AS
+BEGIN
+    UPDATE Account 
+    SET userName = @username,
+        password = dbo.HashPassword(@password),
+        email = @email,
+        phoneNumber = @phoneNumber,
+        address = @address,
+        roleID = @roleID,
+        status = @status
+    WHERE userID = @accountID;
+    
+    RETURN @@ROWCOUNT;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateAccountInfoOnly]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Tạo stored procedure để cập nhật tài khoản không bao gồm mật khẩu
+CREATE PROCEDURE [dbo].[UpdateAccountInfoOnly]
+    @accountID INT,
+    @username NVARCHAR(100),
+    @email NVARCHAR(100),
+    @roleID INT
+AS
+BEGIN
+    UPDATE Account 
+    SET userName = @username,
+        email = @email,
+        roleID = @roleID
+    WHERE userID = @accountID;
+    
+    -- Trả về số lượng hàng bị ảnh hưởng
+    RETURN @@ROWCOUNT;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateAccountPassword]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Tạo stored procedure để cập nhật mật khẩu với mã hóa
+CREATE PROCEDURE [dbo].[UpdateAccountPassword]
+    @userID INT,
+    @newPassword NVARCHAR(100)
+AS
+BEGIN
+    -- Mã hóa mật khẩu mới và cập nhật
+    UPDATE Account 
+    SET password = dbo.HashPassword(@newPassword)
+    WHERE userID = @userID;
+    
+    -- Trả về số lượng hàng bị ảnh hưởng
+    RETURN @@ROWCOUNT;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateAccountWithoutPassword]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Tạo stored procedure để cập nhật thông tin tài khoản không bao gồm mật khẩu
+CREATE PROCEDURE [dbo].[UpdateAccountWithoutPassword]
+    @accountID INT,
+    @username NVARCHAR(100),
+    @email NVARCHAR(100),
+    @phoneNumber NVARCHAR(20),
+    @address NVARCHAR(50),
+    @roleID INT,
+    @status INT
+AS
+BEGIN
+    UPDATE Account 
+    SET userName = @username,
+        email = @email,
+        phoneNumber = @phoneNumber,
+        address = @address,
+        roleID = @roleID,
+        status = @status
+    WHERE userID = @accountID;
+    
+    RETURN @@ROWCOUNT;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateAccountWithPassword]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- Sử dụng ALTER nếu stored procedure đã tồn tại
+CREATE PROCEDURE [dbo].[UpdateAccountWithPassword]
+    @userID NVARCHAR(10),
+    @userName NVARCHAR(100),
+    @password NVARCHAR(100),
+    @roleID INT,
+    @status INT
+AS
+BEGIN
+    UPDATE Account 
+    SET userName = @userName,
+        password = dbo.HashPassword(@password),
+        roleID = @roleID,
+        status = @status
+    WHERE userID = @userID;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateAccountWithPasswordHash]    Script Date: 3/26/2025 6:28:55 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Tạo stored procedure để cập nhật tài khoản bao gồm mật khẩu
+CREATE PROCEDURE [dbo].[UpdateAccountWithPasswordHash]
+    @accountID INT,
+    @username NVARCHAR(100),
+    @password NVARCHAR(100),
+    @email NVARCHAR(100),
+    @roleID INT
+AS
+BEGIN
+    UPDATE Account 
+    SET userName = @username,
+        password = dbo.HashPassword(@password),
+        email = @email,
+        roleID = @roleID
+    WHERE userID = @accountID;
+    
+    -- Trả về số lượng hàng bị ảnh hưởng
+    RETURN @@ROWCOUNT;
+END
 GO
