@@ -134,8 +134,14 @@
                                                                 <form action="cart?action=update" method="POST" style="display:flex;align-items:center;">
                                                                     <input type="hidden" name="action" value="update">
                                                                     <input type="hidden" name="id" value="${item.product.id}">
-                                                                    <input type="number" min="1" name="quantity" value="${item.quantity}" min="1" 
-                                                                           style="width:80px; height:35px; padding:0 10px; border:1px solid #e6e6e6;">
+                                                                    <input type="number" 
+                                                                           name="quantity" 
+                                                                           value="${item.quantity}" 
+                                                                           min="1"
+                                                                           max="${item.product.stock}"
+                                                                           style="width:80px; height:35px; padding:0 10px; border:1px solid #e6e6e6;"
+                                                                           oninput="this.value = this.value > ${item.product.stock} ? ${item.product.stock} : Math.abs(this.value || 1)">
+
                                                                     <button type="submit" class="btn btn-info" style="padding:5px 10px; margin-left:10px;">
                                                                         <i class="fa fa-refresh"></i> Update
                                                                     </button>
@@ -158,9 +164,8 @@
                                                     <button type="submit" class="btn btn-clear">Clear Cart</button>
                                                 </form>
                                                 <a  href="checkoutBefor" class="btn btn-update">Checkout</a>
-<!--                                                    <p>${sessionScope.cart.totalAmount}</p> -->
                                             </td>
-                                       </tr>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </form>

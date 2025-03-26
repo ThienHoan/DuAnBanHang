@@ -6,7 +6,7 @@ from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 
 # Thiết lập API key của OpenAI
-openai.api_key = "sk-123"  # Thay bằng API key của bạn
+openai.api_key = " "  # Thay bằng API key của bạn
 
 # Khởi tạo Flask app
 app = Flask(__name__)

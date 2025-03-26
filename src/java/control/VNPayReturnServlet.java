@@ -60,15 +60,15 @@ public class VNPayReturnServlet extends HttpServlet {
         } catch (UnsupportedEncodingException e) {
             LOGGER.severe("Encoding error during VNPay response validation: " + e.getMessage());
             request.setAttribute("errorMessage", "Lỗi mã hóa khi xác thực phản hồi từ VNPay: " + e.getMessage());
-            request.getRequestDispatcher("404loi.jsp").forward(request, response);
+            request.getRequestDispatcher("404Loi.jsp").forward(request, response);
         } catch (NumberFormatException e) {
             LOGGER.severe("Invalid order ID format in vnp_TxnRef: " + e.getMessage());
             request.setAttribute("errorMessage", "Lỗi định dạng mã đơn hàng: " + e.getMessage());
-            request.getRequestDispatcher("404loi.jsp").forward(request, response);
+            request.getRequestDispatcher("404Loi.jsp").forward(request, response);
         } catch (Exception e) {
             LOGGER.severe("Unexpected error during VNPay return processing: " + e.getMessage());
             request.setAttribute("errorMessage", "Lỗi xử lý phản hồi từ VNPay: " + e.getMessage());
-            request.getRequestDispatcher("404loi.jsp").forward(request, response);
+            request.getRequestDispatcher("404Loi.jsp").forward(request, response);
         }
     }
 }

@@ -5,6 +5,7 @@
 
  package control;
 
+import dao.DAO;
  import jakarta.servlet.RequestDispatcher;
  import java.io.IOException;
  import java.io.PrintWriter;
@@ -18,6 +19,8 @@
  import entity.CartItem;
  import entity.Product;
  import entity.Account;
+import entity.Category;
+import java.util.List;
  import productDao.ProductDao;
  import service.CartService;
  import service.ICartService;
@@ -80,6 +83,7 @@
          @Override
          protected void doPost(HttpServletRequest request, HttpServletResponse response)
                  throws ServletException, IOException {
+            
       HttpSession session = request.getSession();
         Integer userID = (Integer) session.getAttribute("userID");
 
