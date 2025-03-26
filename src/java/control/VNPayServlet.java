@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import entity.Account;
 import entity.Cart;
 import service.VNPayService;
-import orderDao.OrderDao;
+import dao.OrderDAO;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -17,11 +17,11 @@ import java.util.logging.Logger;
 public class VNPayServlet extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(CheckoutServlet.class.getName());
     private VNPayService vnpayService;
-    private OrderDao orderDao;
+    private OrderDAO orderDao;
     @Override
     public void init() throws ServletException {
         vnpayService = new VNPayService();
-        orderDao=new OrderDao();
+        orderDao=new OrderDAO();
     }
 
     @Override

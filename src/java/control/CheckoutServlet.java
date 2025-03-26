@@ -27,7 +27,7 @@ import entity.Order;
  import java.util.logging.Logger;
 
 import dao.DAO;
-import orderDao.OrderDao;
+import dao.OrderDAO;
  import productDao.ProductDao;
  import service.CartService;
  import service.EmailService;
@@ -40,7 +40,7 @@ import orderDao.OrderDao;
   */
  @WebServlet(name="CheckoutServlet", urlPatterns={"/checkout"})
  public class CheckoutServlet extends HttpServlet {
-     private OrderDao orderDAO = new OrderDao();
+     private OrderDAO orderDAO = new OrderDAO();
      private ProductDao productDao = new ProductDao();
      private DAO dao=new DAO();
   //   private UserDAO userDao = new UserDAO();
