@@ -1,8 +1,1 @@
-UPDATE Product SET status = 1 WHERE pid IN (SELECT pid FROM ProductClick)
-GO
 
-SELECT COUNT(*) FROM Product WHERE status = 1
-
-  UPDATE Product SET status = 1 WHERE pid IN (SELECT pid FROM ProductClick)
-
-GO
