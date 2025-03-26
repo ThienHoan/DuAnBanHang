@@ -3,33 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/CheckoutServlet.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/dao/DAO.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/VNPayServlet.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/VNPayReturnServlet.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/service/ICartService.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/Cart.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/control/CartControll.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/Product.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/ShoppingCart.jsp</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/dao/OrderDAO.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/entity/CartItem.java</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Detail.jsp</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/web/Checkout.jsp</file>
-            <file>file:/G:/github_visual/ki4/DuAnBanHang/src/java/VNPay/VNPayConfig.java</file>
-=======
-            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/web/Login.jsp</file>
-            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/control/SearchControl.java</file>
-            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/web/Menu.jsp</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/web/productAccessData.jsp</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/service/ProductService.java</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/service/IProductService.java</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/control/ManagerProduct.java</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/entity/Product.java</file>
             <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/productDao/ProductDao.java</file>
-            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/control/LoginControl.java</file>
-            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/control/DetailControl.java</file>
-            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/control/LoginGmail.java</file>
-            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/web/Category.jsp</file>
-            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/control/CategoryControl.java</file>
-            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/web/Detail.jsp</file>
->>>>>>> 86127818aa7db68b7ea2c95a8afc85c0ea24711a
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/src/java/productDao/IProductDAO.java</file>
+            <file>file:/D:/Code/NetBeans/Ki_4/PRJ301/Assignment/DuAnBanHang/web/ManagerProduct.jsp</file>
         </group>
     </open-files>
 </project-private>

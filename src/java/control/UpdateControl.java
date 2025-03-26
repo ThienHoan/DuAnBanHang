@@ -6,6 +6,7 @@
  package control;
 
  import dao.DAO;
+import entity.Product;
  import java.io.IOException;
  import java.io.PrintWriter;
  import jakarta.servlet.ServletException;
@@ -13,6 +14,7 @@
  import jakarta.servlet.http.HttpServlet;
  import jakarta.servlet.http.HttpServletRequest;
  import jakarta.servlet.http.HttpServletResponse;
+import productDao.ProductDao;
  
  /**
   *
@@ -20,7 +22,9 @@
   */
  @WebServlet(name="UpdateControl", urlPatterns={"/update"})
  public class UpdateControl extends HttpServlet {
-    
+    // Gọi DAO để cập nhật sản phẩm
+     DAO dao = new DAO();
+     ProductDao pdao=new ProductDao();
      /** 
       * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
       * @param request servlet request
@@ -88,10 +92,9 @@
      System.out.println("Status: " + status);
      System.out.println("Category: " + category);
  
-     // Gọi DAO để cập nhật sản phẩm
-     DAO dao = new DAO();
+     
      // Giả định rằng phương thức updateProduct sẽ được cập nhật để nhận các tham số mới
-     dao.updateProduct(id, name, image, price, description, stock, status, category);
+     pdao.updateProduct(id, name, image, price, description, stock, status, category);
      
  
      // Chuyển hướng sau khi cập nhật

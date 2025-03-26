@@ -25,10 +25,6 @@ import java.util.logging.Logger;
  */
 public class DAO {
 
-    private static final String TOP_3 = "SELECT TOP 5 * FROM Product WHERE status = 1 ORDER BY pid DESC";
-
-    private static final String TOP_5 = "SELECT TOP 5 * FROM Product ORDER BY pid DESC";
-    
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
@@ -38,88 +34,63 @@ public class DAO {
     // Helper method to close connections
     private void closeResources(Connection conn, PreparedStatement ps, ResultSet rs) {
         try {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            if (conn != null) conn.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error closing database resources", e);
         }
     }
-    
+
     public Account loginByEmail(String email) {
-    String query = "SELECT * FROM Account WHERE email = ?";
-    Connection conn = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
-
-    try {
-        conn = new DBContext().getConnection();
-        ps = conn.prepareStatement(query);
-        ps.setString(1, email);
-        rs = ps.executeQuery();
-        
-        if (rs.next()) {
-            return new Account(
-                rs.getInt("userID"),
-                rs.getString("userName"),
-                rs.getString("password"),
-                rs.getString("email"),
-                rs.getString("address"),
-                rs.getString("phoneNumber"),
-                rs.getInt("roleID"),
-                rs.getInt("status")
-            );
-        }
-    } catch (Exception e) {
-        LOGGER.log(Level.SEVERE, "Error during loginByEmail for email: " + email, e);
-    } finally {
-        closeResources(conn, ps, rs);
-    }
-    return null;
-}
-
-
-    public List<Product> getAllProduct() {
-        List<Product> list = new ArrayList<>();
-        String query = "select * from Product";
+        String query = "SELECT * FROM Account WHERE email = ?";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
+            ps.setString(1, email);
             rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Product(
-                        rs.getInt("pid"),
-                        rs.getString("name"),
-                        rs.getDouble("price"),
-                        rs.getString("description"),
-                        rs.getInt("stock"),
-                        rs.getString("import_date"),
-                        rs.getInt("status"),
-                        rs.getInt("sell_id"),
-                        rs.getInt("cateID"),
-                        rs.getString("img")
-                ));
+
+            if (rs.next()) {
+                return new Account(
+                        rs.getInt("userID"),
+                        rs.getString("userName"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("address"),
+                        rs.getString("phoneNumber"),
+                        rs.getInt("roleID"),
+                        rs.getInt("status")
+                );
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error during loginByEmail for email: " + email, e);
+        } finally {
+            closeResources(conn, ps, rs);
         }
-        return list;
+        return null;
     }
+
     public boolean updateRole(int userID, int roleID) {
         String query = "UPDATE Account SET roleID = ? WHERE userID = ?";
         Connection conn = null;
         PreparedStatement ps = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, roleID);
             ps.setInt(2, userID);
-            
+
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
@@ -127,239 +98,7 @@ public class DAO {
             return false;
         } finally {
             closeResources(conn, ps, null);
-    }
-}
-    
-    public boolean updateStock(int productId, int newStock) {
-    Connection conn = null;
-    PreparedStatement ps = null;
-    String sql = "UPDATE Product SET stock = ?, status = ? WHERE pid = ?";
-    try {
-        conn = new DBContext().getConnection(); // Tạo kết nối mới
-        ps = conn.prepareStatement(sql);
-        ps.setInt(1, newStock);
-        if(newStock==0){
-            ps.setInt(2,0);
-        }else{
-            ps.setInt(2,1);
         }
-        ps.setInt(3, productId);
-        
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected > 0;
-    } catch (Exception e) {
-        LOGGER.log(Level.SEVERE, "Error updating stock for product ID: " + productId, e);
-        return false;
-    } finally {
-        closeResources(conn, ps, null);
-    }
-}
-    
-    public List<Product> getAllProductUser() {
-        List<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM Product WHERE status=1";
-        try (Connection conn = new DBContext().getConnection();//mo ket noi voi sql
-                 PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery();) {
-
-            while (rs.next()) {
-                list.add(new Product(
-                        rs.getInt("pid"),
-                        rs.getString("name"),
-                        rs.getDouble("price"),
-                        rs.getString("description"),
-                        rs.getInt("stock"),
-                        rs.getString("import_date"),
-                        rs.getInt("status"),
-                        rs.getInt("sell_id"),
-                        rs.getInt("cateID"),
-                        rs.getString("img")
-                ));
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    public List<Product> getProductByCID(String cid) {
-        List<Product> list = new ArrayList<>();
-        String query = "select * from Product\n"
-                + "where cateID = ?";
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, cid);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Product(
-                        rs.getInt("pid"),
-                        rs.getString("name"),
-                        rs.getDouble("price"),
-                        rs.getString("description"),
-                        rs.getInt("stock"),
-                        rs.getString("import_date"),
-                        rs.getInt("status"),
-                        rs.getInt("sell_id"),
-                        rs.getInt("cateID"),
-                        rs.getString("img")
-                ));
-            }
-        } catch (Exception e) {
-        }
-        return list;
-    }
-
-    public List<Product> getProductBySellID(int id) {
-        List<Product> list = new ArrayList<>();
-        String query = "select * from Product\n"
-                + "where sell_id = ?";
-        try {
-            conn = new DBContext().getConnection();//mo ket noi voi sql
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Product(
-                        rs.getInt("pid"),
-                        rs.getString("name"),
-                        rs.getDouble("price"),
-                        rs.getString("description"),
-                        rs.getInt("stock"),
-                        rs.getString("import_date"),
-                        rs.getInt("status"),
-                        rs.getInt("sell_id"),
-                        rs.getInt("cateID"),
-                        rs.getString("img")
-                ));
-            }
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error getting products by seller ID: " + id, e);
-        } finally {
-            closeResources(conn, ps, rs);
-        }
-        return list;
-    }
-
-    public List<Product> searchByName(String txtSearch) {
-        List<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM Product WHERE name LIKE ? AND status = 1;";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, "%" + txtSearch + "%");
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Product(
-                        rs.getInt("pid"),
-                        rs.getString("name"),
-                        rs.getDouble("price"),
-                        rs.getString("description"),
-                        rs.getInt("stock"),
-                        rs.getString("import_date"),
-                        rs.getInt("status"),
-                        rs.getInt("sell_id"),
-                        rs.getInt("cateID"),
-                        rs.getString("img")
-                ));
-            }
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error searching products by name: " + txtSearch, e);
-        } finally {
-            closeResources(conn, ps, rs);
-        }
-        return list;
-    }
-
-    public Product getProductByID(String id) {
-        String query = "select * from Product\n"
-                + "where pid = ?";
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, id);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                return new Product(
-                        rs.getInt("pid"),
-                        rs.getString("name"),
-                        rs.getDouble("price"),
-                        rs.getString("description"),
-                        rs.getInt("stock"),
-                        rs.getString("import_date"),
-                        rs.getInt("status"),
-                        rs.getInt("sell_id"),
-                        rs.getInt("cateID"),
-                        rs.getString("img")
-                );
-            }
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error getting product by ID: " + id, e);
-        } finally {
-            closeResources(conn, ps, rs);
-        }
-        return null;
-    }
-
-    public List<Category> getAllCategory() {
-        List<Category> list = new ArrayList<>();
-        String query = "select * from Category";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Category(
-                    rs.getInt("categoryID"),
-                    rs.getString("categoryName")
-                ));
-            }
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error getting all categories", e);
-        } finally {
-            closeResources(conn, ps, rs);
-        }
-        return list;
-    }
-
-    public Product getLast() {
-        String query = "select top 1 * from Product order by pid desc";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                return new Product(
-                        rs.getInt("pid"),
-                        rs.getString("name"),
-                        rs.getDouble("price"),
-                        rs.getString("description"),
-                        rs.getInt("stock"),
-                        rs.getString("import_date"),
-                        rs.getInt("status"),
-                        rs.getInt("sell_id"),
-                        rs.getInt("cateID"),
-                        rs.getString("img")
-                );
-            }
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error getting last product", e);
-        } finally {
-            closeResources(conn, ps, rs);
-        }
-        return null;
     }
 
     public Account login(String user, String pass) {
@@ -367,7 +106,7 @@ public class DAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -376,14 +115,14 @@ public class DAO {
             rs = ps.executeQuery();
             if (rs.next()) {
                 return new Account(
-                    rs.getInt("userID"),
-                    rs.getString("userName"),
-                    rs.getString("password"),
-                    rs.getString("email"),
-                    rs.getString("address"),
-                    rs.getString("phoneNumber"),
-                    rs.getInt("roleID"),
-                    rs.getInt("status")
+                        rs.getInt("userID"),
+                        rs.getString("userName"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("address"),
+                        rs.getString("phoneNumber"),
+                        rs.getInt("roleID"),
+                        rs.getInt("status")
                 );
             }
         } catch (Exception e) {
@@ -394,85 +133,12 @@ public class DAO {
         return null;
     }
 
-    public void deleteProduct(String pid) {
-        String query = "UPDATE Product SET status = 0 WHERE pid = ?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, pid);
-            
-            System.out.println("Đang cập nhật trạng thái sản phẩm có ID: " + pid);
-            int rowsAffected = ps.executeUpdate();
-            
-            if (rowsAffected > 0) {
-                System.out.println("✅ Cập nhật trạng thái sản phẩm thành công!");
-            } else {
-                System.out.println("⚠️ Không tìm thấy sản phẩm để cập nhật!");
-            }
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error deleting product with ID: " + pid, e);
-        } finally {
-            closeResources(conn, ps, null);
-        }
-    }
-
-    public void insertProduct(String name, String image, String price, String description, String category, int sid, int stock) {
-        String query = "INSERT INTO [dbo].[Product] ([name], [img], [price], [description], [cateID], [sell_id], [stock], [status]) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, name);
-            ps.setString(2, image);
-            ps.setString(3, price);
-            ps.setString(4, description);
-            ps.setInt(5, Integer.parseInt(category));
-            ps.setInt(6, sid);
-            ps.setInt(7, stock);
-            ps.setInt(8, 1); // status mặc định
-            ps.executeUpdate();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error inserting product: " + name, e);
-        } finally {
-            closeResources(conn, ps, null);
-        }
-    }
-
-    public void updateProduct(int id, String name, String image, double price, String description, int category, int stock) {
-        String sql = "UPDATE [dbo].[Product] SET name=?, img=?, price=?, description=?, cateID=?, stock=? WHERE pid=?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, name);
-            ps.setString(2, image);
-            ps.setDouble(3, price);
-            ps.setString(4, description);
-            ps.setInt(5, category);
-            ps.setInt(6, stock);
-            ps.setInt(7, id);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error updating product with ID: " + id, e);
-        } finally {
-            closeResources(conn, ps, null);
-        }
-    }
-
     public boolean checkAccountExists(String email) {
         String query = "SELECT COUNT(*) FROM Account WHERE email = ?";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -493,7 +159,7 @@ public class DAO {
         String query = "INSERT INTO Account (userName, password, email, address, phoneNumber, roleID, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement ps = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -519,7 +185,7 @@ public class DAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -541,7 +207,7 @@ public class DAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -550,14 +216,14 @@ public class DAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Account(
-                    rs.getInt("userID"),
-                    rs.getString("userName"),
-                    rs.getString("password"),
-                    rs.getString("email"),
-                    rs.getString("address"),
-                    rs.getString("phoneNumber"),
-                    rs.getInt("roleID"),
-                    rs.getInt("status")
+                        rs.getInt("userID"),
+                        rs.getString("userName"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("address"),
+                        rs.getString("phoneNumber"),
+                        rs.getInt("roleID"),
+                        rs.getInt("status")
                 ));
             }
         } catch (Exception e) {
@@ -573,7 +239,7 @@ public class DAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -581,14 +247,14 @@ public class DAO {
             rs = ps.executeQuery();
             if (rs.next()) {
                 return new Account(
-                    rs.getInt("userID"),
-                    rs.getString("userName"),
-                    rs.getString("password"),
-                    rs.getString("email"),
-                    rs.getString("address"),
-                    rs.getString("phoneNumber"),
-                    rs.getInt("roleID"),
-                    rs.getInt("status")
+                        rs.getInt("userID"),
+                        rs.getString("userName"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("address"),
+                        rs.getString("phoneNumber"),
+                        rs.getInt("roleID"),
+                        rs.getInt("status")
                 );
             }
         } catch (Exception e) {
@@ -603,13 +269,13 @@ public class DAO {
         String query = "UPDATE Account SET userName = ?, password = ?, roleID = ?, status = ? WHERE userID = ?";
         Connection conn = null;
         PreparedStatement ps = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1, user);
             ps.setString(2, pass);
-            ps.setInt(3, isSell);  
+            ps.setInt(3, isSell);
             ps.setInt(4, status);
             ps.setString(5, id);
             ps.executeUpdate();
@@ -625,7 +291,7 @@ public class DAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -647,7 +313,7 @@ public class DAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -668,7 +334,7 @@ public class DAO {
         String query = "UPDATE Account SET userName=?, password=?, email=?, roleID=? WHERE userID=?";
         Connection conn = null;
         PreparedStatement ps = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -677,7 +343,7 @@ public class DAO {
             ps.setString(3, email);
             ps.setInt(4, roleID);
             ps.setInt(5, accountID);
-            
+
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
@@ -691,27 +357,27 @@ public class DAO {
     public boolean debugPasswordCheck(int id, String currentPassword) {
         try {
             Connection conn = new DBContext().getConnection();
-            
+
             String query = "SELECT userID, userName, password FROM Account WHERE userID = ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 int userId = rs.getInt("userID");
                 String username = rs.getString("userName");
                 String dbPassword = rs.getString("password");
-                
+
                 System.out.println("DEBUG - Found user in 'Account' table:");
                 System.out.println("  ID: " + userId);
                 System.out.println("  Username: " + username);
                 System.out.println("  Password in DB: [" + dbPassword + "]");
                 System.out.println("  Password provided: [" + currentPassword + "]");
                 System.out.println("  Match result: " + currentPassword.equals(dbPassword));
-                
+
                 return currentPassword.equals(dbPassword);
             }
-            
+
             System.out.println("DEBUG - User not found in Account table with ID: " + id);
             return false;
         } catch (Exception e) {
@@ -720,7 +386,6 @@ public class DAO {
             return false;
         }
     }
-
 
     public void updateAccountInfo(int id, String fullName, String email, String phone, String address) {
         String query = "UPDATE Account SET address=?, email=?, phoneNumber=? WHERE userID=?";
@@ -743,7 +408,7 @@ public class DAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -751,14 +416,14 @@ public class DAO {
             rs = ps.executeQuery();
             if (rs.next()) {
                 return new Account(
-                    rs.getInt("userID"),
-                    rs.getString("userName"),
-                    rs.getString("password"),
-                    rs.getString("email"),
-                    rs.getString("address"),
-                    rs.getString("phoneNumber"),
-                    rs.getInt("roleID"),
-                    rs.getInt("status")
+                        rs.getInt("userID"),
+                        rs.getString("userName"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("address"),
+                        rs.getString("phoneNumber"),
+                        rs.getInt("roleID"),
+                        rs.getInt("status")
                 );
             }
         } catch (Exception e) {
@@ -773,7 +438,7 @@ public class DAO {
         String query = "UPDATE Account SET userName=?, password=?, email=?, phoneNumber=?, address=?, roleID=?, status=? WHERE userID=?";
         Connection conn = null;
         PreparedStatement ps = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -785,7 +450,7 @@ public class DAO {
             ps.setInt(6, roleID);
             ps.setInt(7, status);
             ps.setInt(8, accountID);
-            
+
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
@@ -795,6 +460,7 @@ public class DAO {
             closeResources(conn, ps, null);
         }
     }
+
     public Account getAccountById(int id) {
         String query = "SELECT * FROM Account WHERE userID = ?";
         try {
@@ -804,14 +470,14 @@ public class DAO {
             rs = ps.executeQuery();
             if (rs.next()) {
                 return new Account(
-                    rs.getInt("userID"),
-                    rs.getString("userName"),
-                    rs.getString("password"),
-                    rs.getString("email"),
-                    rs.getString("address"),
-                    rs.getString("phoneNumber"),
-                    rs.getInt("roleID"),
-                    rs.getInt("status")
+                        rs.getInt("userID"),
+                        rs.getString("userName"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("address"),
+                        rs.getString("phoneNumber"),
+                        rs.getInt("roleID"),
+                        rs.getInt("status")
                 );
             }
         } catch (Exception e) {
@@ -820,7 +486,6 @@ public class DAO {
         return null;
     }
 
-    
     public void updateAccountPassword(int id, String newPassword) {
         String query = "UPDATE Account SET password=? WHERE userID=?";
         try {
@@ -839,13 +504,13 @@ public class DAO {
         String query = "UPDATE Account SET status = ? WHERE userID = ?";
         Connection conn = null;
         PreparedStatement ps = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, status);
             ps.setInt(2, userID);
-            
+
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
@@ -858,7 +523,7 @@ public class DAO {
 
     /**
      * Add a new account to the database
-     * 
+     *
      * @param userName User's username
      * @param password User's password (will be hashed)
      * @param email User's email address
@@ -872,27 +537,26 @@ public class DAO {
         String query = "INSERT INTO Account (userName, password, email, phoneNumber, address, roleID, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement ps = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
-            
+
             ps.setString(1, userName);
-            
+
             // Check if password needs to be hashed - implement your password hashing here
             // For example, you could use a simple MD5 hash (not recommended for production)
             // String hashedPassword = DigestUtils.md5Hex(password);
             // ps.setString(2, hashedPassword);
-            
             // Or if you're not hashing passwords (not recommended for security reasons)
             ps.setString(2, password);
-            
+
             ps.setString(3, email);
             ps.setString(4, phoneNumber);
             ps.setString(5, address);
             ps.setInt(6, roleID);
             ps.setInt(7, status);
-            
+
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
@@ -900,8 +564,12 @@ public class DAO {
             return false;
         } finally {
             try {
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -910,6 +578,7 @@ public class DAO {
 
     /**
      * Get account by username
+     *
      * @param userName the username to search for
      * @return the Account object if found, null otherwise
      */
@@ -918,23 +587,23 @@ public class DAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1, userName);
             rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 return new Account(
-                    rs.getInt("userID"),
-                    rs.getString("userName"),
-                    rs.getString("password"),
-                    rs.getString("email"),
-                    rs.getString("address"),
-                    rs.getString("phoneNumber"),
-                    rs.getInt("roleID"),
-                    rs.getInt("status")
+                        rs.getInt("userID"),
+                        rs.getString("userName"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("address"),
+                        rs.getString("phoneNumber"),
+                        rs.getInt("roleID"),
+                        rs.getInt("status")
                 );
             }
         } catch (Exception e) {
@@ -946,72 +615,22 @@ public class DAO {
     }
 
     
-
-    public void insertProduct(String name, String image, String price, String description, String category, int sid, String stock,String status) {
-        String query = "INSERT INTO [dbo].[Product] ([name], [img], [price], [description], [cateID], [sell_id], [stock], [status]) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, name);
-            ps.setString(2, image);
-            ps.setString(3, price);
-            ps.setString(4, description);
-            ps.setString(5, category);
-            ps.setInt(6, sid);
-            ps.setString(7, stock);
-            ps.setString(8, status); // status mặc định
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Error inserting product: " + e.getMessage());
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (Exception e) {
-                System.out.println("Error closing resources: " + e.getMessage());
-            }
-        }
-    }
-
-    public void updateProduct(int id, String name, String image, double price, String description, int stock, int status, int category) {
-    String sql = "UPDATE [dbo].[Product] SET name=?, img=?, price=?, description=?, cateID=?, stock=?, status=? WHERE pid=?";
-    if(stock==0) status=0;
-    try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-        ps.setString(1, name);
-        ps.setString(2, image);
-        ps.setDouble(3, price);
-        ps.setString(4, description);
-        ps.setInt(5, category);
-        ps.setInt(6, stock);
-        ps.setInt(7, status);
-        ps.setInt(8, id);
-        ps.executeUpdate();
-    } catch (Exception e) {
-        System.out.println("Error updating product: " + e.getMessage());
-    }
-}
-
     public boolean recordProductClick(int productId, Integer userId) {
         String query = "INSERT INTO ProductClick (pid, uid) VALUES (?, ?)";
         Connection conn = null;
         PreparedStatement ps = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, productId);
-            
+
             if (userId != null) {
                 ps.setInt(2, userId);
             } else {
                 ps.setNull(2, java.sql.Types.INTEGER);
             }
-            
+
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
@@ -1024,7 +643,7 @@ public class DAO {
 
     /**
      * Get the total number of clicks for a product
-     * 
+     *
      * @param productId the product ID to get click count for
      * @return the total number of clicks
      */
@@ -1033,13 +652,13 @@ public class DAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, productId);
             rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 return rs.getInt(1);
             }
@@ -1053,41 +672,41 @@ public class DAO {
 
     /**
      * Get the most clicked products
-     * 
+     *
      * @param limit the maximum number of products to return
      * @return a list of products ordered by click count
      */
     public List<Product> getMostClickedProducts(int limit) {
         List<Product> list = new ArrayList<>();
-        String query = "SELECT p.*, COUNT(pc.pid) as click_count FROM Product p " +
-                       "JOIN ProductClick pc ON p.pid = pc.pid " +
-                       "WHERE p.status = 1 " +
-                       "GROUP BY p.pid, p.name, p.price, p.description, p.stock, p.import_date, p.status, p.sell_id, p.cateID, p.img " +
-                       "ORDER BY click_count DESC " +
-                       "SELECT TOP (?) p.*, ISNULL(pc.clickCount, 0) as clickCount";
-        
+        String query = "SELECT p.*, COUNT(pc.pid) as click_count FROM Product p "
+                + "JOIN ProductClick pc ON p.pid = pc.pid "
+                + "WHERE p.status = 1 "
+                + "GROUP BY p.pid, p.name, p.price, p.description, p.stock, p.import_date, p.status, p.sell_id, p.cateID, p.img "
+                + "ORDER BY click_count DESC "
+                + "SELECT TOP (?) p.*, ISNULL(pc.clickCount, 0) as clickCount";
+
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, limit);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 list.add(new Product(
-                    rs.getInt("pid"),
-                    rs.getString("name"),
-                    rs.getDouble("price"),
-                    rs.getString("description"),
-                    rs.getInt("stock"),
-                    rs.getString("import_date"),
-                    rs.getInt("status"),
-                    rs.getInt("sell_id"),
-                    rs.getInt("cateID"),
-                    rs.getString("img")
+                        rs.getInt("pid"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getString("description"),
+                        rs.getInt("stock"),
+                        rs.getString("import_date"),
+                        rs.getInt("status"),
+                        rs.getInt("sell_id"),
+                        rs.getInt("cateID"),
+                        rs.getString("img")
                 ));
             }
         } catch (Exception e) {
@@ -1102,18 +721,18 @@ public class DAO {
         String checkSql = "SELECT clickCount FROM ProductClick WHERE pid = ?";
         String insertSql = "INSERT INTO ProductClick (pid, clickCount) VALUES (?, 1)";
         String updateSql = "UPDATE ProductClick SET clickCount = clickCount + 1 WHERE pid = ?";
-        
+
         Connection conn = null;
         PreparedStatement ps = null;
-        
+
         try {
             conn = new DBContext().getConnection();
-            
+
             // First check if the product exists in the ProductClick table
             ps = conn.prepareStatement(checkSql);
             ps.setInt(1, productId);
             ResultSet rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 // Product exists, update the click count
                 ps = conn.prepareStatement(updateSql);
@@ -1139,82 +758,82 @@ public class DAO {
 
     public List<Product> getProductsSortedByClicks(int limit) {
         List<Product> list = new ArrayList<>();
-        
+
         // Improved SQL query that will work with MS SQL Server
-        String query = "SELECT p.*, ISNULL(pc.clickCount, 0) as clickCount " +
-                       "FROM Product p " +
-                       "LEFT JOIN ProductClick pc ON p.pid = pc.pid " +
-                       "ORDER BY ISNULL(pc.clickCount, 0) DESC";
-        
+        String query = "SELECT p.*, ISNULL(pc.clickCount, 0) as clickCount "
+                + "FROM Product p "
+                + "LEFT JOIN ProductClick pc ON p.pid = pc.pid "
+                + "ORDER BY ISNULL(pc.clickCount, 0) DESC";
+
         if (limit > 0) {
             // Add TOP clause for SQL Server
-            query = "SELECT TOP " + limit + " p.*, ISNULL(pc.clickCount, 0) as clickCount " +
-                    "FROM Product p " +
-                    "LEFT JOIN ProductClick pc ON p.pid = pc.pid " +
-                    "ORDER BY ISNULL(pc.clickCount, 0) DESC";
+            query = "SELECT TOP " + limit + " p.*, ISNULL(pc.clickCount, 0) as clickCount "
+                    + "FROM Product p "
+                    + "LEFT JOIN ProductClick pc ON p.pid = pc.pid "
+                    + "ORDER BY ISNULL(pc.clickCount, 0) DESC";
         }
-        
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
-            
+
             LOGGER.log(Level.INFO, "Executing product clicks query: {0}", query);
-            
+
             while (rs.next()) {
                 int productId = rs.getInt("pid");
                 String productName = rs.getString("name");
                 int productStatus = rs.getInt("status");
                 int clickCount = rs.getInt("clickCount");
-                
-                LOGGER.log(Level.FINE, "Found product: ID={0}, Name={1}, Status={2}, Clicks={3}", 
-                           new Object[]{productId, productName, productStatus, clickCount});
-                
+
+                LOGGER.log(Level.FINE, "Found product: ID={0}, Name={1}, Status={2}, Clicks={3}",
+                        new Object[]{productId, productName, productStatus, clickCount});
+
                 Product product = new Product(
-                    productId,
-                    productName,
-                    rs.getDouble("price"),
-                    rs.getString("description"),
-                    rs.getInt("stock"),
-                    rs.getString("import_date"),
-                    productStatus,
-                    rs.getInt("sell_id"),
-                    rs.getInt("cateID"),
-                    rs.getString("img")
+                        productId,
+                        productName,
+                        rs.getDouble("price"),
+                        rs.getString("description"),
+                        rs.getInt("stock"),
+                        rs.getString("import_date"),
+                        productStatus,
+                        rs.getInt("sell_id"),
+                        rs.getInt("cateID"),
+                        rs.getString("img")
                 );
-                
+
                 // Set the click count properly
                 product.setClickCount(clickCount);
                 list.add(product);
             }
-            
+
             LOGGER.log(Level.INFO, "Total products loaded: {0}", list.size());
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error in getProductsSortedByClicks: {0}", e.getMessage());
         } finally {
             closeResources(conn, ps, rs);
         }
-        
+
         return list;
     }
 
     /**
-     * Initialize ProductClick table with entries for all products
-     * Call this method to ensure all products have click data
+     * Initialize ProductClick table with entries for all products Call this
+     * method to ensure all products have click data
      */
     public void initializeProductClicks() {
-        String query = "SELECT p.pid FROM Product p " +
-                      "LEFT JOIN ProductClick pc ON p.pid = pc.pid " +
-                      "WHERE pc.pid IS NULL";
-        
+        String query = "SELECT p.pid FROM Product p "
+                + "LEFT JOIN ProductClick pc ON p.pid = pc.pid "
+                + "WHERE pc.pid IS NULL";
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
-            
+
             // Prepare insert statement
             PreparedStatement insertPs = null;
-            
+
             while (rs.next()) {
                 int pid = rs.getInt("pid");
                 String insertQuery = "INSERT INTO ProductClick (pid, clickCount) VALUES (?, 0)";
@@ -1222,8 +841,10 @@ public class DAO {
                 insertPs.setInt(1, pid);
                 insertPs.executeUpdate();
             }
-            
-            if (insertPs != null) insertPs.close();
+
+            if (insertPs != null) {
+                insertPs.close();
+            }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error initializing product clicks", e);
         } finally {
@@ -1232,84 +853,86 @@ public class DAO {
     }
 
     /**
-     * Get products sorted by clicks with pagination and filtering for clicks > 0
-     * 
+     * Get products sorted by clicks with pagination and filtering for clicks >
+     * 0
+     *
      * @param page The page number (1-based)
      * @param productsPerPage Number of products per page
      * @return List of products with clicks > 0, sorted by clicks
      */
     public List<Product> getProductsSortedByClicksWithPaging(int page, int productsPerPage) {
         List<Product> list = new ArrayList<>();
-        
+
         // Calculate offset for pagination
         int offset = (page - 1) * productsPerPage;
-        
+
         // Query with pagination and filtering for clicks > 0
         // Using SQL Server pagination with OFFSET-FETCH
-        String query = "SELECT p.*, ISNULL(pc.clickCount, 0) as clickCount " +
-                      "FROM Product p " +
-                      "LEFT JOIN ProductClick pc ON p.pid = pc.pid " +
-                      "WHERE ISNULL(pc.clickCount, 0) > 0 " +
-                      "ORDER BY ISNULL(pc.clickCount, 0) DESC " +
-                      "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        
+        String query = "SELECT p.*, ISNULL(pc.clickCount, 0) as clickCount "
+                + "FROM Product p "
+                + "LEFT JOIN ProductClick pc ON p.pid = pc.pid "
+                + "WHERE ISNULL(pc.clickCount, 0) > 0 "
+                + "ORDER BY ISNULL(pc.clickCount, 0) DESC "
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, offset);
             ps.setInt(2, productsPerPage);
             rs = ps.executeQuery();
-            
-            LOGGER.log(Level.INFO, "Executing paginated product clicks query: {0} with offset {1}, limit {2}", 
-                       new Object[]{query, offset, productsPerPage});
-            
+
+            LOGGER.log(Level.INFO, "Executing paginated product clicks query: {0} with offset {1}, limit {2}",
+                    new Object[]{query, offset, productsPerPage});
+
             while (rs.next()) {
                 int productId = rs.getInt("pid");
                 String productName = rs.getString("name");
                 int productStatus = rs.getInt("status");
                 int clickCount = rs.getInt("clickCount");
-                
+
                 Product product = new Product(
-                    productId,
-                    productName,
-                    rs.getDouble("price"),
-                    rs.getString("description"),
-                    rs.getInt("stock"),
-                    rs.getString("import_date"),
-                    productStatus,
-                    rs.getInt("sell_id"),
-                    rs.getInt("cateID"),
-                    rs.getString("img")
+                        productId,
+                        productName,
+                        rs.getDouble("price"),
+                        rs.getString("description"),
+                        rs.getInt("stock"),
+                        rs.getString("import_date"),
+                        productStatus,
+                        rs.getInt("sell_id"),
+                        rs.getInt("cateID"),
+                        rs.getString("img")
                 );
-                
+
                 product.setClickCount(clickCount);
                 list.add(product);
             }
-            
+
             LOGGER.log(Level.INFO, "Products loaded for page {0}: {1}", new Object[]{page, list.size()});
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error in getProductsSortedByClicksWithPaging: {0}", e.getMessage());
         } finally {
             closeResources(conn, ps, rs);
         }
-        
+
         return list;
     }
 
     /**
      * Count total number of products with clicks > 0
+     *
      * @return Total count of products with clicks
      */
     public int countProductsWithClicks() {
-        String query = "SELECT COUNT(*) FROM Product p " +
-                      "LEFT JOIN ProductClick pc ON p.pid = pc.pid " +
-                      "WHERE ISNULL(pc.clickCount, 0) > 0";
-        
+        String query = "SELECT COUNT(*) FROM Product p "
+                + "LEFT JOIN ProductClick pc ON p.pid = pc.pid "
+                + "WHERE ISNULL(pc.clickCount, 0) > 0";
+
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 return rs.getInt(1);
             }
@@ -1318,11 +941,10 @@ public class DAO {
         } finally {
             closeResources(conn, ps, rs);
         }
-        
+
         return 0;
     }
 
-    
     // Helper method to close connections
     private void closeConnection() {
         try {
@@ -1342,28 +964,9 @@ public class DAO {
 
     //--------------------------------------------
     //lấy 3 sản phẩm mới nhất vào block 2: banner
-    public List<Product> getTop5NewestProducts() {
-        List<Product> productList = new ArrayList<>();
-
-        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(TOP_3); ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                Product p = new Product();
-                p.setId(rs.getInt("pid"));
-                p.setName(rs.getString("name"));
-                p.setPrice(rs.getDouble("price"));
-                p.setDescription(rs.getString("description"));
-                p.setImg(rs.getString("img"));
-                productList.add(p);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return productList;
-    }
-
     /**
      * Test the database connection
+     *
      * @return true if connected, false otherwise
      */
     public boolean testConnection() {
@@ -1376,7 +979,9 @@ public class DAO {
             return false;
         } finally {
             try {
-                if (conn != null) conn.close();
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (Exception e) {
                 System.out.println("Error closing connection: " + e.getMessage());
             }
@@ -1385,6 +990,7 @@ public class DAO {
 
     /**
      * Get the raw count of records in the ProductClick table
+     *
      * @return the number of records
      */
     public int getProductClickCount() {
@@ -1403,9 +1009,15 @@ public class DAO {
             System.out.println("Error counting ProductClick records: " + e.getMessage());
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (Exception e) {
                 System.out.println("Error closing resources: " + e.getMessage());
             }
@@ -1416,16 +1028,7 @@ public class DAO {
     //--------------------------------------------
     public static void main(String[] args) {
         DAO dao = new DAO();
-        List<Product> list = dao.getAllProduct();
-        List<Category> listC = dao.getAllCategory();
-        List<Product> listnews = dao.getTop5NewestProducts();
 
-        for (Category o : listC) {
-            System.out.println(o);
-        }
-        for (Product p : listnews) {
-            System.out.println(p.toString());
-        }
     }
 
 }

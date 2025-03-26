@@ -31,13 +31,13 @@ public class SearchControl extends HttpServlet {
             namep = ""; // Nếu không có từ khóa, lấy tất cả sản phẩm
         }
 
-        List<Product> listAll = dao.getAllProductUser();
+        List<Product> listAll = pdao.getAllProductUser();
         request.setAttribute("listPP", listAll);
-        List<Product> list = dao.searchByName(namep);
+        List<Product> list = pdao.searchByName(namep);
 
-        List<Category> listC = dao.getAllCategory();
+        List<Category> listC = pdao.getAllCategory();
         request.setAttribute("listCC", listC);
-        List<Product> list5 = dao.getTop5NewestProducts();
+        List<Product> list5 = pdao.getTop5NewestProducts();
         request.setAttribute("list5", list5);
         request.setAttribute("productList", list);
 

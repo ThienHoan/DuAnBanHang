@@ -41,7 +41,7 @@ import orderDao.OrderDao;
  @WebServlet(name="CheckoutServlet", urlPatterns={"/checkout"})
  public class CheckoutServlet extends HttpServlet {
      private OrderDao orderDAO = new OrderDao();
-     private ProductDao productDao = new ProductDao();
+     private ProductDao pdao = new ProductDao();
      private DAO dao=new DAO();
   //   private UserDAO userDao = new UserDAO();
      /** 
@@ -96,8 +96,7 @@ import orderDao.OrderDao;
          response.setCharacterEncoding("UTF-8");
  
          HttpSession session = request.getSession();
-         DAO dao = new DAO();
-         List<Category> listC = dao.getAllCategory();
+         List<Category> listC = pdao.getAllCategory();
         request.setAttribute("listCC", listC);
          
          
@@ -157,7 +156,7 @@ import orderDao.OrderDao;
             int newStock = currentStock - quantityInCart; // Tính số lượng mới
 
             // Gọi hàm updateStock từ ProductDAO
-            dao.updateStock(productId, newStock);
+            pdao.updateStock(productId, newStock);
             
         } 
          //------------------------------------------------------------------------------

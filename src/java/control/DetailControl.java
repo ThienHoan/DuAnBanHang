@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import productDao.ProductDao;
 
 /**
  *
@@ -26,6 +27,7 @@ import java.util.List;
 public class DetailControl extends HttpServlet {
 
     DAO dao = new DAO();
+    ProductDao pdao=new ProductDao();
     ReviewDAO reviewDAO = new ReviewDAO();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -35,7 +37,7 @@ public class DetailControl extends HttpServlet {
         String id = request.getParameter("pid");
         int productId = Integer.parseInt(id);
 
-        Product p = dao.getProductByID(id);
+        Product p = pdao.getProductByID(id);
         request.setAttribute("detail", p);
         
         request.setAttribute("cid", p.getCateID());
@@ -61,13 +63,13 @@ public class DetailControl extends HttpServlet {
         int widthPercentage = (int) (avgRating * 20); // 20% per star (5 stars = 100%)
         request.setAttribute("ratingWidth", widthPercentage);
         
-        List<Product> list = dao.getAllProduct();
+        List<Product> list = pdao.getAllProduct();
         request.setAttribute("listP", list);
         
-        List<Product> listP = dao.getProductByCID(String.valueOf(p.getCateID()));
+        List<Product> listP = pdao.getProductByCID(String.valueOf(p.getCateID()));
         request.setAttribute("listPP", listP);
 
-        List<Category> listC = dao.getAllCategory();
+        List<Category> listC = pdao.getAllCategory();
         request.setAttribute("listCC", listC);
 
         // Tìm category của sản phẩm hiện tại
@@ -82,7 +84,7 @@ public class DetailControl extends HttpServlet {
         // Truyền tên category của sản phẩm đến JSP
         request.setAttribute("categoryName", categoryName);
         
-        List<Product> list5 = dao.getTop5NewestProducts();
+        List<Product> list5 = pdao.getTop5NewestProducts();
         request.setAttribute("list5", list5);
 
         request.getRequestDispatcher("Detail.jsp").forward(request, response);

@@ -999,7 +999,7 @@
                                                         <img src="${p.img}" alt="dd" width="270" height="270" class="product-thumnail">
                                                     </a>
                                                 </div>
-                                                <div class="info">
+                                                    <div class="info">
 
                                                     <b class="categories" data-category-id="${p.cateID}"></b>
                                                     <h4 class="product-title"><a href="detail?pid=${p.id}" class="pr-name">${p.name}</a></h4>
@@ -1011,7 +1011,7 @@
                                                     <div class="buttons">
                                                         <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                         <a onclick="addToCart(${p.id})" class="btn add-to-cart-btn">add to cart</a>
-                                                        <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
+                                                        <!--<a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>-->
                                                     </div>
                                                 </div>
                                                 <div class="advance-info">

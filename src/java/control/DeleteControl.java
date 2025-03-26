@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import productDao.ProductDao;
 
 /**
  *
@@ -21,6 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(name="DeleteControl", urlPatterns={"/delete"})
 public class DeleteControl extends HttpServlet {
 
+    ProductDao pdao = new ProductDao();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -34,7 +36,7 @@ public class DeleteControl extends HttpServlet {
         String pid = request.getParameter("pid");
         System.out.println("PID nhận được: " + pid);
         DAO dao = new DAO();
-        dao.deleteProduct(pid);
+        pdao.deleteProduct(pid);
         response.sendRedirect("manager");
         
     }
@@ -69,14 +71,14 @@ public class DeleteControl extends HttpServlet {
         String[] selectedProducts = request.getParameterValues("selectedProducts");
         if (selectedProducts != null) {
             for (String pid : selectedProducts) {
-                dao.deleteProduct(pid);
+                pdao.deleteProduct(pid);
             }
         }
 
         // Xóa một sản phẩm từ modal riêng
         String pid = request.getParameter("pid");
         if (pid != null) {
-            dao.deleteProduct(pid);
+            pdao.deleteProduct(pid);
         }
 
         response.sendRedirect("manager");

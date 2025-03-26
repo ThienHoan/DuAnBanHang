@@ -13,9 +13,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import productDao.ProductDao;
 
 @WebServlet(name = "UserProfileController", urlPatterns = {"/userprofile"})
 public class UserProfileController extends HttpServlet {
+    ProductDao pdao=new ProductDao();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -30,7 +32,7 @@ public class UserProfileController extends HttpServlet {
             
             // Refresh account data from database to ensure we have the latest info
             DAO dao = new DAO();
-            List<Category> listC = dao.getAllCategory();
+            List<Category> listC = pdao.getAllCategory();
         request.setAttribute("listCC", listC);
             Account refreshedAccount = dao.getAccountById(account.getId());
             if (refreshedAccount != null) {

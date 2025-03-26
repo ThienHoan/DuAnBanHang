@@ -319,7 +319,7 @@
         <div class="container-xl">
             <div class="table-responsive">
                 <div class="table-wrapper">
-                    <form id="deleteForm" action="delete" method="post">
+                    <!--<form id="deleteForm" action="manager" method="post">-->
                         <div class="table-title">
                             <div class="row align-items-center">
                                 <div class="col-sm-6">
@@ -422,10 +422,10 @@
                                     <div id="deleteProductModal${o.id}" class="modal fade">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
-                                                <form action="delete" method="post">
+                                                <form action="manager?action=delete" method="post">
                                                     <div class="modal-header">						
                                                         <h4 class="modal-title">Delete Product</h4>
-                                                        <button type="button" class="close" data-dismiss="modal">&times;"></button>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                     </div>
                                                     <div class="modal-body">					
                                                         <p>Are you sure you want to delete this product?</p>
@@ -464,7 +464,7 @@
                     <div id="confirmDeleteModal" class="modal fade">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form id="bulkDeleteForm" action="delete" method="post">
+                                <form id="bulkDeleteForm" action="manager?action=deleteMultiple" method="post">
                                     <div class="modal-header">
                                         <h4 class="modal-title">Confirm Delete</h4>
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -542,7 +542,7 @@
         <div id="addProductModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="add" method="post">
+                    <form action="manager?action=add" method="post">
                         <div class="modal-header">
                             <h4 class="modal-title">Add Product</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -597,7 +597,7 @@
         <div id="editProductModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="update" method="post">
+                    <form action="manager?action=update" method="post">
                         <input type="hidden" name="id"> <!-- ID ẩn -->
                         <div class="modal-header">
                             <h4 class="modal-title">Edit Product</h4>

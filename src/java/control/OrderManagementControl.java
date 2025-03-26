@@ -13,9 +13,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import productDao.ProductDao;
 
 @WebServlet(name = "OrderManagementControl", urlPatterns = {"/orders"})
 public class OrderManagementControl extends HttpServlet {
+    ProductDao pdao =new ProductDao();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,7 +33,7 @@ public class OrderManagementControl extends HttpServlet {
         
         OrderDAO orderDAO = new OrderDAO();
         List<Order> orders;
-        List<Category> listC = dao.getAllCategory();
+        List<Category> listC = pdao.getAllCategory();
         request.setAttribute("listCC", listC);
         int role=account.getRoleID();
 

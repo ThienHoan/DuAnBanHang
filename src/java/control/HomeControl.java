@@ -11,23 +11,25 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import productDao.ProductDao;
 
 @WebServlet(name = "HomeControl", urlPatterns = {"/home"})
 public class HomeControl extends HttpServlet {
 
     // Khởi tạo DAO để truy vấn database
     DAO dao = new DAO();
+    ProductDao pdao=new ProductDao();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         //b1: get data from dao
         DAO dao = new DAO();
-        List<Product> list = dao.getAllProductUser();
+        List<Product> list = pdao.getAllProductUser();
         request.setAttribute("listP", list);
 
         // Lấy danh sách tất cả danh mục
-        List<Category> listC = dao.getAllCategory();
+        List<Category> listC = pdao.getAllCategory();
         request.setAttribute("listCC", listC);
 
         // Lấy sản phẩm mới nhất
@@ -35,7 +37,7 @@ public class HomeControl extends HttpServlet {
         //request.setAttribute("p", last);
         
         // Lấy 3 sản phẩm mới nhất
-        List<Product> listTop5Newsest = dao.getTop5NewestProducts();
+        List<Product> listTop5Newsest = pdao.getTop5NewestProducts();
         request.setAttribute("listTop5Newsest", listTop5Newsest);
 
         request.getRequestDispatcher("Home.jsp").forward(request, response);

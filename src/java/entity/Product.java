@@ -4,20 +4,21 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Product {
+
     private int id;
     private String name;
     private double price;
     private String description;
     private int stock;
     private LocalDate importDate;
-    private int status; 
+    private int status;
     private int sell_id;
     private int cateID;
     private String img;
-    
+
     // Định dạng cho ngày
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    
+
     //Định dạng tiền VND
     private String priceFormatted;
 
@@ -29,9 +30,9 @@ public class Product {
     }
 
     // Constructor với tham số, importDate nhận vào String
-    public Product(int id, String name, double price, String description, 
-                   int stock, String importDate, int status, int sell_id, 
-                   int cateID, String img) {
+    public Product(int id, String name, double price, String description,
+            int stock, String importDate, int status, int sell_id,
+            int cateID, String img) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -52,8 +53,6 @@ public class Product {
     public void setPriceFormatted(String priceFormatted) {
         this.priceFormatted = priceFormatted;
     }
-    
-    
 
     // Getter cho importDate, trả về String theo format yyyy-MM-dd
     public String getImportDate() {

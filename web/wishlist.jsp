@@ -109,6 +109,15 @@
             padding: 20px;
             font-style: italic;
         }
+        .product-link {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .product-link:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -140,7 +149,9 @@
                 <c:when test="${not empty wishlist}">
                     <c:forEach var="item" items="${wishlist}">
                         <tr>
-                            <td>${item.name}</td>
+                            <td>
+                                <a href="detail?pid=${item.productID}" class="product-link">${item.name}</a>
+                            </td>
                             <td><img src="${pageContext.request.contextPath}/${item.img}" alt="${item.name}"></td>
                             <td>${item.addedDate}</td>
                             <td>

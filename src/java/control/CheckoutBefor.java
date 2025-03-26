@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import productDao.ProductDao;
 
 /**
  *
@@ -26,7 +27,8 @@ import jakarta.servlet.http.HttpSession;
  */
 @WebServlet(name="CheckoutBeforControl", urlPatterns={"/checkoutBefor"})
 public class CheckoutBefor extends HttpServlet {
-   
+   DAO dao = new DAO();
+   ProductDao pdao=new ProductDao();
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -62,8 +64,8 @@ public class CheckoutBefor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        DAO dao = new DAO();
-        List<Category> listC = dao.getAllCategory();
+        
+        List<Category> listC = pdao.getAllCategory();
         request.setAttribute("listCC", listC);
         HttpSession session = request.getSession();
         Cart cart = (Cart) session.getAttribute("cart");

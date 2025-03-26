@@ -17,14 +17,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import productDao.ProductDao;
 
 /**
  *
  * @author thienhoan
  */
-@WebServlet(name = "ManagerControl", urlPatterns = {"/manager"})
+//@WebServlet(name = "ManagerControl", urlPatterns = {"/manager"})
 public class ManagerControl extends HttpServlet {
-
+    DAO dao=new DAO();
+    ProductDao pdao=new ProductDao();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -71,12 +73,12 @@ public class ManagerControl extends HttpServlet {
         List<Product> list;
         
         if(role == 2) {
-            list = dao.getProductBySellID(id);
+            list = pdao.getProductBySellID(id);
         } else {
-            list = dao.getAllProduct();
+            list = pdao.getAllProduct();
         }
         
-        List<Category> listC = dao.getAllCategory();
+        List<Category> listC = pdao.getAllCategory();
         request.setAttribute("listS", list);
         request.setAttribute("listCC", listC);
         

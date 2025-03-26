@@ -462,10 +462,21 @@
                                                                                     }
                                                                                 </style>
                                                                                 <div class="buttons">
-                                                                                    <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                                                                                    <a  onclick="addToCart(${o.id})" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                                                    <!--<a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>-->
-                                                                                </div>
+    <form action="wishlist" method="post" style="display: inline;">
+        <input type="hidden" name="action" value="add">
+        <input type="hidden" name="userID" value="<%= session.getAttribute("userID") %>">
+        <input type="hidden" name="productID" value="${o.id}">
+        <input type="hidden" name="returnUrl" value="home">
+        <button type="submit" class="btn wishlist-btn" 
+                onclick="return confirm('Add this item to wishlist?')">
+            <i class="fa fa-heart" aria-hidden="true"></i>
+        </button>
+    </form>
+    <a onclick="addToCart(${o.id})" class="btn add-to-cart-btn">
+        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i> add to cart
+    </a>
+</div>
+
                                                                             </div>
                                                                         </div>
 

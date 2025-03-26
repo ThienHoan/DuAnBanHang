@@ -31,6 +31,7 @@ public class CategoryControl extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
 
         String action = request.getParameter("action");
         String txt = request.getParameter("txt");
@@ -97,7 +98,7 @@ public class CategoryControl extends HttpServlet {
         String cateID = request.getParameter("cid");
         request.setAttribute("cid", cateID);
 
-        List<Category> listC = dao.getAllCategory();
+        List<Category> listC = pdao.getAllCategory();
         request.setAttribute("listCC", listC);
 
         // Tìm tên danh mục từ danh sách danh mục
@@ -131,8 +132,10 @@ public class CategoryControl extends HttpServlet {
         request.setAttribute("selectedPrice", priceRange);
 
         // Lấy danh sách top 5 sản phẩm mới nhất
-        List<Product> list5 = dao.getTop5NewestProducts();
+        List<Product> list5 = pdao.getTop5NewestProducts();
         request.setAttribute("list5", list5);
+        
+        
 
         // Chuyển hướng đến trang Category.jsp
         request.getRequestDispatcher("Category.jsp").forward(request, response);
@@ -144,7 +147,7 @@ public class CategoryControl extends HttpServlet {
             namep = ""; // Nếu không có từ khóa tìm kiếm, lấy tất cả sản phẩm
         }
 
-        List<Category> listC = dao.getAllCategory();
+        List<Category> listC = pdao.getAllCategory();
         request.setAttribute("listCC", listC);
 
         // Lấy tiêu chí lọc theo giá từ yêu cầu
@@ -166,7 +169,7 @@ public class CategoryControl extends HttpServlet {
         request.setAttribute("selectedPrice", priceRange);
 
         // Lấy danh sách top 5 sản phẩm mới nhất
-        List<Product> list5 = dao.getTop5NewestProducts();
+        List<Product> list5 = pdao.getTop5NewestProducts();
         request.setAttribute("list5", list5);
 
         // Chuyển hướng đến trang Category.jsp
