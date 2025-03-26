@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import context.DBContext;
+import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,7 +15,88 @@ public class OrderDAO {
     private Connection conn = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
+    //----------------------------------------------------------------------------------------------------------------
+ 
+    public int getnewOrderId() throws SQLException {
+        String sql = "SELECT TOP 1 id FROM Orders ORDER BY id DESC";
+        int newId = 1;
+
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                newId = rs.getInt("id") + 1;
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Lỗi khi lấy ID đơn hàng mới nhất: " + e.getMessage());
+        }
+
+        return newId;
+    }
     
+    
+    
+    
+    public void addOrderDetail(int orderId, int productId, int quantity, double price) throws SQLException {
+        String sql = "INSERT INTO OrderDetail (order_id, product_id, quantity, price, subtotall) VALUES (?, ?, ?, ?, ?)";
+
+        double subtotal = quantity * price;
+
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, orderId);
+            stmt.setInt(2, productId);
+            stmt.setInt(3, quantity);
+            stmt.setDouble(4, price);
+            stmt.setDouble(5, subtotal);
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Thêm chi tiết đơn hàng thất bại, không có dòng nào được thêm.");
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Lỗi khi thêm chi tiết đơn hàng: " + e.getMessage(), e);
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    public int createOrder(Order order) throws SQLException {
+        String sql = "INSERT INTO Orders (userID, total_price, status) VALUES (?, ?, ?)"; // Bỏ orderDate
+        int orderId = -1;
+
+        try (Connection conn = new DBContext().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setInt(1, order.getUserId());
+            stmt.setDouble(2, order.getTotalPrice());
+            stmt.setString(3, order.getStatus());
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Tạo đơn hàng thất bại, không có dòng nào được thêm.");
+            }
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    orderId = rs.getInt(1);
+                } else {
+                    throw new SQLException("Tạo đơn hàng thất bại, không lấy được ID.");
+                }
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Lỗi khi tạo đơn hàng: " + e.getMessage(), e);
+        }
+
+        return orderId;
+    }
+
+    //------------------------------------------------------------------------------------------------------------
     // Lấy danh sách đơn hàng của người dùng
     public List<Order> getOrdersByUserId(int userId) {
     List<Order> list = new ArrayList<>();

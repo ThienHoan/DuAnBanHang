@@ -351,6 +351,7 @@ $(document).ready(function(){
         xhr.send();
     });
 </script>
+
 </body>
 </html>
 <div class="container-xl">
@@ -454,7 +455,8 @@ $(document).ready(function(){
 				</ul>
 			</div>
 		</div>
-	</div>        
+	</div>  
+	      
 </div>
 <!-- Add Modal HTML -->
 <div id="addAccountModal" class="modal fade">
@@ -598,6 +600,7 @@ $(document).ready(function(){
 			</form>
 		</div>
 	</div>
+	
 </div>
 
 <script>

@@ -4,6 +4,8 @@ import context.DBContext;
 import entity.Account;
 import entity.Category;
 import entity.Product;
+
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,28 +50,87 @@ public class DAO {
         }
     }
 
+    
+    public int findUserIdByUsernameOrEmail(String input) {
+    String query = "SELECT userID FROM Account WHERE userName = ? OR email = ?";
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+            
+        ps.setString(1, input);
+        ps.setString(2, input);
+        
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("userID");
+        }
+            
+    } catch (Exception e) {
+        return -1; // Return -1 if error occurs
+    }
+    return 0; // Return 0 if not found
+}
+    
+    
+    public String getEmailByUserId(int userId) {
+    String query = "SELECT email FROM Account WHERE userID = ?";
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+            
+        ps.setInt(1, userId);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            return rs.getString("email");
+        }
+            
+    } catch (Exception e) {
+        LOGGER.log(Level.SEVERE, "Error getting email for user ID: " + userId, e);
+    }
+    return null; // Return null if not found or error occurs
+}
+    
+public boolean changePasswordByUserId(int userId, String newPassword) {
+    String query = "{CALL ChangePasswordByUserId(?, ?)}";
+    
+    try (Connection conn = new DBContext().getConnection();
+         CallableStatement cs = conn.prepareCall(query)) {
+            
+        cs.setInt(1, userId);
+        cs.setString(2, newPassword);  // Mật khẩu gốc, sẽ được mã hóa trong stored procedure
+        
+        return cs.executeUpdate() > 0;
+            
+    } catch (Exception e) {
+        LOGGER.log(Level.SEVERE, "Error changing password for userID: " + userId, e);
+        return false;
+    }
+}
+    
+    
     public Account loginByEmail(String email) {
-        String query = "SELECT * FROM Account WHERE email = ?";
+        // Thay đổi câu truy vấn để thay thế mật khẩu bằng placeholder
+        String query = "SELECT userID, userName, '********' AS password, email, address, phoneNumber, roleID, status " +
+                      "FROM Account WHERE email = ?";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-
+    
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1, email);
             rs = ps.executeQuery();
-
+            
             if (rs.next()) {
                 return new Account(
-                        rs.getInt("userID"),
-                        rs.getString("userName"),
-                        rs.getString("password"),
-                        rs.getString("email"),
-                        rs.getString("address"),
-                        rs.getString("phoneNumber"),
-                        rs.getInt("roleID"),
-                        rs.getInt("status")
+                    rs.getInt("userID"),
+                    rs.getString("userName"),
+                    rs.getString("password"),  // Sẽ luôn là "********"
+                    rs.getString("email"),
+                    rs.getString("address"),
+                    rs.getString("phoneNumber"),
+                    rs.getInt("roleID"),
+                    rs.getInt("status")
                 );
             }
         } catch (Exception e) {
@@ -102,35 +163,117 @@ public class DAO {
     }
 
     public Account login(String user, String pass) {
-        String query = "select * from Account where userName = ? and password = ?";
+    String query = "{CALL LoginAccount(?, ?)}";
+    Connection conn = null;
+    CallableStatement cs = null;
+    ResultSet rs = null;
+    
+    try {
+        conn = new DBContext().getConnection();
+        cs = conn.prepareCall(query);
+        cs.setString(1, user);  // user có thể là username hoặc email
+        cs.setString(2, pass);
+        rs = cs.executeQuery();
+        
+        if (rs.next()) {
+            return new Account(
+                rs.getInt("userID"),
+                rs.getString("userName"),
+                rs.getString("password"),  // Lưu ý: Trả về giá trị đã mã hóa
+                rs.getString("email"),
+                rs.getString("address"),
+                rs.getString("phoneNumber"),
+                rs.getInt("roleID"),
+                rs.getInt("status")
+            );
+        }
+    } catch (Exception e) {
+        LOGGER.log(Level.SEVERE, "Error during login for user: " + user, e);
+    } finally {
+        // Đóng tài nguyên
+        if (cs != null) {
+            try {
+                cs.close();
+            } catch (SQLException e) {
+                LOGGER.log(Level.WARNING, "Error closing CallableStatement", e);
+            }
+        }
+        closeResources(conn, null, rs);
+    }
+    return null;
+}
+
+    public void deleteProduct(String pid) {
+        String query = "UPDATE Product SET status = 0 WHERE pid = ?";
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
-
+        
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
-            ps.setString(1, user);
-            ps.setString(2, pass);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                return new Account(
-                        rs.getInt("userID"),
-                        rs.getString("userName"),
-                        rs.getString("password"),
-                        rs.getString("email"),
-                        rs.getString("address"),
-                        rs.getString("phoneNumber"),
-                        rs.getInt("roleID"),
-                        rs.getInt("status")
-                );
+            ps.setString(1, pid);
+            
+            System.out.println("Đang cập nhật trạng thái sản phẩm có ID: " + pid);
+            int rowsAffected = ps.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                System.out.println("✅ Cập nhật trạng thái sản phẩm thành công!");
+            } else {
+                System.out.println("⚠️ Không tìm thấy sản phẩm để cập nhật!");
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error during login for user: " + user, e);
+            LOGGER.log(Level.SEVERE, "Error deleting product with ID: " + pid, e);
         } finally {
-            closeResources(conn, ps, rs);
+            closeResources(conn, ps, null);
         }
-        return null;
+    }
+
+    public void insertProduct(String name, String image, String price, String description, String category, int sid, int stock) {
+        String query = "INSERT INTO [dbo].[Product] ([name], [img], [price], [description], [cateID], [sell_id], [stock], [status]) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, name);
+            ps.setString(2, image);
+            ps.setString(3, price);
+            ps.setString(4, description);
+            ps.setInt(5, Integer.parseInt(category));
+            ps.setInt(6, sid);
+            ps.setInt(7, stock);
+            ps.setInt(8, 1); // status mặc định
+            ps.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error inserting product: " + name, e);
+        } finally {
+            closeResources(conn, ps, null);
+        }
+    }
+
+    public void updateProduct(int id, String name, String image, double price, String description, int category, int stock) {
+        String sql = "UPDATE [dbo].[Product] SET name=?, img=?, price=?, description=?, cateID=?, stock=? WHERE pid=?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, image);
+            ps.setDouble(3, price);
+            ps.setString(4, description);
+            ps.setInt(5, category);
+            ps.setInt(6, stock);
+            ps.setInt(7, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error updating product with ID: " + id, e);
+        } finally {
+            closeResources(conn, ps, null);
+        }
     }
 
     public boolean checkAccountExists(String email) {
@@ -156,26 +299,44 @@ public class DAO {
     }
 
     public boolean registerAccount(Account account) {
-        String query = "INSERT INTO Account (userName, password, email, address, phoneNumber, roleID, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "{CALL RegisterAccount(?, ?, ?, ?, ?, ?, ?)}";
         Connection conn = null;
-        PreparedStatement ps = null;
-
+        CallableStatement cs = null;
+        
         try {
             conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, account.getUserName());
-            ps.setString(2, account.getPassword());
-            ps.setString(3, account.getEmail());
-            ps.setString(4, account.getAddress());
-            ps.setString(5, account.getPhoneNumber());
-            ps.setInt(6, account.getRoleID());
-            ps.setInt(7, account.getStatus());
-
-            return ps.executeUpdate() > 0;
+            cs = conn.prepareCall(query);
+            
+            // Thiết lập các tham số cho stored procedure
+            cs.setString(1, account.getUserName());
+            cs.setString(2, account.getPassword());  // Mật khẩu gốc, sẽ được mã hóa bởi stored procedure
+            cs.setString(3, account.getEmail());
+            cs.setString(4, account.getAddress());
+            cs.setString(5, account.getPhoneNumber());
+            cs.setInt(6, account.getRoleID());
+            cs.setInt(7, account.getStatus());
+    
+            // Thực thi stored procedure
+            return cs.executeUpdate() > 0;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error registering account for user: " + account.getUserName(), e);
         } finally {
-            closeResources(conn, ps, null);
+            // Đóng CallableStatement
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    LOGGER.log(Level.WARNING, "Error closing CallableStatement", e);
+                }
+            }
+            // Đóng Connection
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    LOGGER.log(Level.WARNING, "Error closing Connection", e);
+                }
+            }
         }
         return false;
     }
@@ -203,7 +364,10 @@ public class DAO {
 
     public List<Account> getAccountsWithPaging(int offset, int limit) {
         List<Account> list = new ArrayList<>();
-        String query = "SELECT * FROM Account ORDER BY userID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        // Thêm chuỗi "******" thay cho mật khẩu thực
+        String query = "SELECT userID, userName, '********' AS password, " +
+                      "email, address, phoneNumber, roleID, status " +
+                      "FROM Account ORDER BY userID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -216,14 +380,14 @@ public class DAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Account(
-                        rs.getInt("userID"),
-                        rs.getString("userName"),
-                        rs.getString("password"),
-                        rs.getString("email"),
-                        rs.getString("address"),
-                        rs.getString("phoneNumber"),
-                        rs.getInt("roleID"),
-                        rs.getInt("status")
+                    rs.getInt("userID"),
+                    rs.getString("userName"),
+                    rs.getString("password"),  // Sẽ luôn là "********"
+                    rs.getString("email"),
+                    rs.getString("address"),
+                    rs.getString("phoneNumber"),
+                    rs.getInt("roleID"),
+                    rs.getInt("status")
                 ));
             }
         } catch (Exception e) {
@@ -235,16 +399,16 @@ public class DAO {
     }
 
     public Account getAccountById(String id) {
-        String query = "SELECT * FROM Account WHERE userID = ?";
+        String query = "{CALL GetAccountById(?)}";
         Connection conn = null;
-        PreparedStatement ps = null;
+        CallableStatement cs = null;
         ResultSet rs = null;
 
         try {
             conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, id);
-            rs = ps.executeQuery();
+            cs = conn.prepareCall(query);
+            cs.setString(1, id);
+            rs = cs.executeQuery();
             if (rs.next()) {
                 return new Account(
                         rs.getInt("userID"),
@@ -260,29 +424,50 @@ public class DAO {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error getting account by ID: " + id, e);
         } finally {
-            closeResources(conn, ps, rs);
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    LOGGER.log(Level.WARNING, "Error closing CallableStatement", e);
+                }
+            }
+            closeResources(conn, null, rs);
         }
         return null;
     }
 
-    public void updateAccount(String id, String user, String pass, int isSell, int isAdmin, int status) {
-        String query = "UPDATE Account SET userName = ?, password = ?, roleID = ?, status = ? WHERE userID = ?";
+    public void updateAccount(String id, String user, String pass, int roleID, int status) {
         Connection conn = null;
-        PreparedStatement ps = null;
-
+        CallableStatement cs = null;
+        
         try {
             conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, user);
-            ps.setString(2, pass);
-            ps.setInt(3, isSell);
-            ps.setInt(4, status);
-            ps.setString(5, id);
-            ps.executeUpdate();
+            
+            if (pass != null && !pass.trim().isEmpty()) {
+                // Sử dụng tên stored procedure mới
+                String query = "{CALL UpdateAccountWithPasswordHash(?, ?, ?, ?, ?)}";
+                cs = conn.prepareCall(query);
+                cs.setString(1, id);
+                cs.setString(2, user);
+                cs.setString(3, pass);
+                cs.setInt(4, roleID);
+                cs.setInt(5, status);
+            } else {
+                // Sử dụng tên stored procedure mới
+                String query = "{CALL UpdateAccountInfoOnly(?, ?, ?, ?)}";
+                cs = conn.prepareCall(query);
+                cs.setString(1, id);
+                cs.setString(2, user);
+                cs.setInt(3, roleID);
+                cs.setInt(4, status);
+            }
+            
+            cs.executeUpdate();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error updating account with ID: " + id, e);
         } finally {
-            closeResources(conn, ps, null);
+            if (cs != null) try { cs.close(); } catch (SQLException e) {}
+            if (conn != null) try { conn.close(); } catch (SQLException e) {}
         }
     }
 
@@ -331,61 +516,57 @@ public class DAO {
     }
 
     public boolean updateAccount(int accountID, String username, String password, String email, int roleID) {
-        String query = "UPDATE Account SET userName=?, password=?, email=?, roleID=? WHERE userID=?";
         Connection conn = null;
-        PreparedStatement ps = null;
-
+        CallableStatement cs = null;
+        
         try {
             conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ps.setString(3, email);
-            ps.setInt(4, roleID);
-            ps.setInt(5, accountID);
-
-            int rowsAffected = ps.executeUpdate();
+            
+            // Kiểm tra xem mật khẩu có được cung cấp không
+            if (password != null && !password.trim().isEmpty()) {
+                // Nếu có mật khẩu mới, sử dụng stored procedure với mã hóa mật khẩu
+                String query = "{CALL UpdateAccountWithPasswordHash(?, ?, ?, ?, ?)}";
+                cs = conn.prepareCall(query);
+                cs.setInt(1, accountID);
+                cs.setString(2, username);
+                cs.setString(3, password);  // Mật khẩu gốc, sẽ được mã hóa trong stored procedure
+                cs.setString(4, email);
+                cs.setInt(5, roleID);
+            } else {
+                // Nếu không có mật khẩu mới, chỉ cập nhật thông tin khác
+                String query = "{CALL UpdateAccountInfoOnly(?, ?, ?, ?)}";
+                cs = conn.prepareCall(query);
+                cs.setInt(1, accountID);
+                cs.setString(2, username);
+                cs.setString(3, email);
+                cs.setInt(4, roleID);
+            }
+            
+            int rowsAffected = cs.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error updating account with ID: " + accountID, e);
             return false;
         } finally {
-            closeResources(conn, ps, null);
-        }
-    }
-
-    public boolean debugPasswordCheck(int id, String currentPassword) {
-        try {
-            Connection conn = new DBContext().getConnection();
-
-            String query = "SELECT userID, userName, password FROM Account WHERE userID = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                int userId = rs.getInt("userID");
-                String username = rs.getString("userName");
-                String dbPassword = rs.getString("password");
-
-                System.out.println("DEBUG - Found user in 'Account' table:");
-                System.out.println("  ID: " + userId);
-                System.out.println("  Username: " + username);
-                System.out.println("  Password in DB: [" + dbPassword + "]");
-                System.out.println("  Password provided: [" + currentPassword + "]");
-                System.out.println("  Match result: " + currentPassword.equals(dbPassword));
-
-                return currentPassword.equals(dbPassword);
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    LOGGER.log(Level.WARNING, "Error closing CallableStatement", e);
+                }
             }
-
-            System.out.println("DEBUG - User not found in Account table with ID: " + id);
-            return false;
-        } catch (Exception e) {
-            System.out.println("Error in debug password check: " + e.getMessage());
-            e.printStackTrace();
-            return false;
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    LOGGER.log(Level.WARNING, "Error closing Connection", e);
+                }
+            }
         }
     }
+
+    
+
 
     public void updateAccountInfo(int id, String fullName, String email, String phone, String address) {
         String query = "UPDATE Account SET address=?, email=?, phoneNumber=? WHERE userID=?";
@@ -404,16 +585,17 @@ public class DAO {
     }
 
     public Account getAccountByID(int accountID) {
-        String query = "SELECT * FROM Account WHERE userID = ?";
+        String query = "{CALL GetAccountByID(?)}";
         Connection conn = null;
-        PreparedStatement ps = null;
+        CallableStatement cs = null;
         ResultSet rs = null;
 
         try {
             conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, accountID);
-            rs = ps.executeQuery();
+            cs = conn.prepareCall(query);
+            cs.setInt(1, accountID);
+            rs = cs.executeQuery();
+            
             if (rs.next()) {
                 return new Account(
                         rs.getInt("userID"),
@@ -429,29 +611,54 @@ public class DAO {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error getting account by ID: " + accountID, e);
         } finally {
-            closeResources(conn, ps, rs);
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    LOGGER.log(Level.WARNING, "Error closing CallableStatement", e);
+                }
+            }
+            closeResources(conn, null, rs);
         }
         return null;
     }
 
     public boolean updateAccount(int accountID, String username, String password, String email, String phoneNumber, String address, int roleID, int status) {
-        String query = "UPDATE Account SET userName=?, password=?, email=?, phoneNumber=?, address=?, roleID=?, status=? WHERE userID=?";
         Connection conn = null;
-        PreparedStatement ps = null;
-
+        CallableStatement cs = null;
+        
         try {
             conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ps.setString(3, email);
-            ps.setString(4, phoneNumber);
-            ps.setString(5, address);
-            ps.setInt(6, roleID);
-            ps.setInt(7, status);
-            ps.setInt(8, accountID);
-
-            int rowsAffected = ps.executeUpdate();
+            
+            // Kiểm tra xem mật khẩu có phải là placeholder "********" hoặc rỗng không
+            boolean updatePassword = password != null && !password.trim().isEmpty() && !password.equals("********");
+            
+            if (updatePassword) {
+                // Nếu có mật khẩu mới, sử dụng stored procedure để mã hóa mật khẩu
+                String query = "{CALL UpdateAccountFull(?, ?, ?, ?, ?, ?, ?, ?)}";
+                cs = conn.prepareCall(query);
+                cs.setInt(1, accountID);
+                cs.setString(2, username);
+                cs.setString(3, password);  // Mật khẩu gốc sẽ được mã hóa trong stored procedure
+                cs.setString(4, email);
+                cs.setString(5, phoneNumber);
+                cs.setString(6, address);
+                cs.setInt(7, roleID);
+                cs.setInt(8, status);
+            } else {
+                // Nếu không có mật khẩu mới, chỉ cập nhật các thông tin khác
+                String query = "{CALL UpdateAccountWithoutPassword(?, ?, ?, ?, ?, ?, ?)}";
+                cs = conn.prepareCall(query);
+                cs.setInt(1, accountID);
+                cs.setString(2, username);
+                cs.setString(3, email);
+                cs.setString(4, phoneNumber);
+                cs.setString(5, address);
+                cs.setInt(6, roleID);
+                cs.setInt(7, status);
+            }
+            
+            int rowsAffected = cs.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error updating account with ID: " + accountID, e);
@@ -460,46 +667,140 @@ public class DAO {
             closeResources(conn, ps, null);
         }
     }
-
     public Account getAccountById(int id) {
-        String query = "SELECT * FROM Account WHERE userID = ?";
+        // Thay đổi câu truy vấn để thay thế mật khẩu thực bằng placeholder
+        String query = "SELECT userID, userName, '********' AS password, email, address, phoneNumber, roleID, status " +
+                      "FROM Account WHERE userID = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             rs = ps.executeQuery();
+            
             if (rs.next()) {
                 return new Account(
-                        rs.getInt("userID"),
-                        rs.getString("userName"),
-                        rs.getString("password"),
-                        rs.getString("email"),
-                        rs.getString("address"),
-                        rs.getString("phoneNumber"),
-                        rs.getInt("roleID"),
-                        rs.getInt("status")
+                    rs.getInt("userID"),
+                    rs.getString("userName"),
+                    rs.getString("password"),  // Sẽ trả về "********"
+                    rs.getString("email"),
+                    rs.getString("address"),
+                    rs.getString("phoneNumber"),
+                    rs.getInt("roleID"),
+                    rs.getInt("status")
                 );
             }
         } catch (Exception e) {
             System.out.println("Error getting account by ID: " + e.getMessage());
+        } finally {
+            // Đóng tài nguyên
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
         }
         return null;
     }
 
     public void updateAccountPassword(int id, String newPassword) {
-        String query = "UPDATE Account SET password=? WHERE userID=?";
+        String query = "{CALL UpdateAccountPassword(?, ?)}";
+        Connection conn = null;
+        CallableStatement cs = null;
+        
         try {
             conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(query);
-            ps.setString(1, newPassword);
-            ps.setInt(2, id);
-            ps.executeUpdate();
-            System.out.println("Password updated successfully for userID: " + id);
+            cs = conn.prepareCall(query);
+            cs.setInt(1, id);
+            cs.setString(2, newPassword);  // Mật khẩu gốc, sẽ được mã hóa trong stored procedure
+            
+            int rowsAffected = cs.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                System.out.println("Password updated successfully for userID: " + id);
+            } else {
+                System.out.println("Password update failed. User not found with ID: " + id);
+            }
         } catch (Exception e) {
             System.out.println("Error updating password: " + e.getMessage());
+            e.printStackTrace();  // In stack trace để dễ debug
+        } finally {
+            // Đóng tài nguyên
+            try {
+                if (cs != null) cs.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
         }
     }
-
+    public boolean debugPasswordCheck(int id, String currentPassword) {
+        Connection conn = null;
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = new DBContext().getConnection();
+            
+            // Sử dụng stored procedure để kiểm tra mật khẩu
+            String query = "{CALL DebugPasswordCheck(?, ?)}";
+            cs = conn.prepareCall(query);
+            cs.setInt(1, id);
+            cs.setString(2, currentPassword);
+            
+            rs = cs.executeQuery();
+            
+            if (rs.next()) {
+                int userId = rs.getInt("userID");
+                String username = rs.getString("userName");
+                String passwordStatus = rs.getString("passwordStatus");
+                boolean isMatch = rs.getBoolean("isMatch");
+                
+                System.out.println("DEBUG - Found user in 'Account' table:");
+                System.out.println("  ID: " + userId);
+                System.out.println("  Username: " + username);
+                System.out.println("  Password status: " + passwordStatus);
+                System.out.println("  Password provided: [" + currentPassword + "]");
+                System.out.println("  Match result: " + isMatch);
+                
+                return isMatch;
+            }
+            
+            System.out.println("DEBUG - User not found in Account table with ID: " + id);
+            return false;
+        } catch (Exception e) {
+            System.out.println("Error in debug password check: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.out.println("Error closing ResultSet: " + e.getMessage());
+                }
+            }
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    System.out.println("Error closing CallableStatement: " + e.getMessage());
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    System.out.println("Error closing Connection: " + e.getMessage());
+                }
+            }
+        }
+    }
     public boolean updateAccountStatus(int userID, int status) {
         String query = "UPDATE Account SET status = ? WHERE userID = ?";
         Connection conn = null;
@@ -534,44 +835,42 @@ public class DAO {
      * @return true if account was added successfully
      */
     public boolean addAccount(String userName, String password, String email, String phoneNumber, String address, int roleID, int status) {
-        String query = "INSERT INTO Account (userName, password, email, phoneNumber, address, roleID, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "{CALL AddAccount(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
         Connection conn = null;
         PreparedStatement ps = null;
-
+        
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
-
+            
             ps.setString(1, userName);
-
+            
             // Check if password needs to be hashed - implement your password hashing here
             // For example, you could use a simple MD5 hash (not recommended for production)
             // String hashedPassword = DigestUtils.md5Hex(password);
             // ps.setString(2, hashedPassword);
+            
             // Or if you're not hashing passwords (not recommended for security reasons)
             ps.setString(2, password);
-
+            
             ps.setString(3, email);
             ps.setString(4, phoneNumber);
             ps.setString(5, address);
             ps.setInt(6, roleID);
             ps.setInt(7, status);
-
+            
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception e) {
+            System.out.println("Error adding account: " + e.getMessage());
             e.printStackTrace();
             return false;
         } finally {
             try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Error closing resources: " + e.getMessage());
             }
         }
     }
@@ -583,7 +882,9 @@ public class DAO {
      * @return the Account object if found, null otherwise
      */
     public Account getAccount(String userName) {
-        String query = "SELECT * FROM Account WHERE userName = ?";
+        // Thay đổi câu truy vấn để thay thế mật khẩu bằng placeholder
+        String query = "SELECT userID, userName, '********' AS password, email, address, phoneNumber, roleID, status " +
+                      "FROM Account WHERE userName = ?";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -596,14 +897,14 @@ public class DAO {
 
             if (rs.next()) {
                 return new Account(
-                        rs.getInt("userID"),
-                        rs.getString("userName"),
-                        rs.getString("password"),
-                        rs.getString("email"),
-                        rs.getString("address"),
-                        rs.getString("phoneNumber"),
-                        rs.getInt("roleID"),
-                        rs.getInt("status")
+                    rs.getInt("userID"),
+                    rs.getString("userName"),
+                    rs.getString("password"),
+                    rs.getString("email"),
+                    rs.getString("address"),
+                    rs.getString("phoneNumber"),
+                    rs.getInt("roleID"),
+                    rs.getInt("status")
                 );
             }
         } catch (Exception e) {
@@ -615,6 +916,56 @@ public class DAO {
     }
 
     
+
+    public void insertProduct(String name, String image, String price, String description, String category, int sid, String stock,String status) {
+        String query = "INSERT INTO [dbo].[Product] ([name], [img], [price], [description], [cateID], [sell_id], [stock], [status]) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, name);
+            ps.setString(2, image);
+            ps.setString(3, price);
+            ps.setString(4, description);
+            ps.setString(5, category);
+            ps.setInt(6, sid);
+            ps.setString(7, stock);
+            ps.setString(8, status); // status mặc định
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error inserting product: " + e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
+        }
+    }
+
+    public void updateProduct(int id, String name, String image, double price, String description, int stock, int status, int category) {
+    String sql = "UPDATE [dbo].[Product] SET name=?, img=?, price=?, description=?, cateID=?, stock=?, status=? WHERE pid=?";
+    if(stock==0) status=0;
+    try (Connection conn = new DBContext().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, name);
+        ps.setString(2, image);
+        ps.setDouble(3, price);
+        ps.setString(4, description);
+        ps.setInt(5, category);
+        ps.setInt(6, stock);
+        ps.setInt(7, status);
+        ps.setInt(8, id);
+        ps.executeUpdate();
+    } catch (Exception e) {
+        System.out.println("Error updating product: " + e.getMessage());
+    }
+}
+
     public boolean recordProductClick(int productId, Integer userId) {
         String query = "INSERT INTO ProductClick (pid, uid) VALUES (?, ?)";
         Connection conn = null;

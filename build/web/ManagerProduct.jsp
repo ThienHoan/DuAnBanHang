@@ -28,7 +28,7 @@
         <!-- Bootstrap -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css">
-
+        
         <style>
             body {
                 color: #566787;
@@ -677,6 +677,6 @@
             });
         </script>
 
-
+<jsp:include page="Footer.jsp"></jsp:include>
     </body>
 </html>
