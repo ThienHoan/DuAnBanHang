@@ -9,7 +9,6 @@
         <filter-name>LoggingFilter</filter-name>
         <url-pattern>/servlet/*</url-pattern>
         <url-pattern>/Category.jsp</url-pattern>
-        <url-pattern>/category</url-pattern>
         <url-pattern>/ManagerProduct.jsp</url-pattern>
         <url-pattern>/ManagerAccount.jsp</url-pattern>
     </filter-mapping>

@@ -82,25 +82,30 @@ public class WishlistServlet extends HttpServlet {
 
         switch (action != null ? action : "") {
             case "add":
-                String productIDParam = request.getParameter("productID");
-                if (productIDParam == null || productIDParam.trim().isEmpty()) {
-                    response.sendRedirect(returnUrl);
-                    return;
-                }
-                try {
-                    int productID = Integer.parseInt(productIDParam);
-                    wishlistDAO.addToWishlist(userID, productID);
-                    // Cập nhật wishlistCount trước khi redirect
-                    List<Wishlist> updatedWishlistAdd = wishlistDAO.getWishlistByUser(userID);
-                    int updatedCountAdd = (updatedWishlistAdd != null) ? updatedWishlistAdd.size() : 0;
-                    request.getSession().setAttribute("wishlistCount", updatedCountAdd);
-                    // Thêm thông báo thành công vào URL
-                    response.sendRedirect(returnUrl + "&success=AddedToWishlist");
-                } catch (NumberFormatException e) {
-                    response.sendRedirect(returnUrl );
-                }
-                return; // Thoát ngay sau khi redirect
+    String productIDParam = request.getParameter("productID");
+    if (productIDParam == null || productIDParam.trim().isEmpty()) {
+        response.sendRedirect(returnUrl);
+        return;
+    }
+    try {
+        int productID = Integer.parseInt(productIDParam);
+        wishlistDAO.addToWishlist(userID, productID);
+        List<Wishlist> updatedWishlistAdd = wishlistDAO.getWishlistByUser(userID);
+        int updatedCountAdd = (updatedWishlistAdd != null) ? updatedWishlistAdd.size() : 0;
+        request.getSession().setAttribute("wishlistCount", updatedCountAdd);
 
+        // Xử lý returnUrl
+        String redirectUrl = returnUrl;
+        // Nếu returnUrl đã chứa context path, không thêm lại
+        if (!redirectUrl.startsWith("/")) {
+            redirectUrl = "/" + redirectUrl;
+        }
+
+        response.sendRedirect(request.getContextPath() + redirectUrl);
+    } catch (NumberFormatException e) {
+        response.sendRedirect(returnUrl);
+    }
+    return;
             case "remove":
                 String wishlistIDParam = request.getParameter("wishlistID");
                 if (wishlistIDParam == null || wishlistIDParam.trim().isEmpty()) {
