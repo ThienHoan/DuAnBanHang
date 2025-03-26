@@ -320,18 +320,6 @@ GO
 -- Add constraint to ensure rating is between 1 and 5
 ALTER TABLE [dbo].[ProductReview]  WITH CHECK ADD  CONSTRAINT [CK_Rating_Range] CHECK  (([rating]>=(1) AND [rating]<=(5)))
 GO
-Đm k thấy à @Thiện Hoàn
-oke
-@Đông Vănnnnnnnnnnnnn hàm mô rk
-chừ code t code mới
-kh cop lại dao cũ đc
-@Thiện Hoàn hàm loginbygmail ấy
-Đowik rí
-vãi l
-đâu mất hết code r
-may copy vô word
-:)))))))
-căc chìu đưa máy t  code cho
 public Account loginByEmail(String email) {
         String sql = "SELECT * FROM Account WHERE email = ?";
         try {
