@@ -21,6 +21,64 @@
         <link rel="stylesheet" href="assets/css/slick.min.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/main-color.css">
+        <script>
+function sendOTP() {
+    const input = $('#emailInput').val();
+    $.ajax({
+        url: 'forgot-password',
+        method: 'POST',
+        data: {
+            action: 'sendOTP',
+            input: input
+        },
+        success: function(response) {
+            alert(response.message);
+            if(response.success) {
+                $('#step1').hide();
+                $('#step2').show();
+            }
+        }
+    });
+}
+
+function verifyOTP() {
+    const otp = $('#otpInput').val();
+    $.ajax({
+        url: 'forgot-password',
+        method: 'POST',
+        data: {
+            action: 'verifyOTP',
+            otp: otp
+        },
+        success: function(response) {
+            alert(response.message);
+            if(response.success) {
+                $('#step2').hide();
+                $('#step3').show();
+            }
+        }
+    });
+}
+
+function resetPassword() {
+    const password = $('#newPassword').val();
+    $.ajax({
+        url: 'forgot-password',
+        method: 'POST',
+        data: {
+            action: 'resetPassword',
+            newPassword: password
+        },
+        success: function(response) {
+            alert(response.message);
+            if(response.success) {
+                $('#forgotPasswordModal').modal('hide');
+                location.reload();
+            }
+        }
+    });
+}
+</script>
     </head>
     <body class="biolife-body">
 
@@ -124,7 +182,11 @@
 
                                         <button class="btn btn-submit btn-bold" type="submit">sign in</button>
 
-                                        <a href="#" class="link-to-help">Forgot your password</a>
+                                        <div class="form-row">
+    <a href="#" class="link-to-help" data-toggle="modal" data-target="#forgotPasswordModal">
+        Quên mật khẩu?
+    </a>
+</div>
 
                                     </p>
 
@@ -391,6 +453,48 @@
         <script src="assets/js/slick.min.js"></script>
         <script src="assets/js/biolife.framework.js"></script>
         <script src="assets/js/functions.js"></script>
+<!--        modal-->
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Quên Mật Khẩu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Bước 1: Nhập email -->
+                <div id="step1">
+                    <div class="form-group">
+                        <label>Email hoặc tên đăng nhập</label>
+                        <input type="text" class="form-control" id="emailInput">
+                    </div>
+                    <button class="btn btn-primary" onclick="sendOTP()">Gửi mã OTP</button>
+                </div>
+
+                <!-- Bước 2: Nhập OTP -->
+                <div id="step2" style="display:none">
+                    <div class="form-group">
+                        <label>Nhập mã OTP</label>
+                        <input type="text" class="form-control" id="otpInput">
+                        <small class="text-muted">Mã OTP có hiệu lực trong 1 phút</small>
+                    </div>
+                    <button class="btn btn-primary" onclick="verifyOTP()">Xác nhận</button>
+                </div>
+
+                <!-- Bước 3: Đặt mật khẩu mới -->
+                <div id="step3" style="display:none">
+                    <div class="form-group">
+                        <label>Mật khẩu mới</label>
+                        <input type="password" class="form-control" id="newPassword">
+                    </div>
+                    <button class="btn btn-primary" onclick="resetPassword()">Đổi mật khẩu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     </body>
 
 </html>

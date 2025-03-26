@@ -46,6 +46,60 @@ public class DAO {
         }
     }
     
+    public int findUserIdByUsernameOrEmail(String input) {
+    String query = "SELECT userID FROM Account WHERE userName = ? OR email = ?";
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+            
+        ps.setString(1, input);
+        ps.setString(2, input);
+        
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("userID");
+        }
+            
+    } catch (Exception e) {
+        return -1; // Return -1 if error occurs
+    }
+    return 0; // Return 0 if not found
+}
+    
+    
+    public String getEmailByUserId(int userId) {
+    String query = "SELECT email FROM Account WHERE userID = ?";
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+            
+        ps.setInt(1, userId);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            return rs.getString("email");
+        }
+            
+    } catch (Exception e) {
+        LOGGER.log(Level.SEVERE, "Error getting email for user ID: " + userId, e);
+    }
+    return null; // Return null if not found or error occurs
+}
+    
+    public boolean changePasswordByUserId(int userId, String newPassword) {
+    String query = "UPDATE Account SET password = ? WHERE userID = ?";
+    try (Connection conn = new DBContext().getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+            
+        ps.setString(1, newPassword);
+        ps.setInt(2, userId);
+        
+        return ps.executeUpdate() > 0;
+            
+    } catch (Exception e) {
+        return false;
+    }
+}
+    
+    
     public Account loginByEmail(String email) {
     String query = "SELECT * FROM Account WHERE email = ?";
     Connection conn = null;
