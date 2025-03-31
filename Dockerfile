@@ -17,7 +17,8 @@ FROM tomcat:9-jdk17
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copy file WAR vào thư mục chạy ứng dụng
-COPY --from=build /app/target/DuAnBanHang.war /usr/local/tomcat/webapps/ROOT.war
+COPY --from=build /app/target/DuAnBanHang-1.0.war /usr/local/tomcat/webapps/ROOT.war
+
 
 # Mở cổng 8080 để truy cập ứng dụng
 EXPOSE 8080
