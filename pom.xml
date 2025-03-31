@@ -46,10 +46,11 @@
                     <target>17</target>
                 </configuration>
             </plugin>
+            <!-- Sửa lại phiên bản plugin maven-war-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>3.3.1</version> <!-- Thay phiên bản 3.4.0 thành 3.3.1 -->
                 <configuration>
                     <finalName>DuAnBanHang</finalName> <!-- Đặt tên WAR file -->
                 </configuration>
