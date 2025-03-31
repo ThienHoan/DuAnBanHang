@@ -6,7 +6,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>DuAnBanHang</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>war</packaging>  <!-- Nếu dùng Tomcat, để war -->
 
     <dependencies>
