@@ -46,6 +46,14 @@
                     <target>17</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <finalName>DuAnBanHang</finalName> <!-- Đặt tên WAR file -->
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
